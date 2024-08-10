@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
+const {Schema}=mongoose;
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  rank: { type: Number, default: 0 },
-  score: { type: Number, default: 0 },
-  highestScoreInQuiz: { type: Number, default: 0 },
-  problemsSolved: { type: Number, default: 0 }
+  progress:[ProgressSchema],
+  created_at:{type:Date ,default:Date.now},
+  updated_at:{type:Date,default:Date.now}
 });
 
-module.exports = mongoose.models.User || mongoose.model('User', userSchema);
+module.exports = mongoose.models.User || mongoose.model('User', UserSchema);

@@ -1,21 +1,13 @@
 const mongoose = require('mongoose');
+const Schema=require('mongoose');
 
-const dataStructureSchema = new mongoose.Schema({
+const dataStructureSchema = new Schema({
   name: { type: String, required: true },
-  notes: [{ description: { type: String } }],
-  tests: [{
-    totalQuestions: { type: Number },
-    totalScoreOfQuiz: { type: Number },
-    currentScore: { type: Number },
-    highestScore: { type: Number },
-    status: { type: String },
-    quiz: [{
-      question: { type: String },
-      answer: { type: String },
-      options: [{ type: String }],
-      status: { type: String }
-    }]
-  }]
+  description :{type:String},
+  notes:[NoteSchema],
+  created_at:{type:Date,default:Date.now},
+  updated_at:{type:Date,default:Date.now}
+
 });
 
 module.exports = mongoose.models.DataStructure || mongoose.model('DataStructure', dataStructureSchema);

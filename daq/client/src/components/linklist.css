@@ -1,0 +1,17 @@
+.linked-list-visualizer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .node {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+  }
+  
+  .arrow {
+    margin-left: 5px;
+  }
+  
