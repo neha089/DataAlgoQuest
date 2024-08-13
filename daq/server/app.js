@@ -25,17 +25,15 @@ mongoose.connect(process.env.MONGO_URI, {
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
-const visualizationRoutes = require('./routes/visualizationRoutes');
 const noteRoutes = require('./routes/noteRoutes');
 const quizRoutes = require('./routes/quizRoutes');
-const challengeRoutes = require('./routes/challengeRoutes');
+const challengeRoutes = require('./routes/codingChallengeRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 
 // Use Routes
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/feedback', feedbackRoutes);
-app.use('/api/data-structures', visualizationRoutes);
 app.use('/api/notes', noteRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/challenges', challengeRoutes);
