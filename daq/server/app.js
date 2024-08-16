@@ -34,28 +34,38 @@ app.use(session({
 
 // Import Routes
 const userRoutes = require('./routes/userRoutes');
-const adminRoutes = require('./routes/adminRoutes');
+// const adminRoutes = require('./routes/adminRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
 const dataStructureRoutes = require('./routes/dataStructureRoutes');
 const noteRoutes = require('./routes/noteRoutes');
 const quizRoutes = require('./routes/quizRoutes');
 const challengeRoutes = require('./routes/codingChallengeRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const questionRoutes = require('./routes/questionRoutes');
+const HttpError = require("./models/http-error");
 
 // Use Routes
 app.use('/api/users', userRoutes);
-app.use('/api/admin', adminRoutes);
+// app.use('/api/admin', adminRoutes); // Ensure this is the correct path
 app.use('/api/feedback', feedbackRoutes);
-app.use('/api/datastructures', dataStructureRoutes); // Correctly added route
+app.use('/api/datastructures', dataStructureRoutes);
 app.use('/api/notes', noteRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/challenges', challengeRoutes);
+app.use('/api/question', questionRoutes);
 app.use('/api/users/profile', profileRoutes);
 
-// Error Handling Middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Internal Server Error' });
+app.use((req, res, next) => {
+  const error = new HttpError("Could not find this route.", 404);
+  throw error;
+});
+
+app.use((error, req, res, next) => {
+  if (res.headerSent) {
+    return next(error);
+  }
+  res.status(error.code || 500);
+  res.json({ message: error.message || "An unknown error occurred!" });
 });
 
 // Start Server

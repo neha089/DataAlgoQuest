@@ -1,27 +1,38 @@
 const express = require('express');
-const { body, param } = require('express-validator');
+const { check } = require('express-validator');
 const userController = require('../controllers/userController');
-const authMiddleware = require('../middleware/authMiddleware');
+
 const router = express.Router();
 
-// Validation rules
-const registerValidation = [
-  body('name').notEmpty().withMessage('Name is required'),
-  body('email').isEmail().withMessage('Invalid email address'),
-  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
-];
+// Create a new user
+router.post(
+  '/',
+  [
+    check('name').not().isEmpty(),
+    check('email').normalizeEmail().isEmail(),
+    check('password').isLength({ min: 6 })
+  ],
+  userController.createUser
+);
 
-const loginValidation = [
-  body('email').isEmail().withMessage('Invalid email address'),
-  body('password').notEmpty().withMessage('Password is required')
-];
+// Get all users
+router.get('/', userController.getAllUsers);
 
-// Routes
-router.post('/register', registerValidation, userController.register);
-router.post('/login', loginValidation, userController.login);
-router.get('/profile', authMiddleware, userController.getProfile);
-router.put('/profile', authMiddleware, userController.updateProfile);
-router.get('/:id', authMiddleware, userController.getUserProfile); // Admin only
-router.delete('/:id', authMiddleware, userController.deleteUser); // Admin only
+// Get user by ID
+router.get('/:id', userController.getUserById);
+
+// Update user by ID
+router.put(
+  '/:id',
+  [
+    check('name').not().isEmpty(),
+    check('email').normalizeEmail().isEmail(),
+    check('password').optional().isLength({ min: 6 })
+  ],
+  userController.updateUser
+);
+
+// Delete user by ID
+router.delete('/:id', userController.deleteUser);
 
 module.exports = router;
