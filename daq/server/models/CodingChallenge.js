@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const CodingChallengeSchema = new Schema({
+const CodingChallengeSchema =  Schema({
     title: { type: String, required: true },
     problem_statement: { type: String, required: true },
     link:{type:String,required:true},
