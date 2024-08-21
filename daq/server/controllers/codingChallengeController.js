@@ -1,7 +1,10 @@
-const CodingChallenge = require('../models/CodingChallenge');
 const { validationResult } = require('express-validator');
-const ChallengeAttempt = require('../models/ChallengeAttempt'); // Ensure you have this model
-// const User = require('../models/User'); // Ensure you have this model if needed
+
+// Import your models
+const User = require('../models/User'); // Adjust the path if necessary
+const CodingChallenge = require('../models/codingChallenge'); // Adjust the path if necessary
+const ChallengeAttempt = require('../models/challengeAttempt'); // Adjust the path if necessary
+const Progress = require('../models/progress'); // Adjust the path if necessary
 
 // Create a new coding challenge
 exports.createChallenge = async (req, res) => {
@@ -134,8 +137,7 @@ exports.getChallengesForRevision = async (req, res) => {
 };
 
 // Get all coding challenges for a specific data structure
-// Get all coding challenges for a specific data structure
-exports.getChallenges = async (req, res) => {
+exports.getChallenge_with_ds = async (req, res) => {
   try {
     const { data_structure_id } = req.params;
 
@@ -156,7 +158,6 @@ exports.getChallenges = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
 // Submit a challenge attempt
 exports.submitChallenge = async (req, res) => {
   const errors = validationResult(req);
@@ -165,23 +166,44 @@ exports.submitChallenge = async (req, res) => {
   }
 
   try {
-    const { challenge_id } = req.body;
-    const userId = req.user.id; // Assuming user ID is attached to req.user
+    const { challenge_id, user_id } = req.body; // User ID will come from body
 
-    // Validate if the challenge_id is a valid ObjectId
+    // Validate if the challenge_id and user_id are valid ObjectIds
     if (!mongoose.Types.ObjectId.isValid(challenge_id)) {
       return res.status(400).json({ message: 'Invalid challenge ID format' });
+    }
+    if (!mongoose.Types.ObjectId.isValid(user_id)) {
+      return res.status(400).json({ message: 'Invalid user ID format' });
     }
 
     // Fetch the challenge to determine its difficulty
     const challenge = await CodingChallenge.findById(challenge_id);
-
     if (!challenge) {
       return res.status(404).json({ message: 'Challenge not found' });
     }
 
+    // Fetch the user and their progress
+    let user = await User.findById(user_id).populate('progress');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if progress exists; if not, create a new Progress object
+    if (!user.progress) {
+      const newProgress = new Progress({
+        quiz_scores: 0,
+        challenge_scores: 0,
+      });
+      await newProgress.save();
+
+      user.progress = newProgress._id;
+      await user.save();
+
+      user = await User.findById(user_id).populate('progress'); // Re-fetch user with new progress populated
+    }
+
     // Determine the score based on the difficulty
-    let score;
+    let score = 0;
     switch (challenge.level.toLowerCase()) {
       case 'hard':
         score = 10;
@@ -197,12 +219,17 @@ exports.submitChallenge = async (req, res) => {
         break;
     }
 
+    // Update challenge_scores in user's progress
+    user.progress.challenge_scores += score;
+    await user.progress.save();
+
     // Create a new challenge attempt
     const newAttempt = new ChallengeAttempt({
-      user_id: userId,
-      challenge: challenge_id,
-      score,
-      solved: false,
+      user_id: user_id,
+      challenge_id: challenge_id,
+      score: score,
+      solved: true,
+      completed_at: Date.now(), // Fixed typo from Date to date
     });
 
     await newAttempt.save();
@@ -210,7 +237,35 @@ exports.submitChallenge = async (req, res) => {
   } catch (error) {
     console.error('Error submitting challenge:', error); // Log error
     res.status(500).json({ message: 'Server error' });
-  }
-};
-
-
+  }};
+  exports.solveChallengesAsync = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+  
+    try {
+      const { user_id } = req.body; // User ID will come from body
+  
+      // Validate if the user_id is a valid ObjectId
+      if (!mongoose.Types.ObjectId.isValid(user_id)) {
+        return res.status(400).json({ message: 'Invalid user ID format' });
+      }
+  
+      // Step 1: Find all challenge attempts where the user_id matches and the challenge is solved
+      const challengeAttempts = await ChallengeAttempt.find({ user_id, solved: true });
+  
+      // Step 2: Extract all unique challenge IDs from the challenge attempts
+      const challengeIds = challengeAttempts.map(attempt => attempt.challenge_id);
+  
+      // Step 3: Use the challenge IDs to find the corresponding challenges from the CodingChallenge collection
+      const challenges = await CodingChallenge.find({ _id: { $in: challengeIds } });
+  
+      // Step 4: Return the list of challenges back to the client
+      return res.status(200).json({ solvedChallenges: challenges });
+    } catch (error) {
+      console.error('Error retrieving solved challenges:', error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  

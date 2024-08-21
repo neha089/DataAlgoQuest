@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  progress: [ { type: Schema.Types.ObjectId, ref: 'Progress' } ], // Reference Progress schema
+  progress:  { type: Schema.Types.ObjectId, ref: 'Progress' } , // Reference Progress schema
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now }
 });

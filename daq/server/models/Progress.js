@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
 
-const ProgressSchema = new Schema({
-    data_structure_id: { type: Schema.Types.ObjectId, ref: 'DataStructure' },
-    quiz_scores: [{ type: Schema.Types.ObjectId, ref: 'QuizAttempt' }],
-    challenge_scores: [{ type: Schema.Types.ObjectId, ref: 'ChallengeAttempt' }]
+const progressSchema = new Schema({
+  quiz_scores: {
+    type: Number,
+    default: 0,
+  },
+  challenge_scores: {
+    type: Number,
+    default: 0,
+  },
+  // Other fields can be added here
 });
 
-module.exports = mongoose.models.Progress || mongoose.model('Progress', ProgressSchema);
+const Progress = mongoose.model('Progress', progressSchema);
+
+module.exports = Progress;
