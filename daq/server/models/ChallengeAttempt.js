@@ -8,5 +8,4 @@ const ChallengeAttemptSchema = new Schema({
     score: { type: Number, required: true },
     completed_at: { type: Date, default: Date.now }
 });
-
 module.exports = mongoose.models.ChallengeAttempt || mongoose.model('ChallengeAttempt', ChallengeAttemptSchema);
