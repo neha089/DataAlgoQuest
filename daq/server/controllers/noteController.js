@@ -45,8 +45,13 @@ exports.addNoteToCodingChallenge = async (req, res) => {
     if (!codingChallenge) {
       return res.status(404).json({ message: 'Coding challenge not found' });
     }
+    const newNote = new Note({
+      user_id,
+      content,
+    });
 
-    codingChallenge.note.push({ user_id, content });
+    await newNote.save();
+    codingChallenge.note.push(newNote._id);
     await codingChallenge.save();
 
     res.status(201).json({ message: 'Note added successfully' });
@@ -79,12 +84,15 @@ exports.getNotesForCodingChallenge = async (req, res) => {
   const {user_id} = req.body;
 
   try {
-    const codingChallenge = await CodingChallenge.findById(coding_challenge_id);
+    const codingChallenge = await CodingChallenge.findById(coding_challenge_id).populate('note');
     if (!codingChallenge) {
       return res.status(404).json({ message: 'Coding challenge not found' });
     }
 
     const userNotes = codingChallenge.note.filter(note => note.user_id.toString() === user_id);
+    if (userNotes.length === 0) {
+      return res.status(404).json({ message: 'No notes found for this user' });
+    }
     res.json(userNotes);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
