@@ -1,8 +1,15 @@
 const express = require('express');
-const { check } = require('express-validator');
+const { body,check} = require('express-validator');
 const quizController = require('../controllers/quizController');
 
 const router = express.Router();
+
+// Validation rules
+const submitQuizValidation = [
+  body('quiz_id').notEmpty().withMessage('Quiz ID is required'),
+  body('user_id').notEmpty().withMessage('User ID is required')
+];
+
 
 // Create a new quiz
 router.post(
@@ -34,5 +41,13 @@ router.put(
 
 // Delete a quiz by ID
 router.delete('/:id', quizController.deleteQuiz);
+//submit quiz
+router.post('/submit', submitQuizValidation, quizController.submitQuiz);
+//get all submitted or solved quizes
+router.get('/solved/:userId',quizController.solveQuizAsync);
+//get quiz with highest score user
+router.get('/highestScore/:quizId',quizController.getQuizWithHighestScoreUser);
+//get quiz with lowest score user
+router.get('/lowestScore/:quizId',quizController.getQuizWithLowestScoreUser);
 
 module.exports = router;
