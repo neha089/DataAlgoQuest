@@ -7,24 +7,33 @@ const Note = require('../models/Note');
 // Add a note to a data structure
 exports.addNoteToDataStructure = async (req, res) => {
   const errors = validationResult(req);
+
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
   try {
     const { data_structure_id } = req.params;
-    const { content } = req.body;
-    const userId = req.user.id; // Assuming user ID is attached to req.user
-
+    const { user_id ,content } = req.body;
+  
     const dataStructure = await DataStructure.findById(data_structure_id);
     if (!dataStructure) {
       return res.status(404).json({ message: 'Data structure not found' });
     }
+    
+   const newNote = new Note({
+      user_id,
+      content,
+    });
 
-    dataStructure.notes.push({ user_id: userId, content });
+    await newNote.save(); // Save the new note
+
+    // Push the ObjectId of the new note into the dataStructure's note array
+    dataStructure.note.push(newNote._id);
     await dataStructure.save();
 
     res.status(201).json({ message: 'Note added successfully' });
+    
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
@@ -63,15 +72,18 @@ exports.addNoteToCodingChallenge = async (req, res) => {
 // Get notes for a data structure (only those created by the logged-in user)
 exports.getNotesForDataStructure = async (req, res) => {
   const { data_structure_id } = req.params;
-  const {user_id} = req.body;
+  const { user_id } = req.query;
 
   try {
-    const dataStructure = await DataStructure.findById(data_structure_id);
+    const dataStructure = await DataStructure.findById(data_structure_id).populate('note');
     if (!dataStructure) {
       return res.status(404).json({ message: 'Data structure not found' });
     }
 
-    const userNotes = dataStructure.notes.filter(note => note.user_id.toString() === user_id);
+    const userNotes = dataStructure.note.filter(note => note.user_id.toString() === user_id);
+    if (userNotes.length === 0) {
+      return res.status(404).json({ message: 'No notes found for this user' });
+    }
     res.json(userNotes);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -101,25 +113,26 @@ exports.getNotesForCodingChallenge = async (req, res) => {
 
 // Fetch all notes created by the logged-in user
 exports.getAllUserNotes = async (req, res) => {
-    const userId = req.user.id; // Assuming user ID is attached to req.user
-  
-    try {
-      // Fetch notes from DataStructures
-      const dataStructures = await DataStructure.find({ 'notes.user_id': userId });
-      const dataStructureNotes = dataStructures.flatMap(ds => ds.notes.filter(note => note.user_id.toString() === userId));
-  
-      // Fetch notes from CodingChallenges
-      const codingChallenges = await CodingChallenge.find({ 'note.user_id': userId });
-      const codingChallengeNotes = codingChallenges.flatMap(cc => cc.note.filter(note => note.user_id.toString() === userId));
-  
-      // Combine notes from both models
-      const allNotes = [...dataStructureNotes, ...codingChallengeNotes];
-  
-      res.json(allNotes);
-    } catch (error) {
-      res.status(500).json({ message: 'Server error' });
-    }
-  };
+  const { user_id } = req.query;
+
+  try {
+
+    // Fetch notes from DataStructures
+    const dataStructures = await DataStructure.find({}).populate('note');
+    const dataStructureNotes = dataStructures.flatMap(ds => ds.note.filter(note => note.user_id.toString() === user_id.toString()));
+
+    // Fetch notes from CodingChallenges (assuming CodingChallenge schema exists)
+    const codingChallenges = await CodingChallenge.find({}).populate('note');
+    const codingChallengeNotes = codingChallenges.flatMap(cc => cc.note.filter(note => note.user_id.toString() === user_id.toString()));
+
+    // Combine notes from both models
+    const allNotes = [...dataStructureNotes, ...codingChallengeNotes];
+
+    res.json(allNotes);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
 
   // Update a note by note ID
 exports.updateNoteById = async (req, res) => {

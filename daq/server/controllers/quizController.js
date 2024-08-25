@@ -128,6 +128,23 @@ const deleteQuiz = async (req, res, next) => {
   res.status(200).json({ message: 'Quiz deleted.' });
 };
 
+//get all quiz by ds_id
+const getQuizzesByDataStructureId = async (req, res, next) => {
+  const { data_structure_id } = req.params;
+
+  let quizzes;
+  try {
+    quizzes = await Quiz.find({ data_structure_id })
+      .populate('question')
+      .populate('data_structure_id');
+  } catch (err) {
+    const error = new HttpError('Fetching quizzes failed, please try again later.', 500);
+    return next(error);
+  }
+
+  res.json({ quizzes: quizzes.map(quiz => quiz.toObject({ getters: true })) });
+};
+
 // Submit a quiz attempt
 const submitQuiz = async (req, res) => {
   const errors = validationResult(req);
@@ -393,6 +410,7 @@ module.exports = {
   getQuizById,
   updateQuiz,
   deleteQuiz,
+  getQuizzesByDataStructureId,
   submitQuiz,
   solveQuizAsync,
   getQuizWithHighestScoreUser,

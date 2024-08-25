@@ -41,6 +41,8 @@ router.put(
 
 // Delete a quiz by ID
 router.delete('/:id', quizController.deleteQuiz);
+// Get quizzes by data_structure_id
+router.get('/data-structure/:data_structure_id', quizController.getQuizzesByDataStructureId);
 //submit quiz
 router.post('/submit', submitQuizValidation, quizController.submitQuiz);
 //get all submitted or solved quizes
