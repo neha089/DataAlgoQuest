@@ -130,3 +130,41 @@ body {
     color: #954892;
     margin-top: 10px;
 }
+.data-structure-detail {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.data-structure-title {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color:#007bff; /* Set text color to blue */
+    padding: 10px; /* Add padding for better appearance */
+}
+
+.notes-container {
+    text-align: left; /* Align notes to the left */
+    margin-top: 20px; /* Add margin for spacing */
+}
+
+.note {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 10px; /* Space between notes */
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color:#007bff;
+}

@@ -12,7 +12,7 @@ const DataAlgoQuestNavbar = () => {
             </ul>
             <div className="navbar-right">
             <button className="navbar-right-button">Login</button>
-                <button className="navbar-right-button">Register</button>
+                <button className="navbar-right-button">register</button>
             </div>
         </nav>
     );

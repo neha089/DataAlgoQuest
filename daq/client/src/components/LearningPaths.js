@@ -47,6 +47,7 @@ const LearningPaths = () => {
             duration: 'Total time: 45 hours, 10 minutes',
             progress: 0 // Update this value to reflect actual user progress
         }
+
     ];
 
     return (
