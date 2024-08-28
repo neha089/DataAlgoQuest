@@ -1,0 +1,132 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1b1b1b;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #282828;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #19c4e6;
+}
+
+.navbar-nav {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav li {
+    margin-left: 20px;
+}
+
+.navbar-nav li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar-nav li a:hover {
+    color: #19c4e6;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right button {
+    background-color: #19c4e6;
+    border: none;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.navbar-right button:hover {
+    background-color: #19c4e6;
+}
+
+/* Learning Paths Styles */
+.learning-paths-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.learning-paths-title {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.progress-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Ensures only 3 cards per row */
+    gap: 20px;
+}
+
+.progress-item {
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.progress-item:hover {
+    transform: translateY(-5px);
+}
+
+.circular-progressbar {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px auto;
+}
+
+.learning-path-title {
+    font-size: 1.2em;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.learning-path-description {
+    font-size: 0.9em;
+    color: #bdbdbd;
+}
+
+.learning-path-button {
+    background-color: #19c4e6;
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.learning-path-button:hover {
+    background-color: #19c4e6;
+}
+
+.learning-path-duration {
+    font-size: 0.8em;
+    color: #954892;
+    margin-top: 10px;
+}
