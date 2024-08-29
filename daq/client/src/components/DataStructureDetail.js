@@ -5,6 +5,8 @@ import './style.css';
 import StackVisualization from './StackVisualization'; // Import the stack visualization component
 import QueueVisualization from './QueueVisualization'; // Import the queue visualization component
 import DataStructureQuiz from './DataStructureQuiz'; // Import the quiz component
+import BinaryTreeVisualization from './BinaryTreeVisualization'; // Import the quiz component
+
 
 const DataStructureDetail = () => {
     const { id } = useParams();
@@ -89,7 +91,9 @@ const DataStructureDetail = () => {
             {/* Conditionally render the stack or queue visualization based on the data structure */}
             {dataStructure.title === 'Stack' && <StackVisualization />}
             {dataStructure.title === 'Queue' && <QueueVisualization />}
-
+            
+            {dataStructure.title === 'Tree' && <BinaryTreeVisualization/>}
+            
             {/* Render the quiz if the data structure has associated questions */}
             {dataStructure.questions && (
                 <DataStructureQuiz questions={dataStructure.questions} />
