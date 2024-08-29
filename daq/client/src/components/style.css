@@ -168,3 +168,306 @@ body {
 .back-button:hover {
     background-color:#007bff;
 }
+/* Stack Visualization Styles */
+.stack-visualization {
+    margin-top: 30px;
+    text-align: center;
+    color: #00f; /* Blue text color */
+}
+
+.stack-visualization h2 {
+    color: #00f; /* Blue title color */
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.stack-container {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin: 20px auto;
+    padding: 10px;
+    width: 200px;
+    background-color: #333;
+    border: 2px solid #00f; /* Blue border */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.5); /* Blue shadow */
+    height: 300px;
+    position: relative;
+}
+
+.stack-item {
+    background-color: #007bff; /* Stack item color */
+    color: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    width: 80%;
+    text-align: center;
+    transition: transform 0.5s ease;
+}
+
+.stack-item.active {
+    background-color: #28a745; /* Active item color */
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+.stack-controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.stack-button {
+    background-color: #28a745; /* Green button color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.stack-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.cloud-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+    background-color: #000;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.5); /* Blue shadow */
+    color: #00f; /* Blue text color */
+}
+
+.cloud-icon {
+    font-size: 2rem;
+    margin-right: 10px;
+}
+
+.message-text {
+    font-size: 1.2rem;
+}
+/* Queue Visualization Styles */
+.queue-visualization {
+    margin-top: 30px;
+    text-align: center;
+    color: #00f; /* Blue text color */
+}
+
+.queue-visualization h2 {
+    color: #00f; /* Blue title color */
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.queue-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    padding: 10px;
+    width: 80%;
+    background-color: #333;
+    border: 2px solid #00f; /* Blue border */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.5); /* Blue shadow */
+    height: 100px;
+}
+
+.queue-item {
+    background-color: #007bff; /* Queue item color */
+    color: white;
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    transition: transform 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+}
+
+.queue-item.active {
+    background-color: #dc3545; /* Active item color (red to indicate dequeuing) */
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+.queue-controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.queue-button {
+    background-color: #17a2b8; /* Cyan button color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.queue-button:hover {
+    background-color: #138496; /* Darker cyan on hover */
+}
+
+.cloud-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+    background-color: #000;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.5); /* Blue shadow */
+    color: #00f; /* Blue text color */
+}
+
+.cloud-icon {
+    font-size: 2rem;
+    margin-right: 10px;
+}
+
+.message-text {
+    font-size: 1.2rem;
+}
+/* General styles */
+.data-structure-detail {
+    background-color: #111;
+    color: #00bfff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.data-structure-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.notes-container {
+    margin-bottom: 20px;
+}
+
+.note {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #00bfff;
+    color: #111;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #009acd;
+}
+
+/* Quiz styles */
+.quiz-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.quiz-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #00bfff;
+}
+
+.quiz-card {
+    background-color: #333;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.quiz-question {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quiz-option {
+    font-size: 1rem;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.quiz-option input {
+    margin-right: 10px;
+}
+
+.quiz-option.correct {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.quiz-option.incorrect {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.correct-answer {
+    margin-top: 10px;
+    color: #00ff00;
+    font-size: 0.9rem;
+}
+
+.submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00bfff;
+    color: #111;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: #009acd;
+}
+
+.quiz-result {
+    font-size: 1.2rem;
+    color: #00ff00;
+    margin-top: 20px;
+    text-align: center;
+}
