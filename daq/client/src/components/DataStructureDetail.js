@@ -6,7 +6,8 @@ import StackVisualization from './StackVisualization'; // Import the stack visua
 import QueueVisualization from './QueueVisualization'; // Import the queue visualization component
 import DataStructureQuiz from './DataStructureQuiz'; // Import the quiz component
 import BinaryTreeVisualization from './BinaryTreeVisualization'; // Import the quiz component
-
+import SinglyLinkedListVisualization from './SinglyLinkedListVisualization';
+import DoublyLinkedListVisualization from './DoublyLinkedListVisualization';
 
 const DataStructureDetail = () => {
     const { id } = useParams();
@@ -75,6 +76,67 @@ const DataStructureDetail = () => {
                 },
             ]
         },
+        {
+            id: 4,
+            title: 'Singly Linked List',
+            notes: [
+                'A singly linked list is a linear data structure consisting of nodes, where each node contains data and a reference to the next node.',
+                'Unlike arrays, linked lists do not require contiguous memory allocation, making them more flexible for dynamic memory usage.',
+                'Insertion and deletion of nodes can be done efficiently in O(1) time if done at the head or tail.',
+                'However, searching for a specific element in a singly linked list requires O(n) time as there is no direct access to nodes.',
+                'Singly linked lists are often used in applications like implementing stacks, queues, and dynamic memory management.'
+            ],
+            questions: [
+                {
+                    question: 'What is the time complexity for searching an element in a singly linked list?',
+                    options: ['O(1)', 'O(n)', 'O(log n)', 'O(n^2)'],
+                    correctAnswer: 'O(n)',
+                },
+                {
+                    question: 'Which of the following operations on a singly linked list takes O(1) time?',
+                    options: ['Inserting at the head', 'Searching for an element', 'Inserting at the middle', 'Accessing the last node'],
+                    correctAnswer: 'Inserting at the head',
+                },
+                {
+                    question: 'What does each node in a singly linked list contain?',
+                    options: ['Data and pointer to the previous node', 'Data and pointer to the next node', 'Only data', 'Pointer to both previous and next nodes'],
+                    correctAnswer: 'Data and pointer to the next node',
+                },
+                {
+                    question: 'Which of the following is a disadvantage of a singly linked list?',
+                    options: ['Requires contiguous memory allocation', 'Difficult to insert at the head', 'Cannot be traversed backwards', 'Fixed size'],
+                    correctAnswer: 'Cannot be traversed backwards',
+                },
+            ]
+        },
+        {
+            id: 5,
+            title: 'Doubly Linked List',
+            notes: [
+                'A doubly linked list is a linear data structure where each node contains data, a reference to the next node, and a reference to the previous node.',
+                'Bidirectional traversal is possible in a doubly linked list, allowing traversal both forward and backward through the list.',
+                'Insertion and deletion can be efficiently performed at both the head and the tail in O(1) time.',
+                'More memory is required compared to a singly linked list because each node stores an additional reference (to the previous node).',
+                'Doubly linked lists are used in various applications such as browser history, undo/redo functionality in software, and in-memory management.'
+            ],
+            questions: [
+                {
+                    question: 'What additional pointer does each node in a doubly linked list contain?',
+                    options: ['Pointer to the next node', 'Pointer to the previous node', 'Pointer to both the next and previous nodes', 'Only data'],
+                    correctAnswer: 'Pointer to both the next and previous nodes',
+                },
+                {
+                    question: 'What is an advantage of a doubly linked list over a singly linked list?',
+                    options: ['Less memory usage', 'Can be traversed in both directions', 'Easier to implement', 'Searching is faster'],
+                    correctAnswer: 'Can be traversed in both directions',
+                },
+                {
+                    question: 'Which operation on a doubly linked list takes O(1) time?',
+                    options: ['Searching for an element', 'Inserting at the head', 'Inserting at a specific position', 'Accessing a middle node'],
+                    correctAnswer: 'Inserting at the head',
+                },
+            ]
+        },
     ];
 
     const dataStructure = dataStructures.find(ds => ds.id === parseInt(id));
@@ -93,6 +155,9 @@ const DataStructureDetail = () => {
             {dataStructure.title === 'Queue' && <QueueVisualization />}
             
             {dataStructure.title === 'Tree' && <BinaryTreeVisualization/>}
+            {dataStructure.title === 'Singly Linked List' && <SinglyLinkedListVisualization/>}
+            {dataStructure.title === 'Doubly Linked List' && <DoublyLinkedListVisualization/>}
+
             
             {/* Render the quiz if the data structure has associated questions */}
             {dataStructure.questions && (

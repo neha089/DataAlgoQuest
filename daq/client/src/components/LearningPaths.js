@@ -28,14 +28,14 @@ const LearningPaths = () => {
         },
         {
             id: 4,
-            title: 'stack',
+            title: 'Singly Linked List',
             description: 'Your Path to Becoming a Career-Ready Web Developer!',
             duration: 'Total time: 39 hours, 30 minutes',
             progress: 0 // Update this value to reflect actual user progress
         },
         {
             id: 5,
-            title: 'queue',
+            title: 'Doubly Linked List',
             description: 'Enhance Your Skills and Build More Complex Projects!',
             duration: 'Total time: 42 hours, 15 minutes',
             progress: 0 // Update this value to reflect actual user progress

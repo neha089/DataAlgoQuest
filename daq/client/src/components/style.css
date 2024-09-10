@@ -537,3 +537,141 @@ button {
 .navigation {
     margin-top: 20px;
 }
+
+/* singly linked list */
+.linkedlist-visualization {
+    text-align: center;
+    margin: 20px;
+}
+
+.list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.list-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 0 5px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 50px;
+}
+
+.arrow {
+    margin-left: 5px;
+    font-size: 24px;
+    color: #000;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+.control-button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-button:hover {
+    background-color: #005f73;
+}
+
+.input-field {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.cloud-message {
+    margin-top: 20px;
+}
+
+.message-text {
+    font-size: 18px;
+    color: #333;
+}
+
+/* doubly linked list*/
+.doublylinkedlist-visualization {
+    text-align: center;
+    margin: 20px;
+}
+
+.list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.list-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 0 5px;
+    background-color: #f97316;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 50px;
+}
+
+.node-value {
+    font-size: 18px;
+}
+
+.arrow {
+    margin-left: 5px;
+    font-size: 24px;
+    color: #000;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+.control-button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #2d6a4f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-button:hover {
+    background-color: #1b4332;
+}
+
+.input-field {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.cloud-message {
+    margin-top: 20px;
+}
+
+.message-text {
+    font-size: 18px;
+    color: #333;
+}
