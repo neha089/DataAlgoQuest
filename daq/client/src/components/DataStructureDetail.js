@@ -7,6 +7,7 @@ import DataStructureQuiz from './DataStructureQuiz'; // Import the quiz componen
 import BinaryTreeVisualization from './BinaryTreeVisualization'; // Import the quiz component
 import SinglyLinkedListVisualization from './SinglyLinkedListVisualization';
 import DoublyLinkedListVisualization from './DoublyLinkedListVisualization';
+import CodingChallenges from './CodingChallenges';
 
 const DataStructureDetail = () => {
     const { id } = useParams();
