@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import './style.css';
@@ -32,6 +31,18 @@ const DataStructureDetail = () => {
                     options: ['Push', 'Pop', 'Enqueue', 'Dequeue'],
                     correctAnswer: 'Push',
                 },
+            ],
+            challenges: [
+                {
+                    title: 'Implement Stack using Arrays',
+                    difficulty: 'Easy',
+                    link: 'https://example.com/stack-challenge-1',
+                },
+                {
+                    title: 'Balanced Parentheses using Stack',
+                    difficulty: 'Medium',
+                    link: 'https://example.com/stack-challenge-2',
+                }
             ]
         },
         {
@@ -53,6 +64,18 @@ const DataStructureDetail = () => {
                     options: ['Dequeue', 'Push', 'Pop', 'Enqueue'],
                     correctAnswer: 'Dequeue',
                 },
+            ],
+            challenges: [
+                {
+                    title: 'Implement Queue using Arrays',
+                    difficulty: 'Easy',
+                    link: 'https://example.com/queue-challenge-1',
+                },
+                {
+                    title: 'Circular Queue Implementation',
+                    difficulty: 'Medium',
+                    link: 'https://example.com/queue-challenge-2',
+                }
             ]
         },
         {
@@ -150,7 +173,6 @@ const DataStructureDetail = () => {
                 ))}
             </div>
 
-            {/* Conditionally render the stack or queue visualization based on the data structure */}
             {dataStructure.title === 'Stack' && <StackVisualization />}
             {dataStructure.title === 'Queue' && <QueueVisualization />}
             
@@ -159,9 +181,12 @@ const DataStructureDetail = () => {
             {dataStructure.title === 'Doubly Linked List' && <DoublyLinkedListVisualization/>}
 
             
-            {/* Render the quiz if the data structure has associated questions */}
             {dataStructure.questions && (
                 <DataStructureQuiz questions={dataStructure.questions} />
+            )}
+
+            {dataStructure.challenges && (
+                <CodingChallenges challenges={dataStructure.challenges} />
             )}
 
             <a href="/learning-paths" className="back-button">Back to Learning Paths</a>
