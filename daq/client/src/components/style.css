@@ -134,19 +134,26 @@ body {
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
+    text-align: center; /* Center align text and buttons */
+}
+
+.data-structure-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
 }
 
 .data-structure-title {
     font-size: 2.5rem;
     margin-bottom: 10px;
-    color:#007bff; /* Set text color to blue */
+    color: #007bff; /* Set text color to blue */
     padding: 10px; /* Add padding for better appearance */
 }
 
 .notes-container {
     text-align: left; /* Align notes to the left */
-    margin-top: 20px; /* Add margin for spacing */
+    margin: 0 auto; /* Center the notes container */
 }
 
 .note {
@@ -155,19 +162,39 @@ body {
     margin-bottom: 10px; /* Space between notes */
 }
 
-.back-button {
+.button-container {
+    margin-top: 20px;
+}
+
+.back-button, .start-quiz-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
+    text-align: center;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.start-quiz-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.start-quiz-button:hover {
+    background-color: #45a049;
+}
+
+.back-button {
+    background-color: #007bff;
+    color: white;
 }
 
 .back-button:hover {
-    background-color:#007bff;
+    background-color: #0056b3;
 }
+
 /* Stack Visualization Styles */
 .stack-visualization {
     margin-top: 30px;
@@ -256,6 +283,8 @@ body {
 .message-text {
     font-size: 1.2rem;
 }
+
+
 /* Queue Visualization Styles */
 .queue-visualization {
     margin-top: 30px;
@@ -537,83 +566,279 @@ button {
 .navigation {
     margin-top: 20px;
 }
-.coding-challenges-container {
+
+/* singly linked list */
+.linkedlist-visualization {
+    text-align: center;
     margin: 20px;
-    color: #fff;
+}
+
+.list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.list-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 0 5px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 50px;
+}
+
+.arrow {
+    margin-left: 5px;
+    font-size: 24px;
+    color: #000;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+.control-button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-button:hover {
+    background-color: #005f73;
+}
+
+.input-field {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.cloud-message {
+    margin-top: 20px;
+}
+
+.message-text {
+    font-size: 18px;
+    color: #333;
+}
+
+/* doubly linked list*/
+.doublylinkedlist-visualization {
+    text-align: center;
+    margin: 20px;
+}
+
+.list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.list-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 0 5px;
+    background-color: #f97316;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 50px;
+}
+
+.node-value {
+    font-size: 18px;
+}
+
+.arrow {
+    margin-left: 5px;
+    font-size: 24px;
+    color: #000;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+.control-button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #2d6a4f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-button:hover {
+    background-color: #1b4332;
+}
+
+.input-field {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.cloud-message {
+    margin-top: 20px;
+}
+
+.message-text {
+    font-size: 18px;
+    color: #333;
+}
+
+/* ds main page*/
+.data-structure-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
     font-family: Arial, sans-serif;
 }
 
-.progress-tracker {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.text-center {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
     margin-bottom: 20px;
 }
 
-.progress-info p {
-    margin: 0;
-}
-
-.action-buttons button {
-    padding: 10px;
-    background-color: #ff5722;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-.coding-challenges-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.coding-challenges-table th, .coding-challenges-table td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #444;
-}
-
-.icon {
-    width: 24px;
-    height: 24px;
-}
-
-.difficulty {
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.difficulty.easy {
-    background-color: #28a745;
-}
-
-.difficulty.medium {
-    background-color: #ffc107;
-}
-
-.star-icon {
-    cursor: pointer;
-    font-size: 20px;
-}
-
-.starred {
-    color: gold;
-}
-
-.note-section {
+.tree-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
-.note-section p {
-    margin: 5px 0;
+.tree-root {
+    margin-bottom: 20px;
 }
 
-.note-buttons {
+.tree-branches {
     display: flex;
-    gap: 5px;
-}.challenges-container {
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.tree-branch-left, .tree-branch-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.tree-branch-left {
+    margin-right: 50px; /* Adjust space between branches */
+}
+
+.tree-branch-right {
+    margin-left: 50px; /* Adjust space between branches */
+}
+
+.tree-subtypes-left, .tree-subtypes-right {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adjust gap between subtypes */
+    margin-top: 20px;
+}
+
+.tree-subtypes-left {
+    margin-right: auto; /* Align to the left */
+}
+
+.tree-subtypes-right {
+    margin-left: auto; /* Align to the right */
+}
+
+.tree-sub-subtypes-left, .tree-sub-subtypes-right {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adjust gap between sub-subtypes */
+    margin-top: 20px;
+}
+
+.tree-sub-subtypes-left {
+    margin-right: auto; /* Align to the left */
+}
+
+.tree-sub-subtypes-right {
+    margin-left: auto; /* Align to the right */
+}
+
+.box-data {
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    width: 200px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.box-data:hover {
+    background-color: #45a049;
+}
+
+.box-data.active-subtype {
+    background-color: #388E3C;
+}
+
+/primitive sub type/
+.subtype-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .mt-5 {
+    margin-top: 20px;
+  }
+  
+  .subtype-page h1 {
+    font-size: 2em;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  .subtype-page p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #ffffff;
+    margin-bottom: 15px;
+  }
+  
+  .read-more-link {
+    color: #007bff; /* Adjust color as needed */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .read-more-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+.challenges-container {
     padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
@@ -775,142 +1000,4 @@ button {
     padding: 5px 10px;
     font-size: 14px;
     cursor: pointer;
-}
-
-/* singly linked list */
-.linkedlist-visualization {
-    text-align: center;
-    margin: 20px;
-}
-
-.list-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-}
-
-.list-node {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    margin: 0 5px;
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 8px;
-    font-size: 18px;
-    width: 50px;
-}
-
-.arrow {
-    margin-left: 5px;
-    font-size: 24px;
-    color: #000;
-}
-
-.controls {
-    margin-top: 20px;
-}
-
-.control-button {
-    padding: 10px 15px;
-    margin: 5px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.control-button:hover {
-    background-color: #005f73;
-}
-
-.input-field {
-    padding: 8px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 200px;
-}
-
-.cloud-message {
-    margin-top: 20px;
-}
-
-.message-text {
-    font-size: 18px;
-    color: #333;
-}
-
-/* doubly linked list*/
-.doublylinkedlist-visualization {
-    text-align: center;
-    margin: 20px;
-}
-
-.list-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-}
-
-.list-node {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    margin: 0 5px;
-    background-color: #f97316;
-    color: white;
-    border-radius: 8px;
-    font-size: 18px;
-    width: 50px;
-}
-
-.node-value {
-    font-size: 18px;
-}
-
-.arrow {
-    margin-left: 5px;
-    font-size: 24px;
-    color: #000;
-}
-
-.controls {
-    margin-top: 20px;
-}
-
-.control-button {
-    padding: 10px 15px;
-    margin: 5px;
-    background-color: #2d6a4f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.control-button:hover {
-    background-color: #1b4332;
-}
-
-.input-field {
-    padding: 8px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 200px;
-}
-
-.cloud-message {
-    margin-top: 20px;
-}
-
-.message-text {
-    font-size: 18px;
-    color: #333;
 }
