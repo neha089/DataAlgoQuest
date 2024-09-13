@@ -1,10 +1,9 @@
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import './style.css';
 import StackVisualization from './StackVisualization'; // Import the stack visualization component
 import QueueVisualization from './QueueVisualization'; // Import the queue visualization component
-import DataStructureQuiz from './DataStructureQuiz'; // Import the quiz component
 import BinaryTreeVisualization from './BinaryTreeVisualization'; // Import the quiz component
 import SinglyLinkedListVisualization from './SinglyLinkedListVisualization';
 import DoublyLinkedListVisualization from './DoublyLinkedListVisualization';
@@ -141,8 +140,9 @@ const DataStructureDetail = () => {
 
     const dataStructure = dataStructures.find(ds => ds.id === parseInt(id));
 
+
     return (
-        <div className="data-structure-detail">
+        <div className="data-structure-container">
             <h1 className="data-structure-title">{dataStructure.title}</h1>
             <div className="notes-container">
                 {dataStructure.notes.map((note, index) => (
@@ -153,20 +153,22 @@ const DataStructureDetail = () => {
             {/* Conditionally render the stack or queue visualization based on the data structure */}
             {dataStructure.title === 'Stack' && <StackVisualization />}
             {dataStructure.title === 'Queue' && <QueueVisualization />}
-            
-            {dataStructure.title === 'Tree' && <BinaryTreeVisualization/>}
-            {dataStructure.title === 'Singly Linked List' && <SinglyLinkedListVisualization/>}
-            {dataStructure.title === 'Doubly Linked List' && <DoublyLinkedListVisualization/>}
+            {dataStructure.title === 'Tree' && <BinaryTreeVisualization />}
+            {dataStructure.title === 'Singly Linked List' && <SinglyLinkedListVisualization />}
+            {dataStructure.title === 'Doubly Linked List' && <DoublyLinkedListVisualization />}
 
-            
-            {/* Render the quiz if the data structure has associated questions */}
-            {dataStructure.questions && (
-                <DataStructureQuiz questions={dataStructure.questions} />
-            )}
-
-            <a href="/learning-paths" className="back-button">Back to Learning Paths</a>
+            <div className="button-container">
+                <Link
+                    to={`/data-structure/${id}/quiz`}
+                    state={{ questions: dataStructure.questions }}
+                    className="start-quiz-button"
+                >
+                    Start Quiz
+                </Link>
+                <a href="/learning-paths" className="back-button">Back to Learning Paths</a>
+            </div>
         </div>
     );
-}
+};
 
 export default DataStructureDetail;
