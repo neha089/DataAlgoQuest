@@ -7,6 +7,14 @@ const DataStructureQuizPage = () => {
     const navigate = useNavigate();
     const { questions } = location.state; // Get the quiz questions from state
 
+    if (!questions) {
+        return (
+            <div className="quiz-page-container">
+                <h1>No Coding Challenges Available</h1>
+                <button onClick={() => navigate(-1)} className="back-button">Back</button>
+            </div>
+        );
+    }
     // Function to handle back navigation
     const handleBack = () => {
         navigate(-1); // Go back to the previous page

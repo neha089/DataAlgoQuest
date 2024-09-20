@@ -1,8 +1,7 @@
 const { validationResult } = require('express-validator');
+const CodingChallenge = require('../models/CodingChallenge');
 
 // Import your models
-const User = require('../models/User'); // Adjust the path if necessary
-const CodingChallenge = require('../models/codingChallenge'); // Adjust the path if necessary
 const ChallengeAttempt = require('../models/challengeAttempt'); // Adjust the path if necessary
 const Progress = require('../models/progress'); // Adjust the path if necessary
 
@@ -109,7 +108,7 @@ exports.getChallengeByTitle = async (req, res) => {
 // Get all coding challenges
 exports.getChallenge = async (req, res) => {
   try {
-    const challenges = await CodingChallenge.find();
+    const challenges = await CodingChallenge.find().populate('note');
     if (challenges.length === 0) {
       return res.status(404).json({ message: 'No challenges found' });
     }
@@ -146,8 +145,8 @@ exports.getChallenge_with_ds = async (req, res) => {
       return res.status(400).json({ message: 'Invalid data structure ID format' });
     }
 
-    const challenges = await CodingChallenge.find({ data_structure_id });
-
+    const challenges = await CodingChallenge.find({ data_structure_id }).populate({ path: 'note', select: 'content' });
+      console.log(challenges); 
     if (challenges.length === 0) {
       return res.status(404).json({ message: 'No challenges found for this data structure' });
     }
@@ -268,4 +267,5 @@ exports.submitChallenge = async (req, res) => {
       return res.status(500).json({ message: 'Internal Server Error' });
     }
   };
+  
   
