@@ -166,7 +166,7 @@ body {
     margin-top: 20px;
 }
 
-.back-button, .start-quiz-button {
+.back-button, .start-button {
     display: inline-block;
     padding: 10px 20px;
     text-align: center;
@@ -177,12 +177,12 @@ body {
     cursor: pointer;
 }
 
-.start-quiz-button {
+.start-button {
     background-color: #4CAF50;
     color: white;
 }
 
-.start-quiz-button:hover {
+.start-button:hover {
     background-color: #45a049;
 }
 
@@ -801,7 +801,7 @@ button {
     background-color: #388E3C;
 }
 
-/primitive sub type/
+/*primitive sub type*/
 .subtype-page {
     font-family: Arial, sans-serif;
     padding: 20px;
@@ -838,6 +838,10 @@ button {
   .read-more-link:hover {
     text-decoration: underline; /* Add underline on hover */
   }
+
+
+/* coding challenges*/
+
 .challenges-container {
     padding: 40px 20px;
     max-width: 1200px;
@@ -1000,4 +1004,121 @@ button {
     padding: 5px 10px;
     font-size: 14px;
     cursor: pointer;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dim background */
+    z-index: 100;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 101;
+    width: 600px;
+    height: 300px;
+    max-width: 90%;
+}
+
+.modal h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.modal textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.save-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Button to trigger the modal */
+.edit-btn {
+    padding: 8px 15px;
+    background-color: #008cba;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-btn:hover {
+    background-color: #007bb5;
+}
+/* Ensure modal size is proper */
+.modal-dialog {
+    width: 100%; /* or use a specific width like 400px */
+    max-width: 500px; /* Limit the width of the modal */
+    margin: auto; /* Center the modal */
+}
+
+/* Make textarea responsive inside modal */
+
+textarea {
+    width: 100%; /* Ensure it takes up full width of the modal */
+    height: 150px; /* Adjust height as needed */
+    box-sizing: border-box; /* Include padding and borders in width */
+    resize: none; /* Prevent manual resizing if not needed */
+}
+
+/* Add padding around modal to ensure it looks neat */
+.modal-content {
+    padding: 15px; /* Add padding inside modal */
+}
+
+/* Coding Challenges Page Styles */
+.coding-challenges-page {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.coding-challenges-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #FF9800; /* Orange color to differentiate */
+}
+
+
+.icon {
+    width: 30px;
+    height: auto;
 }

@@ -56,7 +56,29 @@ app.use('/api/quizzes', quizRoutes);
 app.use('/api/challenges', challengeRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/users/profile', profileRoutes);
+const Note = require('./models/Note'); // Adjust path as needed
 
+app.patch('/api/notes/:noteId', async (req, res) => {
+    const { noteId } = req.params;
+    const { content } = req.body;
+
+    try {
+        const updatedNote = await Note.findByIdAndUpdate(
+            noteId,
+            { content },
+            { new: true }
+        );
+
+        if (!updatedNote) {
+            return res.status(404).json({ error: 'Note not found' });
+        }
+
+        res.json(updatedNote);
+    } catch (error) {
+        console.error('Error updating note:', error);
+        res.status(500).json({ error: 'Failed to update note' });
+    }
+});
 // app.use((req, res, next) => {
 //   const error = new HttpError("Could not find this route.", 404);
 //   throw error;

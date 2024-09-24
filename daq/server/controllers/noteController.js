@@ -1,8 +1,8 @@
 const DataStructure = require('../models/DataStructure');
-const CodingChallenge = require('../models/CodingChallenge');
 const { validationResult } = require('express-validator');
 const mongoose=require('mongoose');
 const Note = require('../models/Note');
+const CodingChallenge = require('../models/CodingChallenge');
 
 // Add a note to a data structure
 exports.addNoteToDataStructure = async (req, res) => {
@@ -39,7 +39,6 @@ exports.addNoteToDataStructure = async (req, res) => {
   }
 };
 
-// Add a note to a coding challenge
 exports.addNoteToCodingChallenge = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -48,12 +47,13 @@ exports.addNoteToCodingChallenge = async (req, res) => {
 
   try {
     const { coding_challenge_id } = req.params;
-    const { user_id,content } = req.body;
+    const { user_id, content } = req.body;
 
     const codingChallenge = await CodingChallenge.findById(coding_challenge_id);
     if (!codingChallenge) {
       return res.status(404).json({ message: 'Coding challenge not found' });
     }
+
     const newNote = new Note({
       user_id,
       content,
@@ -65,9 +65,11 @@ exports.addNoteToCodingChallenge = async (req, res) => {
 
     res.status(201).json({ message: 'Note added successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('Server error:', error); // Log error for debugging
+    res.status(500).json({ message: 'Server error', error: error.message }); // Provide detailed error message
   }
 };
+
 
 // Get notes for a data structure (only those created by the logged-in user)
 exports.getNotesForDataStructure = async (req, res) => {
