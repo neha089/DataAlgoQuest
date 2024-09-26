@@ -38,3 +38,53 @@ tr:hover {
     text-align: center;
     font-weight: bold;
 }
+.admin-feedback {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.star {
+    color: #FFD700;
+    margin-right: 3px;
+}
+
+.analytics {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.chart-container {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}

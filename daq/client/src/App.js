@@ -23,7 +23,7 @@ const AppContent = () => {
             <Routes>
             <Route path="/learning-paths" element={<LearningPaths />} />
                 <Route path="/data-structure/:name" element={<DataStructureDetail />} />
-                <Route path="/admin" element={<Admin/>}></Route>
+                <Route path="/admin/*" element={<Admin />} />
                 <Route path="/data-structure/:data_structure_id/quiz" element={<DataStructureQuiz />} />
                 <Route path="/data-structure/:data_structure_id/challenges" element={<CodingChallenges />} />
                 <Route path="/dsmainpage" element={<DataStructurePage/>} /> 

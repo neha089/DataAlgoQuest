@@ -45,3 +45,14 @@ h2 {
     text-align: center;
     color: #333;
 }
+
+
+.btn-edit, .btn-delete, .btn-save {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons'; // Solid star
+import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'; // Empty star
 import './AdminFeedback.css';
 
 const AdminFeedback = () => {
@@ -8,9 +11,9 @@ const AdminFeedback = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/feedback')
+        axios.get('http://localhost:5000/api/feedback/')
             .then(response => {
-                setFeedbacks(response.data);  // Assuming feedback data comes as an array
+                setFeedbacks(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -19,6 +22,23 @@ const AdminFeedback = () => {
                 setLoading(false);
             });
     }, []);
+
+    const renderStars = (rating) => {
+        const totalStars = 5;
+        const stars = [];
+
+        for (let i = 1; i <= totalStars; i++) {
+            stars.push(
+                <FontAwesomeIcon
+                    key={i}
+                    icon={i <= rating ? faStar : faStarEmpty}
+                    className="star"
+                />
+            );
+        }
+
+        return <span>{stars}</span>;
+    };
 
     return (
         <div className="admin-feedback">
@@ -40,7 +60,7 @@ const AdminFeedback = () => {
                         {feedbacks.map(feedback => (
                             <tr key={feedback._id}>
                                 <td>{feedback.user_id}</td>
-                                <td>{feedback.feedback}</td>
+                                <td>{renderStars(feedback.feedback)}</td> {/* Display stars */}
                                 <td>{feedback.bug || 'No bug reported'}</td>
                                 <td>{new Date(feedback.created_at).toLocaleDateString()}</td>
                             </tr>

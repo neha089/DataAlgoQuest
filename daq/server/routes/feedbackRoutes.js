@@ -1,7 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
 const feedbackController = require('../controllers/feedbackController');
-const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
 // Validation rules
@@ -13,6 +12,6 @@ const feedbackValidation = [
 
 // Routes
 router.post('/', feedbackValidation, feedbackController.submitFeedback);
-router.get('/', authMiddleware, feedbackController.getFeedbacks); // Admin only
+router.get('/', feedbackController.getFeedbacks); 
 
 module.exports = router;

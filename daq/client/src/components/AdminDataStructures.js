@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './AdminDatastructure.css';
 
 const AdminDataStructures = () => {
     const [dataStructures, setDataStructures] = useState([]);
@@ -20,7 +21,7 @@ const AdminDataStructures = () => {
         e.preventDefault();
         if (editingId) {
             // Update the existing data structure
-            axios.put(`http://localhost:5000/api/datastructure/${editingId}`, { name, description })
+            axios.put(`http://localhost:5000/api/datastructures/${editingId}`, { name, description })
                 .then(response => {
                     const updatedDataStructures = dataStructures.map(ds =>
                         ds._id === editingId ? response.data : ds
@@ -34,7 +35,7 @@ const AdminDataStructures = () => {
                 });
         } else {
             // Add a new data structure
-            axios.post('http://localhost:5000/api/datastructure', { name, description })
+            axios.post('http://localhost:5000/api/datastructures', { name, description })
                 .then(response => {
                     setDataStructures([...dataStructures, response.data]);
                     resetForm();
@@ -48,7 +49,7 @@ const AdminDataStructures = () => {
 
     // Handle delete data structure
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:5000/api/datastructure/${id}`)
+        axios.delete(`http://localhost:5000/api/datastructures/${id}`)
             .then(() => {
                 setDataStructures(dataStructures.filter(ds => ds._id !== id));
             })

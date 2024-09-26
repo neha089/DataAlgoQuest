@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom'; 
 import AdminNavbar from './AdminNavbar';
 import AdminUsers from './AdminUsers';
 import AdminFeedback from './AdminFeedback';
@@ -14,12 +14,15 @@ const Admin = () => {
             <AdminNavbar />
             <div className="admin-content">
                 <Routes>
-                    <Route path="users" element={<AdminUsers />} /> {/* Route fixed */}
+                    <Route path="users" element={<AdminUsers />} />
                     <Route path="feedback" element={<AdminFeedback />} />
                     <Route path="datastructures" element={<AdminDataStructures />} />
                     <Route path="quizzes" element={<AdminQuizzes />} />
+                    <Route path="quizzes/question/:quizId" element={<AdminQuestions />} /> {/* Updated path */}
                     <Route path="challenges" element={<AdminChallenges />} />
-                    <Route path="questions" element={<AdminQuestions />} />
+
+                    {/* Redirect from /admin to /admin/users */}
+                    <Route path="/" element={<Navigate to="users" />} /> {/* Default redirect */}
                 </Routes>
             </div>
         </div>

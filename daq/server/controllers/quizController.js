@@ -5,6 +5,23 @@ const QuizAttempt=require('../models/quizAttempt');
 const Progress=require('../models/progress');
 const mongoose = require('mongoose');
 
+const getQuestionByQuizId=async (req, res, next) => {
+  const { quizId } = req.params;
+
+try {
+    // Fetch the quiz by quizId and populate its associated questions
+    const quiz = await Quiz.findById(quizId).populate('question');
+
+    if (!quiz) {
+        return res.status(404).json({ error: 'Quiz not found' });
+    }
+
+    // Return the questions associated with the quiz
+    res.json(quiz.question);
+} catch (error) {
+    res.status(500).json({ error: 'Failed to fetch questions for the quiz' });
+}
+}
 // Create a new quiz
 const createQuiz = async (req, res, next) => {
   const errors = validationResult(req);
@@ -106,26 +123,48 @@ const deleteQuiz = async (req, res, next) => {
 
   let quiz;
   try {
-    quiz = await Quiz.findById(quizId).populate('question').populate('data_structure_id');
+    // Fetch the quiz along with its associated questions
+    quiz = await Quiz.findById(quizId).populate('question');
+    if (!quiz) {
+      return next(new HttpError('Quiz not found.', 404));
+    }
   } catch (err) {
-    const error = new HttpError('Something went wrong, could not delete quiz.', 500);
-    return next(error);
-  }
-
-  if (!quiz) {
-    const error = new HttpError('Quiz not found.', 404);
-    return next(error);
+    console.error("Error fetching quiz: ", err.message || err);
+    return next(new HttpError('Something went wrong, could not retrieve the quiz.', 500));
   }
 
   try {
-    await quiz.remove();
+    // Delete each question associated with the quiz
+    const questions = quiz.question;
+    for (const question of questions) {
+      const deletedQuestion = await Question.findByIdAndDelete(question._id);
+      if (!deletedQuestion) {
+        console.error(`Error: Question with ID ${question._id} not found.`);
+        return next(new HttpError('Failed to delete some questions.', 500));
+      }
+      console.log(`Question with ID ${question._id} deleted.`);
+    }
   } catch (err) {
-    const error = new HttpError('Something went wrong, could not delete quiz.', 500);
-    return next(error);
+    console.error("Error deleting questions: ", err.message || err);
+    return next(new HttpError('Something went wrong, could not delete related questions.', 500));
   }
 
-  res.status(200).json({ message: 'Quiz deleted.' });
+  try {
+    // Delete the quiz itself
+    const deletedQuiz = await Quiz.findByIdAndDelete(quizId);
+    if (!deletedQuiz) {
+      console.error(`Error: Quiz with ID ${quizId} not found.`);
+      return next(new HttpError('Quiz not found when trying to delete.', 404));
+    }
+    res.status(200).json({ message: 'Quiz and related questions deleted successfully.' });
+  } catch (err) {
+    console.error("Error deleting quiz: ", err.message || err);
+    return next(new HttpError('Something went wrong, could not delete quiz.', 500));
+  }
 };
+
+
+
 
 //get all quiz by ds_id
 const getQuizzesByDataStructureId = async (req, res, next) => {
@@ -414,4 +453,5 @@ module.exports = {
   solveQuizAsync,
   getQuizWithHighestScoreUser,
   getQuizWithLowestScoreUser,
+  getQuestionByQuizId
 };
