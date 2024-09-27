@@ -1,0 +1,63 @@
+.homepage-container {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgb(20, 19, 19);
+    text-align: center;
+    position: relative; /* Make sure the container is positioned relative */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center; /* Center the buttons vertically */
+    gap: 150px; /* Space between circular buttons */
+    margin-bottom: 20px; /* Space below the circular buttons */
+}
+
+.circular-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 170px; /* Adjust the size as needed */
+    height: 170px; /* Adjust the size as needed */
+    border-radius: 50%;
+    background-color: #19c4e6; /* Semi-transparent blue */
+    color: rgb(18, 17, 17);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+    font-size: 1.2em; /* Adjust font size for the text */
+    position: relative; /* For box-shadow effect */
+    border: 2px solid transparent; /* Default border */
+}
+
+/* Hover effect for circular buttons */
+.circular-button:hover {
+    background-color: #207890; /* Darker blue on hover */
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Box shadow effect */
+    border: 2px solid #0b3d6b; /* Border on hover */
+}
+
+.start-learning {
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    background-color: #19c4e6;; /* Button background color */
+    color: rgb(17, 16, 16);
+    transition: background-color 0.3s ease, transform 0.3s;
+    position: relative; /* For positioning */
+}
+
+/* Hover effect for start-learning button */
+.start-learning:hover {
+    background-color: #4ac3d6; /* Darker color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}

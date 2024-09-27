@@ -19,12 +19,12 @@ exports.submitFeedback = async (req, res) => {
   }
 };
 
-// View all feedback related to the logged-in user (Admin only)
 exports.getFeedbacks = async (req, res) => {
   try {
-    const feedbacks = await Feedback.find({ user_id: req.user.id });
+    const feedbacks = await Feedback.find();
     res.json(feedbacks);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

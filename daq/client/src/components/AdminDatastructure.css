@@ -1,0 +1,77 @@
+.data-structures {
+    padding: 20px;
+}
+
+.data-structures ul {
+    list-style: none;
+    padding: 0;
+}
+
+.data-structures li {
+    padding: 20px;
+    background-color: #ffffff;
+    margin-bottom: 15px;
+    border-left: 5px solid #28a745; /* Green border for data structures */
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    justify-content: space-between; /* Aligns buttons on the right */
+    align-items: center; /* Vertically centers content */
+}
+
+.data-structures li:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+input, textarea {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px; /* Added padding for better input appearance */
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Rounded corners */
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 15px; /* Padding for buttons */
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+    font-weight: bold; /* Bold text for better visibility */
+}
+
+/* Add styles for add/update button */
+button[type="submit"] {
+    background-color: #28a745; /* Green for add/update */
+    color: white;
+}
+
+/* Add styles for delete button */
+button[type="button"] {
+    background-color: #dc3545; /* Red for delete */
+    color: white;
+    margin-left: 10px; /* Space between buttons */
+}
+
+/* Hover effects for buttons */
+button[type="submit"]:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+button[type="button"]:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+h2 {
+    text-align: center;
+    color: #28a745;
+}

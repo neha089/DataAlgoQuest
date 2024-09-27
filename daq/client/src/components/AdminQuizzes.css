@@ -1,0 +1,25 @@
+.admin-quizzes {
+    padding: 20px;
+}
+
+.admin-quizzes h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.quiz-form {
+    margin-bottom: 20px;
+}
+
+.quiz-form input {
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}

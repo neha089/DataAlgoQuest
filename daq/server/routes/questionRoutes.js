@@ -2,19 +2,16 @@ const express = require('express');
 const router = express.Router();
 const questionController = require('../controllers/questionController');
 
-// Route to insert a new question
+// Add a question and associate it with a quiz
 router.post('/questions', questionController.insertQuestion);
 
-// Route to get all questions
-router.get('/questions', questionController.getQuestions);
-
-// Route to get a single question by ID
-router.get('/questions/:id', questionController.getQuestionById);
-
-// Route to update a question by ID
+// Update a question
 router.put('/questions/:id', questionController.updateQuestion);
 
-// Route to delete a question by ID
+// Delete a question and remove it from the quiz
 router.delete('/questions/:id', questionController.deleteQuestion);
+
+// Get questions for a specific quiz
+router.get('/quizzes/question/:quizId', questionController.getQuestionsForQuiz);
 
 module.exports = router;

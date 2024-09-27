@@ -96,6 +96,7 @@ const updateUser = async (req, res, next) => {
     return next(new HttpError('User not found.', 404));
   }
 
+  // If password is provided, hash it before saving
   if (password) {
     let hashedPassword;
     try {
@@ -106,15 +107,20 @@ const updateUser = async (req, res, next) => {
     user.password = hashedPassword;
   }
 
+  // Update user's name and email
   user.name = name;
   user.email = email;
 
+  // Manually set updated_at to the current date
+  user.updated_at = Date.now(); 
+
   try {
-    await user.save();
+    await user.save(); // Save the updated user document
   } catch (err) {
     return next(new HttpError('Something went wrong, could not update user.', 500));
   }
 
+  // Respond with the updated user data
   res.json({ user: user.toObject({ getters: true }) });
 };
 

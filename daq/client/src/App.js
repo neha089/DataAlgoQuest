@@ -1,6 +1,5 @@
-// App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import DataAlgoQuestNavbar from './components/DataAlgoQuestNavbar';
 import LearningPaths from './components/LearningPaths';
 import DataStructureDetail from './components/DataStructureDetail';
@@ -12,15 +11,19 @@ import Character from './components/Character';
 import Boolean from './components/Boolean';
 import CodingChallenges from './components/CodingChallenges';
 import Admin from './components/Admin';
+import HomePage from './components/HomePage'; // Import the new HomePage
 
-const App = () => {
+const AppContent = () => {
+    const location = useLocation();
+
     return (
-        <Router>
-            <DataAlgoQuestNavbar /> {/* Include the navbar */}
+        <div>
+            {!location.pathname.startsWith('/admin') && <DataAlgoQuestNavbar />}
             <Routes>
+                <Route path="/" element={<HomePage />} /> {/* Add the new homepage */}
                 <Route path="/learning-paths" element={<LearningPaths />} />
                 <Route path="/data-structure/:name" element={<DataStructureDetail />} />
-                <Route path="/admin" element={<Admin/>}></Route>
+                <Route path="/admin/*" element={<Admin />} />
                 <Route path="/data-structure/:data_structure_id/quiz" element={<DataStructureQuiz />} />
                 <Route path="/data-structure/:data_structure_id/challenges" element={<CodingChallenges />} />
                 <Route path="/dsmainpage" element={<DataStructurePage/>} /> 
@@ -28,12 +31,17 @@ const App = () => {
                 <Route path="/Float" element={<Float/>}/>
                 <Route path="/Character" element={<Character/>}/>
                 <Route path="/Boolean" element={<Boolean/>}/>
-
-                {/* Add other routes as needed */}
             </Routes>
+        </div>
+    );
+};
+
+const App = () => {
+    return (
+        <Router>
+            <AppContent />
         </Router>
     );
-}
+};
 
 export default App;
-

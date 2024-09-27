@@ -51,5 +51,6 @@ router.get('/solved/:userId',quizController.solveQuizAsync);
 router.get('/highestScore/:quizId',quizController.getQuizWithHighestScoreUser);
 //get quiz with lowest score user
 router.get('/lowestScore/:quizId',quizController.getQuizWithLowestScoreUser);
+router.get('/question/:quizId',quizController.getQuestionByQuizId);
 
 module.exports = router;

@@ -1,0 +1,57 @@
+.challenge-list {
+    padding: 20px;
+}
+
+.challenge-list ul {
+    padding: 0;
+}
+
+.challenge-list li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: #ffffff;
+    margin-bottom: 15px;
+    border-left: 5px solid #007bff;
+}
+
+.challenge-list li:hover {
+    border-left: 5px solid #0056b3;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.challenge-info {
+    font-size: 0.9em;
+    color: #555;
+}
+
+button {
+    align-self: flex-end;
+    margin: 10px 0;
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+input, textarea, select {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
