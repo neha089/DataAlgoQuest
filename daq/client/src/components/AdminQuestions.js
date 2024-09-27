@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom'; // Updated: useNavigate instead of useHistory
+import { useParams, useNavigate } from 'react-router-dom';
 
 const AdminQuestions = () => {
     const { quizId } = useParams(); // Get quizId from the route params
@@ -8,7 +8,7 @@ const AdminQuestions = () => {
     const [newQuestion, setNewQuestion] = useState({ question: '', options: ['', '', '', ''], correct_answer: '' });
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
-    const navigate = useNavigate(); // Updated: useNavigate hook
+    const navigate = useNavigate();
 
     // Fetch all questions for the selected quiz
     useEffect(() => {
@@ -24,29 +24,33 @@ const AdminQuestions = () => {
     }, [quizId]);
 
     // Handle add or update question
-    const handleQuestionSubmit = (e) => {
-        e.preventDefault();
-        const questionData = { ...newQuestion, quizId };
+    // Handle add or update question
+const handleQuestionSubmit = (e) => {
+    e.preventDefault();
+    const questionData = { ...newQuestion, quizId }; // Include quizId in the question data
 
-        if (newQuestion._id) {
-            axios.put(`http://localhost:5000/api/question/questions/${newQuestion._id}`, questionData)
-                .then(response => {
-                    const updatedQuestions = questions.map(q => q._id === newQuestion._id ? response.data : q);
-                    setQuestions(updatedQuestions);
-                    resetQuestionForm();
-                    setSuccessMessage('Question updated successfully!');
-                })
-                .catch(error => setError('Failed to update question.'));
-        } else {
-            axios.post('http://localhost:5000/api/question/questions', questionData)
-                .then(response => {
-                    setQuestions([...questions, response.data]);
-                    resetQuestionForm();
-                    setSuccessMessage('Question added successfully!');
-                })
-                .catch(error => setError('Failed to add question.'));
-        }
-    };
+    if (newQuestion._id) {
+        // If updating a question
+        axios.put(`http://localhost:5000/api/question/questions/${newQuestion._id}`, questionData)
+            .then(response => {
+                const updatedQuestions = questions.map(q => q._id === newQuestion._id ? response.data.data : q);
+                setQuestions(updatedQuestions);
+                resetQuestionForm();
+                setSuccessMessage('Question updated successfully!');
+            })
+            .catch(error => setError('Failed to update question.'));
+    } else {
+        // If adding a new question
+        axios.post('http://localhost:5000/api/question/questions', questionData)
+            .then(response => {
+                setQuestions([...questions, response.data.data]);
+                resetQuestionForm();
+                setSuccessMessage('Question added successfully!');
+            })
+            .catch(error => setError('Failed to add question.'));
+    }
+};
+
 
     // Handle delete question with confirmation
     const handleDeleteQuestion = (id) => {
@@ -74,7 +78,7 @@ const AdminQuestions = () => {
 
     // Return to quiz list
     const goBackToQuizzes = () => {
-        navigate('/admin/quizzes'); // Updated: use navigate to go back to the quiz list
+        navigate('/admin/quizzes');
     };
 
     return (

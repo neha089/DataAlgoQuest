@@ -11,17 +11,17 @@ import Character from './components/Character';
 import Boolean from './components/Boolean';
 import CodingChallenges from './components/CodingChallenges';
 import Admin from './components/Admin';
+import HomePage from './components/HomePage'; // Import the new HomePage
 
-// New component to handle location logic
 const AppContent = () => {
     const location = useLocation();
 
     return (
         <div>
-            {/* Conditionally render the navbar if the current path does not start with "/admin" */}
             {!location.pathname.startsWith('/admin') && <DataAlgoQuestNavbar />}
             <Routes>
-            <Route path="/learning-paths" element={<LearningPaths />} />
+                <Route path="/" element={<HomePage />} /> {/* Add the new homepage */}
+                <Route path="/learning-paths" element={<LearningPaths />} />
                 <Route path="/data-structure/:name" element={<DataStructureDetail />} />
                 <Route path="/admin/*" element={<Admin />} />
                 <Route path="/data-structure/:data_structure_id/quiz" element={<DataStructureQuiz />} />
@@ -31,8 +31,6 @@ const AppContent = () => {
                 <Route path="/Float" element={<Float/>}/>
                 <Route path="/Character" element={<Character/>}/>
                 <Route path="/Boolean" element={<Boolean/>}/>
-
-                {/* Add other routes as needed */}
             </Routes>
         </div>
     );
@@ -41,7 +39,7 @@ const AppContent = () => {
 const App = () => {
     return (
         <Router>
-            <AppContent /> {/* Use AppContent component inside the Router */}
+            <AppContent />
         </Router>
     );
 };
