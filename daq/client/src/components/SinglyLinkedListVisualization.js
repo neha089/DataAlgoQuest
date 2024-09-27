@@ -1,204 +1,227 @@
 import React, { useState } from 'react';
-import './style.css'; // Custom CSS for styling
+import SingleLinkedList from './LinkedList';
 
-// Define the Node structure
-class ListNode {
-    constructor(value) {
-        this.value = value;
-        this.next = null;
+const SingleLinkedListComponent = () => {
+  const [singleLinkedList, setSingleLinkedList] = useState(null);
+  const [operationStep, setOperationStep] = useState(-1);
+  const [insertOperationStep, setInsertOperationStep] = useState(-1);
+  const [updateOperationStep, setUpdateOperationStep] = useState(-1);
+  const [deleteOperationStep, setDeleteOperationStep] = useState(-1);
+
+  const operations = {
+    Creation: 0,
+    Insertion: 1,
+    Updation: 2,
+    Deletion: 3,
+    Reverse: 4,
+    SourceCode: 5,
+  };
+
+  const insertOperations = {
+    InsertAtFirst: 0,
+    InsertAtEnd: 1,
+    InsertAtPosition: 2,
+  };
+
+  const updateOperations = {
+    UpdateAtFirst: 0,
+    UpdateAtEnd: 1,
+    UpdateAtPosition: 2,
+  };
+
+  const deleteOperations = {
+    DeleteAtFirst: 0,
+    DeleteAtEnd: 1,
+    DeleteAtPosition: 2,
+  };
+
+  const createLinkedList = () => {
+    console.log("Creating Linked List");
+    setOperationStep(operations.Creation);
+    const newLinkedList = new SingleLinkedList();
+    const value = prompt('Enter value to create the head node:');
+    
+    if (value) {
+        newLinkedList.insertAtHead(value);
+        setSingleLinkedList(newLinkedList);
+        console.log("Linked List created with head value:", value);
+    } else {
+        alert('Please enter a valid value to initialize the linked list.');
     }
-}
+};
 
-const SinglyLinkedList = () => {
-    const [head, setHead] = useState(null);
-    const [size, setSize] = useState(0); 
-    const [inputValue, setInputValue] = useState(''); 
-    const [specificValue, setSpecificValue] = useState(''); 
-    const [message, setMessage] = useState(''); 
 
-    // Helper to traverse the list and render nodes
-    const renderList = () => {
-        const nodes = [];
-        let current = head;
-        while (current !== null) {
-            nodes.push(current);
-            current = current.next;
-        }
-        return nodes;
-    };
+const handleInsertion = (method) => {
+    let value = prompt('Enter value:');
+    let position;
 
-    // Add node at the beginning
-    const addNodeAtBeginning = () => {
-        const newNode = new ListNode(inputValue);
-        newNode.next = head;
-        setHead(newNode);
-        setSize(size + 1);
-        setMessage(`Added ${inputValue} at the beginning`);
-    };
-
-    // Add node at the end
-    const addNodeAtEnd = () => {
-        const newNode = new ListNode(inputValue);
-        if (head === null) {
-            setHead(newNode);
-        } else {
-            let current = head;
-            while (current.next !== null) {
-                current = current.next;
-            }
-            current.next = newNode;
-        }
-        setSize(size + 1);
-        setMessage(`Added ${inputValue} at the end`);
-    };
-
-    // Add node before a specific value
-    const addNodeBeforeValue = () => {
-        const newNode = new ListNode(inputValue);
-        if (head === null) {
-            setMessage('List is empty');
+    if (method === 'InsertAtPosition') {
+        position = prompt('Enter position:');
+        if (position < 0) {
+            alert('Position cannot be negative');
             return;
         }
-        if (head.value === specificValue) {
-            addNodeAtBeginning();
-            return;
-        }
-        let current = head;
-        let prev = null;
-        while (current !== null && current.value !== specificValue) {
-            prev = current;
-            current = current.next;
-        }
-        if (current !== null) {
-            newNode.next = current;
-            prev.next = newNode;
-            setSize(size + 1);
-            setMessage(`Added ${inputValue} before ${specificValue}`);
-        } else {
-            setMessage(`${specificValue} not found in the list`);
-        }
-    };
+    }
 
-    // Add node after a specific value
-    const addNodeAfterValue = () => {
-        const newNode = new ListNode(inputValue);
-        let current = head;
-        while (current !== null && current.value !== specificValue) {
-            current = current.next;
+    if (value) {
+        switch (method) {
+            case 'InsertAtFirst':
+                singleLinkedList.insertAtHead(value);
+                break;
+            case 'InsertAtEnd':
+                singleLinkedList.insertAtTail(value);
+                break;
+            case 'InsertAtPosition':
+                singleLinkedList.insertAtPosition(value, parseInt(position));
+                break;
+            default:
+                break;
         }
-        if (current !== null) {
-            newNode.next = current.next;
-            current.next = newNode;
-            setSize(size + 1);
-            setMessage(`Added ${inputValue} after ${specificValue}`);
-        } else {
-            setMessage(`${specificValue} not found in the list`);
-        }
-    };
+        setSingleLinkedList({ ...singleLinkedList }); // Trigger re-render
+    } else {
+        alert('Please enter valid values.');
+    }
+};
 
-    // Remove node from the beginning
-    const removeNodeFromBeginning = () => {
-        if (head === null) {
-            setMessage('List is empty, cannot remove.');
-            return;
-        }
-        const removedValue = head.value;
-        setHead(head.next);
-        setSize(size - 1);
-        setMessage(`Removed ${removedValue} from the beginning`);
-    };
 
-    // Remove node from the end
-    const removeNodeFromEnd = () => {
-        if (head === null) {
-            setMessage('List is empty, cannot remove.');
-            return;
-        }
-        if (head.next === null) {
-            const removedValue = head.value;
-            setHead(null);
-            setSize(size - 1);
-            setMessage(`Removed ${removedValue} from the end`);
-            return;
-        }
-        let current = head;
-        let prev = null;
-        while (current.next !== null) {
-            prev = current;
-            current = current.next;
-        }
-        prev.next = null;
-        setSize(size - 1);
-        setMessage(`Removed ${current.value} from the end`);
-    };
+  const handleUpdate = (method) => {
+    const value = prompt('Enter new value:');
+    let position;
 
-    // Remove node with a specific value
-    const removeNodeWithValue = () => {
-        if (head === null) {
-            setMessage('List is empty');
-            return;
-        }
-        if (head.value === specificValue) {
-            removeNodeFromBeginning();
-            return;
-        }
-        let current = head;
-        let prev = null;
-        while (current !== null && current.value !== specificValue) {
-            prev = current;
-            current = current.next;
-        }
-        if (current !== null) {
-            prev.next = current.next;
-            setSize(size - 1);
-            setMessage(`Removed node with value ${specificValue}`);
-        } else {
-            setMessage(`${specificValue} not found in the list`);
-        }
-    };
+    if (method === 'UpdateAtPosition') {
+      position = prompt('Enter position:');
+    }
 
-    return (
-        <div className="linkedlist-visualization">
-            <h2>Singly Linked List</h2>
-            <div className="list-container">
-                {renderList().map((node, index) => (
-                    <div key={index} className="list-node">
-                        {node.value}
-                        {node.next && <div className="arrow">→</div>}
-                    </div>
-                ))}
-            </div>
+    if (value && (method !== 'UpdateAtPosition' || position)) {
+      switch (method) {
+        case 'UpdateAtFirst':
+          singleLinkedList.updateAtHead(value);
+          break;
+        case 'UpdateAtEnd':
+          singleLinkedList.updateAtTail(value);
+          break;
+        case 'UpdateAtPosition':
+          singleLinkedList.updateAtPosition(value, parseInt(position));
+          break;
+        default:
+          break;
+      }
+      setSingleLinkedList({ ...singleLinkedList });
+    } else {
+      alert('Please enter valid values.');
+    }
+  };
 
-            <div className="controls">
-                <input 
-                    type="text" 
-                    placeholder="Enter node value" 
-                    value={inputValue} 
-                    onChange={(e) => setInputValue(e.target.value)} 
-                    className="input-field"
-                />
-                <input 
-                    type="text" 
-                    placeholder="Specific value (optional)" 
-                    value={specificValue} 
-                    onChange={(e) => setSpecificValue(e.target.value)} 
-                    className="input-field"
-                />
-                
-                <button onClick={addNodeAtBeginning} className="control-button">Add at Beginning</button>
-                <button onClick={addNodeAtEnd} className="control-button">Add at End</button>
-                <button onClick={addNodeBeforeValue} className="control-button">Add Before Specific Value</button>
-                <button onClick={addNodeAfterValue} className="control-button">Add After Specific Value</button>
-                <button onClick={removeNodeFromBeginning} className="control-button">Remove from Beginning</button>
-                <button onClick={removeNodeFromEnd} className="control-button">Remove from End</button>
-                <button onClick={removeNodeWithValue} className="control-button">Remove Specific Value</button>
-            </div>
+  const handleDeletion = (method) => {
+    if (singleLinkedList.head) {
+      switch (method) {
+        case 'DeleteAtFirst':
+          singleLinkedList.deleteAtHead();
+          break;
+        case 'DeleteAtEnd':
+          singleLinkedList.deleteAtTail();
+          break;
+        case 'DeleteAtPosition':
+          const position = prompt('Enter position:');
+          if (position) {
+            singleLinkedList.deleteAtPosition(parseInt(position));
+          } else {
+            alert('Please enter a valid position.');
+          }
+          break;
+        default:
+          break;
+      }
+      setSingleLinkedList({ ...singleLinkedList });
+    } else {
+      alert('Cannot delete. The linked list is empty.');
+    }
+  };
 
-            <div className="cloud-message">
-                <span className="message-text">{message}</span>
-            </div>
+  const reverseLinkedList = () => {
+    if (singleLinkedList.head) {
+      singleLinkedList.reverse();
+      setSingleLinkedList({ ...singleLinkedList });
+    } else {
+      alert('Cannot reverse. The linked list is empty.');
+    }
+  };
+
+  const viewSourceCode = () => {
+    setOperationStep(operations.SourceCode);
+    // Implement the logic to show source code
+  };
+
+  return (
+    <div className="linked-list-operations">
+      <h5>Single Linked List Operations</h5>
+      <div className="horizontal-scroll">
+        <div
+          className={operationStep === operations.Creation ? 'box box-active' : 'box'}
+          onClick={createLinkedList}
+        >
+          <p>Create Linked List</p>
         </div>
-    );
-}
+        {singleLinkedList && (
+          <>
+            <div
+              className={operationStep === operations.Insertion ? 'box box-active' : 'box'}
+              onClick={() => setOperationStep(operations.Insertion)}
+            >
+              <p>Insertion</p>
+            </div>
+            <div
+              className={operationStep === operations.Updation ? 'box box-active' : 'box'}
+              onClick={() => setOperationStep(operations.Updation)}
+            >
+              <p>Updation</p>
+            </div>
+            <div
+              className={operationStep === operations.Deletion ? 'box box-active' : 'box'}
+              onClick={() => setOperationStep(operations.Deletion)}
+            >
+              <p>Deletion</p>
+            </div>
+            <div
+              className={operationStep === operations.Reverse ? 'box box-active' : 'box'}
+              onClick={reverseLinkedList}
+            >
+              <p>Reverse Linked List</p>
+            </div>
+            <div
+              className={operationStep === operations.SourceCode ? 'box box-active' : 'box'}
+              onClick={viewSourceCode}
+            >
+              <p>View Code</p>
+            </div>
+          </>
+        )}
+      </div>
 
-export default SinglyLinkedList;
+      {/* Insertion Operations */}
+      {operationStep === operations.Insertion && (
+        <div>
+          <h5>Single Linked List Insertion</h5>
+          <div className="horizontal-scroll">
+            {Object.keys(insertOperations).map((key) => (
+              <div
+                key={key}
+                className={insertOperationStep === insertOperations[key] ? 'box box-active' : 'box'}
+                onClick={() => {
+                  setInsertOperationStep(insertOperations[key]);
+                  handleInsertion(key);
+                }}
+              >
+                <p>{key.replace(/([A-Z])/g, ' $1').trim()}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Other operations (Updation, Deletion, etc.) would follow a similar pattern */}
+    </div>
+  );
+};
+
+export default SingleLinkedListComponent;
