@@ -1,0 +1,76 @@
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f0f0f0, #ffffff);
+    font-family: 'Roboto', sans-serif;
+}
+
+.admin-navbar {
+    background-color: #007bff;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.admin-navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.admin-navbar a:hover {
+    text-decoration: underline;
+}
+
+.admin-content {
+    padding: 40px;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+li:hover {
+    transform: translateY(-3px);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}

@@ -1,0 +1,64 @@
+.admin-questions {
+    padding: 20px;
+}
+
+.admin-questions h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.question-list {
+    list-style: none;
+    padding: 0;
+}
+
+.question-list li {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.options-list {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+}
+
+.question-actions {
+    margin-top: 10px;
+}
+
+.btn-edit, .btn-delete, .btn-primary, .btn-secondary {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.btn-delete {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.btn-primary {
+    background-color: #2196F3; /* Blue */
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #e7e7e7; /* Light gray */
+    color: black;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
