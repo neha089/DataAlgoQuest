@@ -30,7 +30,7 @@ const LearningPaths = () => {
         },
         {
             id: 4,
-            title: 'Singly Linked List',
+            title: 'Linked List',
             description: 'Your Path to Becoming a Career-Ready Web Developer!',
             duration: 'Total time: 39 hours, 30 minutes',
             progress: 0 // Update this value to reflect actual user progress
