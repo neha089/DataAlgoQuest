@@ -5,10 +5,12 @@ import './BinaryTreeVisualization.css';
 const BinaryTreeVisualization = () => {
   const [data, setData] = useState({ value: null, children: [] });
   const [curId, setCurId] = useState(1);
-  const nodeRadius = 20; // Reduced node size
-  const LinkStroke = 1;
+  const width = Math.max(100, window.innerWidth - 50);
+  const height = Math.max(100, window.innerHeight - 100);
+  const nodeRadius = 20;
+  const LinkStroke = 4;
   const animationDuration = 750;
-  const padding = 15; // Adjusted padding
+  const padding = 22;
 
   useEffect(() => {
     const svg = d3.select('.Canvas').append('svg').append('g');
@@ -20,30 +22,20 @@ const BinaryTreeVisualization = () => {
   const freezeButtons = () => {
     document.getElementById('InsertButton').disabled = true;
     document.getElementById('DeleteButton').disabled = true;
-    document.getElementById('ConstructButton').disabled = true;
   };
 
   const unfreezeButtons = () => {
     document.getElementById('InsertButton').disabled = false;
     document.getElementById('DeleteButton').disabled = false;
-    document.getElementById('ConstructButton').disabled = false;
   };
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  const updateCanvasSize = () => {
-    const width = Math.max(100, window.innerWidth - 50);
-    const height = Math.max(100, window.innerHeight - 200);
-    d3.select('.Canvas > svg')
-      .attr('width', width)
-      .attr('height', height);
-  };
-
   const update = (oldData, newData, parentValue, childValue) => {
-    const treemap = d3.tree().size([window.innerHeight - 200, window.innerWidth - 50]);
-    const oldTree = treemap(d3.hierarchy(oldData, (d) => d.children));
+    const treemap = d3.tree().size([width, height]);
+    const oldTree = treemap(d3.hierarchy(data, (d) => d.children));
     const newTree = treemap(d3.hierarchy(newData, (d) => d.children));
 
     const oldTreeArray = oldTree.descendants();
@@ -70,7 +62,7 @@ const BinaryTreeVisualization = () => {
     d3.select('.Canvas > svg g').remove();
     d3.select('.Canvas > svg').append('g');
 
-    const allLinks = [];
+    let allLinks = [];
     for (let i = 0; i < newTreeArray.length; i++) {
       for (let j = 0; j < 2; j++) {
         if (newTreeArray[i].data.value !== null && newTreeArray[i].children[j].data.value !== null) {
@@ -82,24 +74,32 @@ const BinaryTreeVisualization = () => {
       }
     }
 
-    allLinks.forEach(link => {
-      d3.select('.Canvas > svg g')
+    for (let i = 0; i < 2; i++) {
+      const lineId = i === 0 ? 'Under' : '';
+
+      const links = d3
+        .select('.Canvas > svg g')
+        .selectAll('g.link')
+        .data(allLinks)
+        .enter()
+        .append('g')
         .append('line')
+        .attr('id', (d) => `${lineId}link_Source_${d.parent.data.nodeId}_Dest_${d.child.data.nodeId}`)
         .attr('stroke-width', LinkStroke)
-        .attr('stroke', 'white') // Change link color to white
-        .attr('x1', link.parent.oldX)
-        .attr('y1', link.parent.oldY)
-        .attr('x2', link.child.oldX)
-        .attr('y2', link.child.oldY)
+        .attr('stroke', 'white')
+        .attr('x1', (d) => d.parent.oldX)
+        .attr('y1', (d) => d.parent.oldY)
+        .attr('x2', (d) => d.child.oldX)
+        .attr('y2', (d) => d.child.oldY);
+
+      links
         .transition()
         .duration(animationDuration)
-        .attr('x1', link.parent.x)
-        .attr('y1', link.parent.y - 1500) // Adjusted to shorten link height
-        .attr('x2', link.child.x)
-        .attr('y2', link.child.y - 1500); // Adjusted to shorten link height
-    });
-    
-    
+        .attr('x1', (d) => d.parent.x)
+        .attr('y1', (d) => d.parent.y)
+        .attr('x2', (d) => d.child.x)
+        .attr('y2', (d) => d.child.y);
+    }
 
     const nodes = d3
       .select('.Canvas > svg g')
@@ -113,11 +113,10 @@ const BinaryTreeVisualization = () => {
     nodes
       .append('circle')
       .attr('id', (d) => `circle${d.data.nodeId}`)
-      .attr('r', nodeRadius) // Reduced radius
+      .attr('r', nodeRadius)
       .attr('cx', (d) => d.oldX)
       .attr('cy', (d) => d.oldY)
-      .attr('value', (d) => d.data.value)
-      .attr('fill', (d) => (d.data.value != null ? 'lightblue' : 'transparent'));
+      .attr('value', (d) => d.data.value);
 
     nodes
       .append('text')
@@ -125,7 +124,7 @@ const BinaryTreeVisualization = () => {
       .attr('dy', (d) => d.oldY)
       .attr('text-anchor', 'middle')
       .attr('alignment-baseline', 'middle')
-      .attr('font-size', '12px') // Reduced font size
+      .attr('font-size', '20px')
       .attr('font-weight', 'bold')
       .text((d) => d.data.value);
 
@@ -138,7 +137,6 @@ const BinaryTreeVisualization = () => {
       });
 
     setData(newData);
-    updateCanvasSize();
   };
 
   const addNode = async () => {
@@ -205,86 +203,20 @@ const BinaryTreeVisualization = () => {
     unfreezeButtons();
   };
 
-  const deleteNode = async () => {
-    let val = document.getElementById('DeleteNodeField').value;
-    if (val === '') return;
-    if (isNaN(val)) {
-      alert('Only integer values are allowed');
-      return;
-    }
-    val = parseInt(val);
-    document.getElementById('DeleteNodeField').value = '';
-    freezeButtons();
-
-    let oldData = JSON.parse(JSON.stringify(data));
-    let newData = JSON.parse(JSON.stringify(data));
-
-    const deleteNodeRecursive = (node, value) => {
-      if (node.value === null) return null;
-      if (node.value === value) {
-        if (node.children[0] === null && node.children[1] === null) {
-          return { value: null, children: [] }; // If the node is a leaf, set its value to null
-        }
-
-        // Find in-order successor (smallest value in the right subtree)
-        let successor = node.children[1];
-        while (successor && successor.children[0]) {
-          successor = successor.children[0];
-        }
-
-        // Replace node value with the successor value
-        node.value = successor.value;
-        node.children[1] = deleteNodeRecursive(node.children[1], successor.value);
-        return node;
-      }
-
-      node.children[0] = deleteNodeRecursive(node.children[0], value);
-      node.children[1] = deleteNodeRecursive(node.children[1], value);
-      return node;
-    };
-
-    const result = deleteNodeRecursive(newData, val);
-    if (result) {
-      newData = result;
-      update(oldData, newData, -1, -1);
-    } else {
-      alert('Node not found');
-      update(oldData, oldData, -1, -1);
-    }
-
-    unfreezeButtons();
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', updateCanvasSize);
-    updateCanvasSize();
-    return () => {
-      window.removeEventListener('resize', updateCanvasSize);
-    };
-  }, []);
-
   return (
     <div>
+      <div className="Canvas"></div>
       <div className="ControlPanel">
-        <input
-          type="text"
-          id="InsertNodeField"
-          className="text-field"
-          placeholder="Insert Node"
-        />
-        <input
-          type="text"
-          id="DeleteNodeField"
-          className="text-field"
-          placeholder="Delete Node"
-        />
-        <button id="InsertButton" onClick={addNode}>Insert Node</button>
-        <button id="DeleteButton" onClick={deleteNode}>Delete Node</button>
-        <button id="ConstructButton" onClick={updateCanvasSize}>Construct Tree</button>
+        <input id="InsertNodeField" type="number" placeholder="Enter node value" />
+        <button id="InsertButton" onClick={addNode}>
+          Insert
+        </button>
+        <input id="DeleteNodeField" type="number" placeholder="Enter value to delete" />
+        <button id="DeleteButton">Delete</button>
       </div>
-      <div className="Canvas" />
     </div>
   );
 };
 
 export default BinaryTreeVisualization;
+ 

@@ -1,21 +1,36 @@
+.Canvas svg {
+  width: 100%;
+  height: 100vh;
+}
 
-.node {
-    cursor: pointer;
+.highlightedNode circle {
+  stroke: #ff5722;
+  stroke-width: 5px;
+}
+
+.LinkAnimation {
+  stroke: #ff5722 !important;
 }
 
 .node circle {
-    transition: fill 0.3s;
+  fill: lightblue;
 }
 
-.node:hover circle {
-    fill: orange;
+.node text {
+  fill: black;
 }
 
-.link {
-    stroke: #ccc;
-    stroke-width: 2px;
+.null-node circle {
+  fill: lightgray;
 }
 
-.link:hover {
-    stroke: red;
+.ControlPanel {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.ControlPanel input,
+.ControlPanel button {
+  margin: 5px;
 }
