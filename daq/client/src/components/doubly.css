@@ -1,0 +1,108 @@
+.linked-list-operations {
+    margin: 20px; /* Provide consistent margin around the main container */
+  }
+  
+  
+  .box {
+    background-color: #171414; /* Maintain your color */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 15px; /* Ensure padding is consistent */
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .box-active {
+    background-color: #606162; /* Active state color */
+  }
+  
+  .visualization1 {
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Align items in the center */
+}
+
+.node-container1 {
+    display: flex; /* Make node container a flex container */
+    align-items: center; /* Center the contents vertically */
+    margin: 10px; /* Add margin to separate nodes */
+}
+
+.data-section {
+    padding: 10px; /* Add padding to the data section */
+    border: 1px solid #000; /* Optional: add border for visibility */
+    border-radius: 5px; /* Optional: rounded corners */
+}
+
+.link-section {
+    margin: 0 3px; /* Space between data and arrows */
+    font-weight: bold; /* Highlight the link text */
+}
+
+.arrow2  {
+    display: flex; /* Flexbox to align arrows */
+    justify-content: center; /* Center the arrow */
+    margin: 0 4px; /* Add margin for spacing around arrows */
+    align-items: center; /* Center the arrow image */
+    height: 20px; /* Set height for arrows */
+}
+.arrow3  {
+    display: flex; /* Flexbox to align arrows */
+    justify-content: center; /* Center the arrow */
+    align-items: center; /* Center the arrow image */
+    margin: 0 0px;
+    height: 20px; /* Set height for arrows */
+}
+
+.arrow2 img {
+    height: 40px; /* Set a consistent height for arrow images */
+    width: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s; /* Smooth transition for rotation */
+}
+.arrow3 img {
+    height: 40px; /* Set a consistent height for arrow images */
+    width: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s; /* Smooth transition for rotation */
+    margin: 0;
+}
+
+/* Add hover effects for arrows if needed */
+.arrow2 img:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.horizontal-scroll {
+    display: flex; /* Horizontal scrolling layout */
+    overflow-x: auto; /* Allow horizontal scrolling */
+}
+
+  
+  .code-container {
+    margin-top: 20px; /* Space above the code container */
+    padding: 10px; /* Padding for the code container */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .code-header {
+    display: flex;
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center;
+    margin-bottom: 10px; /* Space below the header */
+  }
+  
+  .code-section {
+    margin-top: 10px; /* Space between code blocks */
+  }
+  
+  /* Optional: Media queries for responsiveness */
+  @media (max-width: 768px) {
+    .horizontal-scroll {
+      flex-direction: column; /* Stack boxes vertically on small screens */
+    }
+  
+    .node-container1 {
+      flex-direction: column; /* Stack nodes vertically */
+      align-items: flex-start; /* Align items to the start */
+    }
+  }
+  

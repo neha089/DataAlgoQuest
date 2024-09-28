@@ -186,38 +186,35 @@ class DoubleLinkedList {
         return {
             title: 'Double Linked List',
             codes: [
-                {
-                    description: 'Node Class of double linked list',
-                    code: `
-                    class Node {
-                        constructor(data) {
-                            this.data = data;
-                            this.next = null;
-                            this.prev = null;
-                        }
-                    }`
-                },
-                {
+            {
+                description: 'Node Class of double linked list',
+                code:`class Node {
+                constructor(data) {
+                this.data = data;
+                this.next = null;
+                this.prev = null;
+                }
+            }`
+            },
+            {
                     description: 'Convert an array into double linked list',
-                    code: `
-                    createDoubleLinkedList(arr) {
-                        arr.forEach((item, index) => {
-                            const newNode = new Node(item);
-                            if (index === 0) {
-                                this.head = newNode;
-                                this.tail = newNode;
-                            } else {
-                                newNode.prev = this.tail;
-                                this.tail.next = newNode;
-                                this.tail = newNode;
-                            }
-                        });
-                    }`
-                },
+                    code: `createDoubleLinkedList(arr) {
+                    arr.forEach((item, index) => {
+                        const newNode = new Node(item);
+                        if (index === 0) {
+                            this.head = newNode;
+                            this.tail = newNode;
+                        } else {
+                            newNode.prev = this.tail;
+                            this.tail.next = newNode;
+                            this.tail = newNode;
+                        }
+                    });
+            }`
+            },
                 {
                     description: 'Insert Node at the first of the double linked list',
-                    code: `
-                    insertNodeAtFirst(element) {
+                    code: `insertNodeAtFirst(element) {
                         const newNode = new Node(element);
                         if (this.head) {
                             newNode.next = this.head;
@@ -231,8 +228,7 @@ class DoubleLinkedList {
                 },
                 {
                     description: 'Insert Node at the last of the double linked list',
-                    code: `
-                    insertNodeAtEnd(element) {
+                    code: `insertNodeAtEnd(element) {
                         const newNode = new Node(element);
                         if (!this.tail) {
                             this.head = newNode;
@@ -246,8 +242,7 @@ class DoubleLinkedList {
                 },
                 {
                     description: 'Insert Node at the specific position of the double linked list',
-                    code: `
-                    insertNodeAtPosition(element, position) {
+                    code: `insertNodeAtPosition(element, position) {
                         const newNode = new Node(element);
                         if (position === 0) {
                             this.insertNodeAtFirst(element);
@@ -271,8 +266,7 @@ class DoubleLinkedList {
                 },
                 {
                     description: 'Delete node at the first of the double linked list',
-                    code: `
-                    deleteAtFirst() {
+                    code: `deleteAtFirst() {
                         if (this.head) {
                             this.head = this.head.next;
                             if (this.head) {
@@ -285,8 +279,7 @@ class DoubleLinkedList {
                 },
                 {
                     description: 'Delete node at the end of the double linked list',
-                    code: `
-                    deleteAtEnd() {
+                    code: `deleteAtEnd() {
                         if (this.tail) {
                             if (this.tail.prev) {
                                 this.tail = this.tail.prev;
@@ -300,8 +293,7 @@ class DoubleLinkedList {
                 },
                 {
                     description: 'Delete node at the specific position of the double linked list',
-                    code: `
-                    deleteAtPosition(position) {
+                    code: `deleteAtPosition(position) {
                         if (position === 0) {
                             this.deleteAtFirst();
                         } else {

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import DoubleLinkedList from './DoublyLinkedList';
-import image from '../assets/icons/link-arrow.jpg'; // Arrow for the links
-import "./singly.css";
-
+import image from '../assets/icons/link-arrow.png'; // Arrow for the links
+import "./doubly.css";
+import linkImage from '../assets/icons/double-link.png';
 const DoubleLinkedListComponent = () => {
   const [doubleLinkedList, setDoubleLinkedList] = useState(null);
   const [operationStep, setOperationStep] = useState(-1);
   const [insertOperationStep, setInsertOperationStep] = useState(-1);
-
+  const [showCodeContainer, setShowCodeContainer] = useState(false);
+  const [currentCode, setCurrentCode] = useState(null);
+  const [copiedStates, setCopiedStates] = useState([]); 
   const operations = {
     Creation: 0,
     Insertion: 1,
@@ -151,13 +153,19 @@ const DoubleLinkedListComponent = () => {
     setDoubleLinkedList(linkedListCopy); // Update the state with the modified instance
   };
   
-  // const SourceCode = () => {
-  //   if (doubleLinkedList) {
-  //     doubleLinkedList.SourceCode(); // Call SourceCode method from the DoubleLinkedList class
-  //   } else {
-  //     alert('Please create a linked list first!');
-  //   }
-  // };
+  const handleViewCode = () => {
+    if (doubleLinkedList) {
+      const sourceCode = doubleLinkedList.sourceCode();
+      setCurrentCode(sourceCode);
+      setShowCodeContainer(true);
+    } else {
+      alert('Please create a linked list first!');
+    }
+  };
+
+  const closeCodeContainer = () => {
+    setShowCodeContainer(false);
+  };
   
   const visualizeList = (node) => {  
     const nodes = [];
@@ -173,59 +181,72 @@ const DoubleLinkedListComponent = () => {
     traverse(node);
     
     return (
-      <div className="visualization">
-        {/* Add Null at the beginning */}
-        <div className="node-container">
+      <div className="visualization1">
+        {/* Add Null at the beginning with an arrow */}
+        <div className="node-container1">
           <div className="data-section">
             <p className="m-0">Null</p>
           </div>
-          <div className="arrow">
+          <div className="arrow2">
             <img src={image} className="rotate" alt="left-arrow" style={{ transform: 'rotate(180deg)' }}/>
           </div>
         </div>
-
+  
         {/* Iterate over nodes */}
         {nodes.map((node, index) => (
-          <div className="node-container" key={node.data}>
-            {/* Left Arrow for Previous Link */}
-            <div className="arrow">
-              {index !== 0 && ( // If not the first node, show left arrow
-                <img src={image} className="rotate" alt="left-arrow" />
-              )}
-            </div>
-  
+          <div className="node-container1" key={node.data}>
             {/* Data Section */}
             <div className="data-section">
               <p className="m-0">{node.data}</p>
             </div>
-            
-            {/* Link Section */}
+  
+            {/* Link Section for current node */}
             <div className="link-section">
               <p className="m-0">Link</p>
             </div>
-            
+  
             {/* Right Arrow for Next Link */}
-            <div className="arrow">
-              {node.next ? (
-                <img src={image} className="rotate" alt="right-arrow" style={{ transform: 'rotate(180deg)' }}/>
+            <div className="arrow3">
+              {index !== nodes.length - 1 ? ( // Show right arrow only if it's not the last node
+                <img src={linkImage} alt="link-arrow" />
               ) : (
-                <img src={image} className="rotate" alt="right-arrow"  />
+                // Do not show an arrow for the last node
+                <></>
               )}
             </div>
           </div>
         ))}
-
+  
         {/* Add Null at the end */}
-        <div className="node-container">
+        <div className="node-container1">
+          <div className="arrow2">
+            <img src={image} className="rotate" alt="right-arrow" />
+          </div>
           <div className="data-section">
             <p className="m-0">Null</p>
           </div>
         </div>
       </div>
     );
+  };
+  
+
+const copyToClipboard = (code, index) => {
+  navigator.clipboard.writeText(code).then(() => {
+    const newCopiedStates = [...copiedStates];
+    newCopiedStates[index] = true; // Set the state for the specific index to true
+    setCopiedStates(newCopiedStates);
+
+    setTimeout(() => {
+      const resetCopiedStates = [...copiedStates];
+      resetCopiedStates[index] = false; // Reset the state after 2 seconds
+      setCopiedStates(resetCopiedStates);
+    }, 2000);
+  }).catch(err => {
+    console.error('Error copying text: ', err);
+  });
 };
 
-  
   
   return (
     <div className="linked-list-operations">
@@ -263,14 +284,12 @@ const DoubleLinkedListComponent = () => {
             >
               <p>Reverse Linked List</p>
             </div>
-            {/* <div
-              className={operations.SourceCode === operationStep 
-                ? 'box box-active p-lg-2 p-1 px-lg-3 px-2 tab me-lg-4 me-3 mb-2'
-                : 'box p-lg-2 p-1 px-lg-3 px-2 tab me-lg-4 me-3 mb-2'}
-              onClick={SourceCode}
+            <div
+              className={operationStep === operations.SourceCode ? 'box box-active' : 'box'}
+              onClick={handleViewCode}
             >
-              <p className="m-0">View Code</p>
-            </div> */}
+           <p>View Code</p>
+           </div>
           </>
         )}
       </div>
@@ -340,12 +359,39 @@ const DoubleLinkedListComponent = () => {
 
       {/* Visualize the Linked List */}
       <h5>Linked List Visualization:</h5>
-      <div className="visualization">
+      <div className="visualization1">
         <div>
           {doubleLinkedList && visualizeList(doubleLinkedList.head)}
         </div>
       </div>
-
+      <div>
+        { showCodeContainer && (
+      <div className={`code-container ${showCodeContainer ? 'visible' : ''}`}>
+        <div className="code-header">
+          <h5>{currentCode?.title}</h5>
+          <button onClick={closeCodeContainer}>Close</button>
+        </div>
+        <div className="code-content">
+          {currentCode?.codes.map((codeBlock, index) => (
+            <div key={index} className="code-section">
+              <h5>{codeBlock.description}</h5>
+              <div style={{ position: 'relative' }}>
+                <pre>
+                  <code>{codeBlock.code}</code>
+                </pre>
+                <button 
+                  onClick={() => copyToClipboard(codeBlock.code, index)} 
+                  style={{ position: 'absolute', top: '10px', right: '10px', cursor: 'pointer' }}
+                >
+                  {copiedStates[index] ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+        )}
+        </div>
     </div>
   );
 };

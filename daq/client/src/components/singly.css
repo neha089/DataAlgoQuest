@@ -29,15 +29,20 @@
     margin-right: 10px;
   }
   
-  .arrow {
-    width: 75px; /* Set a fixed width for arrows */
+  .arrow2 {
+    width: 20px; /* Adjust this value as needed */
     height: auto; /* Maintain aspect ratio */
-    margin: 0px; /* Space between arrows and nodes */
+    margin-left: 10px; /* Add space between the node and the arrow */
   }
-  
-  .arrow img {
-    width: 60px; /* Adjust the width of the arrow image */
+  .arrow1{
+    width: 50px; /* Adjust this value as needed */
     height: auto; /* Maintain aspect ratio */
+    margin-left: 10px; /* Add space between the node and the arrow */
+  }
+  .arrow2 img {
+    width: 40px; /* Adjust the width of the arrow image */
+    height: auto; /* Maintain aspect ratio */
+    margin-left: 0px; 
   }
   
   
@@ -105,9 +110,6 @@
     margin: 20px 0;
   }
   
-  .arrow p {
-    margin: 0; /* Remove margin for proper alignment */
-  }
   
   .rotate {
     display: inline-block; /* Allow transformation effects */
@@ -125,6 +127,88 @@
   }
   
 
+  .code-container {
+    position: fixed;
+    top: 0;
+    width: 70%;
+    height: 100%;
+    background-color: #f8f9fa;
+    border-left: 1px solid #ccc;
+    transition: right 0.5s ease;
+    box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+  }
+  
+  .code-container.visible {
+    right: 0;
+  }
+  
+  .code-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .code-header h5 {
+    margin: 0;
+  }
+  
+  .code-header button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .code-header button:hover {
+    background-color: #c82333;
+  }
+  
+  .code-content {
+    padding: 15px;
+  }
+  
+  .code-section {
+    margin-bottom: 20px;
+  }
+  
+  .code-section h5 {
+    margin-bottom: 10px;
+    color: #151616;
+    text-align: left;
+  }
   
 
+  pre {
+    background-color: #151616;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 10px; /* Space between description and code */
+    flex-basis: 40%; /* Set a fixed width for the code */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+  }
   
+  pre {
+    background-color: #151616;
+    padding: 10px;  /* Padding inside the pre element */
+    border-radius: 5px;
+    overflow-x: auto;  /* Allow horizontal scrolling if needed */
+    white-space:pre;  /* Preserve whitespace and line breaks */
+    text-align:left;  /* Align text to the left */
+    font-family: monospace;  /* Use a monospace font for code */
+}
+
+.visualization1 {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center items vertically */
+  margin-top: 20px;
+}
+.node-container1 {
+  display: flex;
+  align-items: center;
+  margin: 0px; /* Add margin to space nodes */
+}
