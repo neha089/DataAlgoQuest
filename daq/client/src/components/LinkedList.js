@@ -1,3 +1,5 @@
+import image from '../assets/icons/link-arrow.jpg';
+
 class Node {
     constructor(data) {
         this.data = data;
