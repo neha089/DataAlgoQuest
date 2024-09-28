@@ -171,19 +171,7 @@ const dataStructures = [
      'Random access: Random access is not possible in a linked list due to its dynamic memory allocation',
         ]
     },
-    // {
-    //     title: 'Doubly Linked List',
-    //     notes: [
-    //         'A doubly linked list is a linear data structure where each node contains data, a reference to the next node, and a reference to the previous node.',
-    //         'Bidirectional traversal is possible in a doubly linked list, allowing traversal both forward and backward through the list.',
-    //         'Insertion and deletion can be efficiently performed at both the head and the tail in O(1) time.',
-    //         'More memory is required compared to a singly linked list because each node stores an additional reference (to the previous node).',
-    //         'Doubly linked lists are used in various applications such as browser history, undo/redo functionality in software, and in-memory management.',
-    //         'They facilitate easier implementation of complex operations like sorting and reversing the list.',
-    //         'Doubly linked lists provide greater flexibility for certain operations compared to singly linked lists.',
-    //         'Mastering doubly linked lists is important for understanding concepts like skip lists and self-balancing trees.'
-    //     ],
-    // }
+   
 ];
 
 

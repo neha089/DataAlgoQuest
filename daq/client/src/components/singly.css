@@ -1,0 +1,130 @@
+.linked-list-operations {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .visualization {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center items vertically */
+    margin-top: 20px;
+  }
+  
+  .node-container {
+    display: flex;
+    align-items: center;
+    margin: 0px; /* Add margin to space nodes */
+  }
+  
+  .data-section {
+    flex: 1; /* Allow this section to grow */
+    text-align: center; /* Center text */
+    padding: auto;
+  }
+  
+  .link-section {
+    flex: 0 0 auto; /* Prevent this section from growing */
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .arrow {
+    width: 75px; /* Set a fixed width for arrows */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0px; /* Space between arrows and nodes */
+  }
+  
+  .arrow img {
+    width: 60px; /* Adjust the width of the arrow image */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  
+  .link-indicator {
+    flex-basis: calc(100% / var(--node-count)); /* Match size with the node */
+    padding: 10px; /* Same padding as node */
+    border: 1px solid #f9f9f9;
+    border-radius: 5px;
+    margin: 0; /* Add margin for spacing */
+    font-size: calc(300% / var(--node-count)); /* Dynamic font size based on viewport width */
+    background-color: rgb(72, 64, 51); /* Light background for visibility */
+    display: flex; /* Center content in the link indicator */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+  }
+  
+  .node {
+    flex-basis: calc(100% / var(--node-count)); /* Divide width based on node count */
+    padding: 10px; /* Set padding for the node */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px; /* Add margin to space nodes */
+    font-size: calc(300% / var(--node-count)); /* Dynamic font size based on viewport width */
+    display: flex; /* Center content in the node */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+  }
+  
+  .horizontal-scroll {
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    white-space: nowrap; /* Prevent wrapping of child elements */
+    display: flex; /* Align children in a row */
+    justify-content: center; /* Center children horizontally */
+    margin-bottom: 20px; /* Space between sections */
+  }
+  
+  .box {
+    padding: 15px;
+    border: 2px solid gray;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .box-active {
+    border-color: blue;
+  }
+  
+  .node-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .node-link {
+    display: inline-block; /* Ensure the arrow is inline */
+    margin-left: 5px; /* Space between node and arrow */
+  }
+  
+  .node-link img {
+    margin-top: 10px;
+  }
+  
+  .list-structure {
+    margin: 20px 0;
+  }
+  
+  .arrow p {
+    margin: 0; /* Remove margin for proper alignment */
+  }
+  
+  .rotate {
+    display: inline-block; /* Allow transformation effects */
+    transition: transform 0.3s ease; /* Smooth transition for rotation */
+  }
+  
+  .rotate:hover {
+    transform: rotate(180deg); /* Rotate 180 degrees on hover */
+  }
+  
+  .visualization .node-container:first-of-type .arrow {
+    margin: 0; /* Remove all margins from the first arrow */
+    padding: 0; /* Remove padding if present */
+    width: 0px; /* Reduce arrow size if needed */
+  }
+  
+
+  
+
+  
