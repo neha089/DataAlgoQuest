@@ -35,18 +35,11 @@ const LinkedListComponent = () => {
         >
           <p className="m-0">Double Linked List</p>
         </div>
-        <div
-          className={step === 2 ? 'box box-active p-lg-2 p-1 px-lg-3 px-2 tab me-lg-4 me-3 mb-2' : 'box p-lg-2 p-1 px-lg-3 px-2 tab me-lg-4 me-3 mb-2'}
-          onClick={() => selectionOfType(2)}
-        >
-          <p className="m-0">Circular Linked List</p>
-        </div>
       </div>
 
       <div className="mt-3">
         {step === 0 && <SinglyLinkedListVisualization />}
         {step === 1 && <DoublyLinkedListVisualization />}
-        {/* {step === 2 && <CircularLinkedList />} */}
       </div>
     </div>
   );
