@@ -1,65 +1,21 @@
-.binary-tree-visualization {
-    text-align: center;
-    margin: 20px;
-}
 
-.input-container {
-    margin: 20px;
-}
-
-input {
-    padding: 10px;
-    width: 150px;
-    font-size: 16px;
-}
-
-button {
-    padding: 10px;
-    margin-left: 10px;
-    font-size: 16px;
+.node {
     cursor: pointer;
 }
 
-.tree-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+.node circle {
+    transition: fill 0.3s;
 }
 
-.node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
-    position: relative;
+.node:hover circle {
+    fill: orange;
 }
 
-.node-value {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: bold;
+.link {
+    stroke: #ccc;
+    stroke-width: 2px;
 }
 
-.children {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.children > .node {
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.message {
-    margin-top: 20px;
-    font-size: 16px;
-    color: #333;
-}
-
-.navigation {
-    margin-top: 20px;
+.link:hover {
+    stroke: red;
 }

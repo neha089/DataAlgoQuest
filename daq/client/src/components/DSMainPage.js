@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Updated import
 import { Helper } from './helper';
-import './style.css';
+import './dsmain.css';
 
 const dataStructure = {
   definition:

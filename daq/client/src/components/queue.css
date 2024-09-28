@@ -1,0 +1,116 @@
+.queue-visualization {
+    background-color: #2c3e50;
+    padding: 40px 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.queue-buttons {
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #ecf0f1;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Queue Container Wrapper */
+.queue-container-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-end; /* Align items to the bottom */
+    width: 100%; /* Full width for the queue container */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Hide vertical scrolling */
+    white-space: nowrap; /* Prevent wrapping of queue items */
+}
+
+/* Queue Container */
+.queue-container {
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #1abc9c;
+    border-radius: 5px;
+    background-color: #34495e;
+    min-height: 60px; /* Set minimum height */
+    padding: 50px;
+}
+
+/* Queue Item */
+.queue-item {
+    background-color: #e67e22;
+    color: white;
+    padding: 20px;
+    margin-right: 5px; /* Space between items */
+    text-align: center;
+    border-radius: 5px;
+    font-size: 26px;
+}
+
+/* Empty State */
+.queue-empty {
+    background-color: #95a5a6;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+/* Head Indicator */
+.qhead-indicator {
+    position: absolute;
+    left: 45px; /* Position at the start of the queue */
+    top: calc(65% + 5px); /* Position below the queue items with padding */
+}
+
+/* Tail Indicator */
+.qtail-indicator {
+    position: absolute;
+    top: calc(65% + 5px); /* Position below the queue items with padding */
+    display: flex;
+    flex-direction: column; /* Stack arrow and label vertically */
+    align-items: center; /* Center align the content */
+}
+
+/* Arrow Wrapper */
+.arrow-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack arrow and label vertically */
+    align-items: center; /* Center align the content */
+}
+
+/* Arrow Image */
+.arrow-image {
+    width: 30px; /* Set specific width for arrow */
+    height: 25px; /* Set specific height for arrow */
+    transform: rotate(270deg); /* Rotate the arrow to point upwards */
+}
+
+/* Arrow Label */
+.arrow-label {
+    margin-top: 5px; /* Space between image and label */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .queue-item {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .queue-empty {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .arrow-image {
+        width: 30px; /* Adjust for smaller screens */
+        height: 30px; /* Adjust for smaller screens */
+    }
+}
+

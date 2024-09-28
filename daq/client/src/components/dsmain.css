@@ -1,0 +1,198 @@
+.container {
+    max-width: 90%;  /* Limit the width of the content */
+    margin: 0 auto;    /* Center the container */
+    padding: 20px;     /* Add padding inside the container */
+    font-family: Arial, sans-serif; /* Set a base font */
+    font-size: large;
+}
+.exampleImage {
+    height: 50%;
+    width: 50%;
+    padding-left:100px;
+}
+/* Header styles */
+h1 {
+    font-size: 2rem;       /* Large font size for the heading */
+    text-align: center;    /* Center the heading */
+    margin-bottom: 20px;   /* Space below the heading */
+}
+
+/* List styles */
+ul {
+    list-style-type: disc; /* Use bullet points for the list */
+    padding-left: 20px;    /* Indent the list */
+    margin-bottom: 20px;    /* Space below the list */
+}
+
+/* Button container styles */
+.button-container {
+    display: flex;                   /* Use flexbox for alignment */
+    justify-content: space-between; /* Space buttons evenly */
+    margin-top: 20px;               /* Space above the button container */
+}
+
+/* Button styles */
+.start-button {
+    background-color: #4CAF50; /* Green background */
+    color: white;               /* White text color */
+    border: none;               /* Remove border */
+    padding: 10px 20px;        /* Add padding */
+    text-align: center;         /* Center text */
+    text-decoration: none;      /* Remove underline */
+    display: inline-block;      /* Inline-block for sizing */
+    font-size: 16px;           /* Font size */
+    cursor: pointer;            /* Pointer cursor on hover */
+    border-radius: 5px;        /* Rounded corners */
+    transition: background-color 0.3s; /* Transition for background color */
+}
+
+.start-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Back button styles */
+.back-button {
+    display: inline-block;     /* Inline-block for sizing */
+    margin-top: 20px;         /* Space above the back button */
+    text-decoration: none;     /* Remove underline */
+    color: #007BFF;           /* Blue color */
+    font-size: 16px;          /* Font size */
+}
+
+.back-button:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.data-structure-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.text-center {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.tree-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.tree-root {
+    margin-bottom: 20px;
+}
+
+.tree-branches {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.tree-branch-left, .tree-branch-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.tree-branch-left {
+    margin-right: 50px; /* Adjust space between branches */
+}
+
+.tree-branch-right {
+    margin-left: 50px; /* Adjust space between branches */
+}
+
+.tree-subtypes-left, .tree-subtypes-right {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adjust gap between subtypes */
+    margin-top: 20px;
+}
+
+.tree-subtypes-left {
+    margin-right: auto; /* Align to the left */
+}
+
+.tree-subtypes-right {
+    margin-left: auto; /* Align to the right */
+}
+
+.tree-sub-subtypes-left, .tree-sub-subtypes-right {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adjust gap between sub-subtypes */
+    margin-top: 20px;
+}
+
+.tree-sub-subtypes-left {
+    margin-right: auto; /* Align to the left */
+}
+
+.tree-sub-subtypes-right {
+    margin-left: auto; /* Align to the right */
+}
+
+.box-data {
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    width: 200px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.box-data:hover {
+    background-color: #45a049;
+}
+
+.box-data.active-subtype {
+    background-color: #388E3C;
+}
+
+/*primitive sub type*/
+.subtype-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .mt-5 {
+    margin-top: 20px;
+  }
+  
+  .subtype-page h1 {
+    font-size: 2em;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  .subtype-page p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #ffffff;
+    margin-bottom: 15px;
+  }
+  
+  .read-more-link {
+    color: #007bff; /* Adjust color as needed */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .read-more-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+

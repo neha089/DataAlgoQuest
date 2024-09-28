@@ -1,0 +1,176 @@
+
+.linked-list-operations {
+    padding: 20px;
+    background-color: #3c3e40;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h5 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Horizontal scroll container for buttons */
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 15px;
+}
+
+/* Styles for operation boxes */
+.box {
+    padding: 10px 20px;
+    background-color: #1d1d1d;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.box:hover {
+    background-color: #ced4da;
+    transform: scale(1.05);
+}
+
+.box-active {
+    background-color: #8b9a9c;
+    color: white;
+}
+
+/* Button styles for insertion operations */
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* List visualization styles */
+.linked-list-visualization {
+    margin-top: 20px;
+}
+
+.data-section,
+.link-section {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.data-section {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.link-section {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Arrow styling */
+.arrow {
+    display: flex;
+    align-items: center;
+}
+.arrow img {
+    display: block; /* Ensures the image is treated as a block element */
+    margin: 0 auto; /* Centers the image */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 600px) {
+    .horizontal-scroll {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .box {
+        margin-bottom: 10px;
+    }
+}
+
+/* doubly linked list*/
+.doublylinkedlist-visualization {
+    text-align: center;
+    margin: 20px;
+}
+
+.list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.list-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 0 5px;
+    background-color: #f97316;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 50px;
+}
+
+.node-value {
+    font-size: 18px;
+}
+
+.arrow {
+    margin-left: 5px;
+    font-size: 24px;
+    color: #000;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+.control-button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #2d6a4f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-button:hover {
+    background-color: #1b4332;
+}
+
+.input-field {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.cloud-message {
+    margin-top: 20px;
+}
+
+.message-text {
+    font-size: 18px;
+    color: #333;
+}
