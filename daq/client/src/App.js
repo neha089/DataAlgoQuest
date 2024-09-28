@@ -12,6 +12,7 @@ import Boolean from './components/Boolean';
 import CodingChallenges from './components/CodingChallenges';
 import Admin from './components/Admin';
 import HomePage from './components/HomePage'; // Import the new HomePage
+import BinaryTree from './components/BinaryTree';
 
 const AppContent = () => {
     const location = useLocation();
@@ -31,6 +32,7 @@ const AppContent = () => {
                 <Route path="/Float" element={<Float/>}/>
                 <Route path="/Character" element={<Character/>}/>
                 <Route path="/Boolean" element={<Boolean/>}/>
+                <Route path="/data-structure/Tree/BinaryTree" element={<BinaryTree/>}/>
             </Routes>
         </div>
     );

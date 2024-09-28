@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import StackVisualization from './StackVisualization';
 import QueueVisualization from './QueueVisualization';
-import BinaryTreeVisualization from './BinaryTreeVisualization';
+import TreeVisualization from './TreeVisualization';
 import LinkedListVisualization from './LinkedListVisualization';
 import stackImage from '../assets/ds-image/stack.jpg';
 import queueImage from '../assets/ds-image/queue.jpg';
@@ -342,7 +342,7 @@ const DataStructureDetail = () => {
             case 'Queue':
                 return <QueueVisualization />;
             case 'Tree':
-                return <BinaryTreeVisualization />;
+                return <TreeVisualization />;
             case 'Linked List':
                 return <LinkedListVisualization />;
             default:
