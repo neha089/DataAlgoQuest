@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import arrowImage from '../assets/icons/arrow.png'; // Ensure correct path to arrow image
+import './queue.css'
 
 const QueueVisualization = () => {
   const [queue, setQueue] = useState([]);
