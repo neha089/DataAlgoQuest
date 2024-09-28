@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import SingleLinkedList from './SinglyLinkedList';
+import DoubleLinkedList from './DoublyLinkedList';
 import image from '../assets/icons/link-arrow.jpg'; // Arrow for the links
 import "./singly.css";
 
-const SingleLinkedListComponent = () => {
-  const [singleLinkedList, setSingleLinkedList] = useState(null);
+const DoubleLinkedListComponent = () => {
+  const [doubleLinkedList, setDoubleLinkedList] = useState(null);
   const [operationStep, setOperationStep] = useState(-1);
   const [insertOperationStep, setInsertOperationStep] = useState(-1);
 
@@ -36,14 +36,12 @@ const SingleLinkedListComponent = () => {
   };
 
   const createLinkedList = () => {
-    console.log('Creating Linked List');
-    const newLinkedList = new SingleLinkedList();
+    const newLinkedList = new DoubleLinkedList();
     const value = prompt('Enter value to create the head node:');
 
     if (value) {
       newLinkedList.insertAtHead(value);
-      setSingleLinkedList(newLinkedList); // Set the linked list directly
-      console.log('Linked List created with head value:', value);
+      setDoubleLinkedList(newLinkedList); // Set the linked list directly
     } else {
       alert('Please enter a valid value to initialize the linked list.');
     }
@@ -62,7 +60,7 @@ const SingleLinkedListComponent = () => {
     }
 
     if (value) {
-      const linkedListCopy = singleLinkedList; // Use the existing instance directly
+      const linkedListCopy = doubleLinkedList; // Use the existing instance directly
       switch (method) {
         case 'InsertAtFirst':
           linkedListCopy.insertAtHead(value);
@@ -76,7 +74,7 @@ const SingleLinkedListComponent = () => {
         default:
           break;
       }
-      setSingleLinkedList(linkedListCopy); // Update the state with the modified instance
+      setDoubleLinkedList(linkedListCopy); // Update the state with the modified instance
     } else {
       alert('Please enter valid values.');
     }
@@ -95,7 +93,7 @@ const SingleLinkedListComponent = () => {
     }
 
     if (value) {
-      const linkedListCopy = singleLinkedList; // Use the existing instance directly
+      const linkedListCopy = doubleLinkedList; // Use the existing instance directly
       switch (method) {
         case 'UpdateAtHead':
           linkedListCopy.updateAtHead(value);
@@ -109,17 +107,17 @@ const SingleLinkedListComponent = () => {
         default:
           break;
       }
-      setSingleLinkedList(linkedListCopy); // Update the state with the modified instance
+      setDoubleLinkedList(linkedListCopy); // Update the state with the modified instance
     } else {
       alert('Please enter a valid value.');
     }
   };
 
   const handleDeletion = (method) => {
-    if (!singleLinkedList) return; // Exit if there is no linked list
+    if (!doubleLinkedList) return; // Exit if there is no linked list
   
-    const linkedListCopy = new SingleLinkedList(); // Create a new instance
-    linkedListCopy.head = singleLinkedList.head; // Copy the head reference
+    const linkedListCopy = new DoubleLinkedList(); // Create a new instance
+    linkedListCopy.head = doubleLinkedList.head; // Copy the head reference
     let position;
   
     if (method === 'DeleteAtPosition') {
@@ -143,55 +141,95 @@ const SingleLinkedListComponent = () => {
       default:
         break;
     }
-    setSingleLinkedList(linkedListCopy); // Update the state with the new instance
+    setDoubleLinkedList(linkedListCopy); // Update the state with the new instance
   };
   
   const reverseList = () => {
-    const linkedListCopy = new SingleLinkedList(); // Use the existing instance directly
-    linkedListCopy.head=singleLinkedList.head;
+    const linkedListCopy = new DoubleLinkedList(); // Use the existing instance directly
+    linkedListCopy.head=doubleLinkedList.head;
     linkedListCopy.reverse();
-    setSingleLinkedList(linkedListCopy); // Update the state with the modified instance
+    setDoubleLinkedList(linkedListCopy); // Update the state with the modified instance
   };
-  const visualizeList = (node) => {
-    let count = 0; // Initialize node count
-    const nodes = []; // Array to hold nodes
   
+  // const SourceCode = () => {
+  //   if (doubleLinkedList) {
+  //     doubleLinkedList.SourceCode(); // Call SourceCode method from the DoubleLinkedList class
+  //   } else {
+  //     alert('Please create a linked list first!');
+  //   }
+  // };
+  
+  const visualizeList = (node) => {  
+    const nodes = [];
+    
     const traverse = (currentNode) => {
       if (currentNode === null) {
         return;
       }
       nodes.push(currentNode);
-      count++;
       traverse(currentNode.next);
     };
-  
-    traverse(node); // Fill the nodes array and count
-  
-    // Set the node count in CSS variable
-    document.documentElement.style.setProperty('--node-count', count);
-  
+    
+    traverse(node);
+    
     return (
       <div className="visualization">
-        {nodes.map((node) => (
+        {/* Add Null at the beginning */}
+        <div className="node-container">
+          <div className="data-section">
+            <p className="m-0">Null</p>
+          </div>
+          <div className="arrow">
+            <img src={image} className="rotate" alt="left-arrow" style={{ transform: 'rotate(180deg)' }}/>
+          </div>
+        </div>
+
+        {/* Iterate over nodes */}
+        {nodes.map((node, index) => (
           <div className="node-container" key={node.data}>
-            <div className="node">
-              {node.data}
+            {/* Left Arrow for Previous Link */}
+            <div className="arrow">
+              {index !== 0 && ( // If not the first node, show left arrow
+                <img src={image} className="rotate" alt="left-arrow" />
+              )}
             </div>
-            <div className="link-indicator">
-              {node.next ? 'Link' : 'Null'}
+  
+            {/* Data Section */}
+            <div className="data-section">
+              <p className="m-0">{node.data}</p>
             </div>
-            {node.next && (
-              <img src={image} className="arrow" alt="arrow" />
-            )}
+            
+            {/* Link Section */}
+            <div className="link-section">
+              <p className="m-0">Link</p>
+            </div>
+            
+            {/* Right Arrow for Next Link */}
+            <div className="arrow">
+              {node.next ? (
+                <img src={image} className="rotate" alt="right-arrow" style={{ transform: 'rotate(180deg)' }}/>
+              ) : (
+                <img src={image} className="rotate" alt="right-arrow"  />
+              )}
+            </div>
           </div>
         ))}
+
+        {/* Add Null at the end */}
+        <div className="node-container">
+          <div className="data-section">
+            <p className="m-0">Null</p>
+          </div>
+        </div>
       </div>
     );
-  };
+};
+
+  
   
   return (
     <div className="linked-list-operations">
-      <h5>Single Linked List Operations</h5>
+      <h5>Double Linked List Operations</h5>
       <div className="horizontal-scroll">
         <div
           className={operationStep === operations.Creation ? 'box box-active' : 'box'}
@@ -199,7 +237,7 @@ const SingleLinkedListComponent = () => {
         >
           <p>Create Linked List</p>
         </div>
-        {singleLinkedList && (
+        {doubleLinkedList && (
           <>
             <div
               className={operationStep === operations.Insertion ? 'box box-active' : 'box'}
@@ -225,6 +263,14 @@ const SingleLinkedListComponent = () => {
             >
               <p>Reverse Linked List</p>
             </div>
+            {/* <div
+              className={operations.SourceCode === operationStep 
+                ? 'box box-active p-lg-2 p-1 px-lg-3 px-2 tab me-lg-4 me-3 mb-2'
+                : 'box p-lg-2 p-1 px-lg-3 px-2 tab me-lg-4 me-3 mb-2'}
+              onClick={SourceCode}
+            >
+              <p className="m-0">View Code</p>
+            </div> */}
           </>
         )}
       </div>
@@ -296,7 +342,7 @@ const SingleLinkedListComponent = () => {
       <h5>Linked List Visualization:</h5>
       <div className="visualization">
         <div>
-          {singleLinkedList && visualizeList(singleLinkedList.head)}
+          {doubleLinkedList && visualizeList(doubleLinkedList.head)}
         </div>
       </div>
 
@@ -304,4 +350,4 @@ const SingleLinkedListComponent = () => {
   );
 };
 
-export default SingleLinkedListComponent;
+export default DoubleLinkedListComponent;

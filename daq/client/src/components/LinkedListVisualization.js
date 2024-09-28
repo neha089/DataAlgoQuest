@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import SinglyLinkedListVisualization from './SinglyLinkedListVisualization';
-import DoublyLinkedListVisualization from './DoublyLinkedListVisualization';
+import DoublyLinkedListVisualization from './DoublyVisualization';
 const LinkedListComponent = () => {
   const [step, setStep] = useState(0);
   const location = useLocation();
