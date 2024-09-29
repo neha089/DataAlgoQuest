@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css'; // Make sure you have the styles you need
+import { useNavigate } from 'react-router-dom';
 
 const ReadMore = () => {
     return (
@@ -17,6 +18,7 @@ const ReadMore = () => {
   };
 
 const Integer = () => {
+  const navigate =useNavigate();
   return (
     <div className="subtype-page">
       <h1 className="text-center">Integer</h1>
@@ -38,6 +40,7 @@ const Integer = () => {
         </p>
       </div>
       <ReadMore /> {/* Assuming you have a ReadMore component */}
+      <button onClick={()=>navigate(-1)}>Back</button>
     </div>
   );
 };

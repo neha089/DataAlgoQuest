@@ -1,7 +1,10 @@
 import React from 'react';
 import './style.css'; // Ensure you have the necessary styles
+import { useNavigate } from 'react-router-dom';
 
 const Boolean = () => {
+  const navigate=useNavigate();
+
   return (
     <div className="subtype-page">
       <h1 className="text-center">Boolean</h1>
@@ -11,6 +14,7 @@ const Boolean = () => {
         </p>
       </div>
       <ReadMore />
+      <button onClick={()=>navigate(-1)}>Back</button>
     </div>
   );
 };

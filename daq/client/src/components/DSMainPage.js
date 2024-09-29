@@ -37,7 +37,9 @@ const dataStructure = {
 
 const TreeNode = ({ name, onClick, isActive }) => {
   const navigate = useNavigate(); // Updated hook
-
+  const navigateToPage = (name) => {
+    navigate(`/data-structure/${name}`); // Navigates to /data-structure/Stack
+  };
   const handleClick = () => {
     if (name === "Integer") {
       navigate('/integer'); // Updated method
@@ -50,6 +52,18 @@ const TreeNode = ({ name, onClick, isActive }) => {
     } 
     else if (name === "Boolean") {
       navigate('/boolean'); // Updated method
+    } 
+    else if (name === "Stack") {
+      navigateToPage("Stack"); // Updated method
+    } 
+    else if (name === "Queue") {
+      navigateToPage("Queue"); // Updated method
+    } 
+    else if (name === "Linked List") {
+      navigateToPage("Linked List"); // Updated method
+    }
+    else if (name === "Tree") {
+      navigateToPage("Tree"); // Updated method
     } else {
       onClick && onClick();
     }

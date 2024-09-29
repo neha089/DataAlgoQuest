@@ -294,6 +294,13 @@ const DataStructureDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        const token = localStorage.getItem('token'); // assuming JWT token is stored in localStorage
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
 
     const fetchData = async () => {
         try {
@@ -395,11 +402,26 @@ const DataStructureDetail = () => {
             </ul>
 
             <div className="button-container">
-                <button onClick={handleStartQuiz} className="start-button">Start Quiz</button>
-                <button onClick={handleStartChallenge} className="start-button">Start Challenges</button>
-            </div>
+            <button
+                onClick={isLoggedIn ? handleStartQuiz : null}
+                className="start-button"
+                disabled={!isLoggedIn} // Disable button if not logged in
+            >
+                Start Quiz
+            </button>
 
-            <a href="/learning-paths" className="back-button">Back to Learning Paths</a>
+            <button
+                onClick={isLoggedIn ? handleStartChallenge : null}
+                className="start-button"
+                disabled={!isLoggedIn} // Disable button if not logged in
+            >
+                Start Challenges
+            </button>
+
+            {!isLoggedIn && <p>Please log in to start the quiz or challenge.</p>}
+            </div>
+            <button onClick={()=>navigate(-1)}>Back</button>
+            {/* <a href="/learning-paths" className="back-button">Back to Learning Paths</a> */}
         </div>
     );
 };

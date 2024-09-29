@@ -13,7 +13,8 @@ import CodingChallenges from './components/CodingChallenges';
 import Admin from './components/Admin';
 import HomePage from './components/HomePage'; // Import the new HomePage
 import BinaryTree from './components/BinaryTree';
-
+import Login from './components/login';
+import Signup from './components/signup';
 const AppContent = () => {
     const location = useLocation();
 
@@ -21,7 +22,9 @@ const AppContent = () => {
         <div>
             {!location.pathname.startsWith('/admin') && <DataAlgoQuestNavbar />}
             <Routes>
-                <Route path="/" element={<HomePage />} /> {/* Add the new homepage */}
+                <Route path="/" element={<HomePage/>} />
+                <Route path="/signup" element={<Signup/>} />
+                <Route path="/login" element={<Login/>}/>
                 <Route path="/learning-paths" element={<LearningPaths />} />
                 <Route path="/data-structure/:name" element={<DataStructureDetail />} />
                 <Route path="/admin/*" element={<Admin />} />

@@ -1,5 +1,5 @@
 const HttpError = require('../models/http-error');
-const User = require('../models/user');
+const User = require('../models/User');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ReadMore = () => {
     return (
@@ -16,6 +17,7 @@ const ReadMore = () => {
   };
 
 const Float = () => {
+  const navigate=useNavigate();
   return (
     <div className="subtype-page">
       <h1 className="text-center">Float</h1>
@@ -31,6 +33,7 @@ const Float = () => {
         </p>
       </div>
       <ReadMore/>
+      <button onClick={()=>navigate(-1)}>Back</button>
     </div>
   );
 };
