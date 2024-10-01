@@ -14,6 +14,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:5000/api/users/login', { email, password });
       // Store token in local storage
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data.userId);
       navigate('/');
       window.location.reload();
     } catch (err) {

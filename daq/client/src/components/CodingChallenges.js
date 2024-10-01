@@ -3,15 +3,26 @@ import './style.css';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const CodingChallenges = () => {
+    const [userId, setUserId] = useState(null);
     const { data_structure_id } = useParams(); // Extract data_structure_id from the route
     const [progress, setProgress] = useState({ total: 0, completed: 0 });
     const [showRevisions, setShowRevisions] = useState(false); // Toggle revision view
     const [problems, setProblems] = useState([]);
+    const [solvedChallenges, setSolvedChallenges] = useState([]);
+    const [showSolvedChallenges, setShowSolvedChallenges] = useState(false); // New state for showing solved challenges
     const leetcodeLogo = `${process.env.PUBLIC_URL}/leetcode-logo.png`;
     const navigate = useNavigate(); // Initialize navigate function
-
+    
     // Fetch data based on the data_structure_id
     useEffect(() => {
+        const fetchUserId = () => { 
+            const user_id =localStorage.getItem('userId'); // Assuming 'user' was stored in localStorage
+            if (user_id) {
+              setUserId(user_id);
+            }
+          };
+      
+        fetchUserId();
         if (!data_structure_id) {
             console.error('Data structure ID is not available');
             return;
@@ -28,9 +39,10 @@ const CodingChallenges = () => {
                 setProblems(data);
                 // Calculate progress based on revision status
                 updateProgress(data);
+                loadCheckboxStates(data);
             })
             .catch(error => console.error('Error fetching problems:', error));
-    }, [data_structure_id]); // Re-fetch whenever data_structure_id changes
+    }, [data_structure_id,userId]); // Re-fetch whenever data_structure_id changes
 
     // Update progress based on current problems list
     const updateProgress = (problemsList) => {
@@ -38,8 +50,17 @@ const CodingChallenges = () => {
         setProgress({ total: problemsList.length, completed: revisionsCount });
     };
 
+    const loadCheckboxStates = (problemsList) => {
+        problemsList.forEach(problem => {
+            const solvedStatus = localStorage.getItem(`problem-${problem._id}`);
+            if (solvedStatus !== null) {
+                problem.solved = solvedStatus === 'true'; // Set the checkbox state from localStorage
+            }
+        });
+        setProblems([...problemsList]); // Update state with modified problems list
+    };
+
     const handleNoteSubmit = (problemId, noteId, newContent) => {
-        console.log('Submitting new content:', newContent);
         
         const method = noteId ? 'PATCH' : 'POST'; // Use PATCH for updates, POST for creation
         const url = noteId
@@ -49,7 +70,7 @@ const CodingChallenges = () => {
         fetch(url, {
             method,
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ content: newContent, user_id: '66c186609029c248772c4a5f' }), // Ensure user_id is relevant or remove it
+            body: JSON.stringify({ content: newContent, user_id: userId }), // Ensure user_id is relevant or remove it
         })
         .then(response => {
             if (!response.ok) {
@@ -109,13 +130,96 @@ const CodingChallenges = () => {
         setShowRevisions(!showRevisions); // Toggle between all problems and revision problems
     };
 
-    const problemsToDisplay = showRevisions ? problems.filter(problem => problem.revision) : problems;
+    const handleSubmitChallenge = (id) => {
+        const problem = problems.find(problem => problem._id === id);
+        if (!problem) return;
+
+        const newSolvedStatus = !problem.solved;
+        fetch(`http://localhost:5000/api/challenges/submit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                challenge_id: id,
+                user_id: userId, 
+                solved: newSolvedStatus,
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { 
+                    throw new Error(`Network response was not ok: ${response.status} - ${text}`); 
+                });
+            }
+            return response.json();
+        })
+        .then(() => {
+            setProblems(prevProblems => {
+                const updatedProblems = prevProblems.map(problem =>
+                    problem._id === id ? { ...problem, solved: newSolvedStatus } : problem
+                );
+                // Save the new solved status to localStorage
+                localStorage.setItem(`problem-${id}`, newSolvedStatus);
+                if (!newSolvedStatus) {
+                    // Remove challenge from the challengesAttempt table if unsolved
+                    fetch(`http://localhost:5000/api/challenges/remove/${id}/${userId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                }
+                return updatedProblems;
+            });
+            if (!newSolvedStatus) {
+                setSolvedChallenges(prevSolved => prevSolved.filter(challenge => challenge._id !== id));
+            }
+        })
+        .catch(error => console.error('Error submitting challenge:', error));
+    };
+    
+    const handleShowSolvedChallenges = () => {
+        setShowSolvedChallenges(!showSolvedChallenges);
+        
+        if (!showSolvedChallenges) {
+            fetch(`http://localhost:5000/api/challenges/status?user_id=${encodeURIComponent(userId)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.solvedChallenges) {
+                        setSolvedChallenges(data.solvedChallenges);
+                        setProblems(data.solvedChallenges.map(challenge => ({
+                            ...challenge,
+                            solved: true,
+                            note: challenge.note
+                        })));
+                    }
+                })
+                .catch(error => console.error('Error fetching solved challenges:', error));
+        } else {
+            // Fetch all challenges again
+            fetch(`http://localhost:5000/api/challenges/dschallenge/${data_structure_id}`)
+                .then(response => response.json())
+                .then(data => {
+                    setProblems(data);
+                    updateProgress(data);
+                    loadCheckboxStates(data);
+                })
+                .catch(error => console.error('Error fetching problems:', error));
+        }
+    };
+    
+    
+    const problemsToDisplay = Array.isArray(problems) ? (showRevisions ? problems.filter(problem => problem.revision) : problems) : [];
 
     return (
         <div className="coding-challenges-container">
             <div className="action-buttons">
                 <button onClick={handleShowRevisions}>
                     {showRevisions ? 'Show All Problems' : 'Show Revisions'}
+                </button>
+                <button onClick={handleShowSolvedChallenges}>
+                    {showSolvedChallenges ? 'Show All Challenges' : 'Show Solved Challenges'}
                 </button>
             </div>
             <div className="progress-tracker">
@@ -141,60 +245,58 @@ const CodingChallenges = () => {
                     </tr>
                 </thead>
                 <tbody>
-    {problemsToDisplay.map(problem => (
-        <tr key={problem._id}>
-            <td>
-                <input
-                    type="checkbox"
-                    checked={problem.revision || false} // Checkbox reflects the 'revision' status
-                    onChange={() => handleStar(problem._id)}
-                />
-            </td>
-            <td>{problem.title}</td>
-            <td>
-                <a href={problem.link} target="_blank" rel="noopener noreferrer">
-                    <img src={leetcodeLogo} alt="Leetcode" className="icon" />
-                </a>
-            </td>
-            <td>
-                {problem.note && problem.note.length > 0 ? (
-                    problem.note.map((singleNote, index) => (
-                        <div key={index}>
-                            <NoteSection
-                                note={singleNote.content}
-                                onNoteSubmit={(newContent) =>
-                                    handleNoteSubmit(problem._id, singleNote._id, newContent)
-                                }
-                            />
-                        </div>
-                    ))
-                ) : (
-                    // Allow editing even if there is no note available
-                    <div>
-                        <NoteSection
-                            note={''} // No note content available initially
-                            onNoteSubmit={(newContent) => handleNoteSubmit(problem._id, null, newContent)}
-                        />
-                    </div>
-                )}
-            </td>
-            <td>
-                <span className={`difficulty ${problem.level.toLowerCase()}`}>
-                    {problem.level}
-                </span>
-            </td>
-            <td>
-                <span
-                    className={`star-icon ${problem.revision ? 'starred' : ''}`}
-                    onClick={() => handleStar(problem._id)}
-                >
-                    ★
-                </span>
-            </td>
-        </tr>
-    ))}
-</tbody>
-
+                    {problemsToDisplay.map(problem => (
+                        <tr key={problem._id}>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    checked={problem.solved || false} // New checkbox for solved status
+                                    onChange={() => handleSubmitChallenge(problem._id)} // Call submit API
+                                />
+                            </td>
+                            <td>{problem.title}</td>
+                            <td>
+                                <a href={problem.link} target="_blank" rel="noopener noreferrer">
+                                    <img src={leetcodeLogo} alt="Leetcode" className="icon" />
+                                </a>
+                            </td>
+                            <td>
+                                {problem.note && problem.note.length > 0 ? (
+                                    problem.note.map((singleNote, index) => (
+                                        <div key={index}>
+                                            <NoteSection
+                                                note={singleNote.content}
+                                                onNoteSubmit={(newContent) =>
+                                                    handleNoteSubmit(problem._id, singleNote._id, newContent)
+                                                }
+                                            />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div>
+                                        <NoteSection
+                                            note={''}
+                                            onNoteSubmit={(newContent) => handleNoteSubmit(problem._id, null, newContent)}
+                                        />
+                                    </div>
+                                )}
+                            </td>
+                            <td>
+                                <span className={`difficulty ${problem.level.toLowerCase()}`}>
+                                    {problem.level}
+                                </span>
+                            </td>
+                            <td>
+                                <span
+                                    className={`star-icon ${problem.revision ? 'starred' : ''}`}
+                                    onClick={() => handleStar(problem._id)}
+                                >
+                                    ★
+                                </span>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
             <div className="button-container">
                 <button onClick={() => navigate(-1)} className="back-button">
