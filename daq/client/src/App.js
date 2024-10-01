@@ -15,6 +15,8 @@ import HomePage from './components/HomePage'; // Import the new HomePage
 import BinaryTree from './components/BinaryTree';
 import Login from './components/login';
 import Signup from './components/signup';
+import LearningPathsaa from './components/aa';
+import SortingVisualization from './components/SortingVisulization';
 const AppContent = () => {
     const location = useLocation();
 
@@ -35,7 +37,9 @@ const AppContent = () => {
                 <Route path="/Float" element={<Float/>}/>
                 <Route path="/Character" element={<Character/>}/>
                 <Route path="/Boolean" element={<Boolean/>}/>
+                <Route path="/aa" element={<LearningPathsaa />} />
                 <Route path="/data-structure/Tree/BinaryTree" element={<BinaryTree/>}/>
+                <Route path="/sorting-visualization" element={<SortingVisualization />} />
             </Routes>
         </div>
     );
