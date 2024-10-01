@@ -2,9 +2,9 @@ const { validationResult } = require('express-validator');
 const CodingChallenge = require('../models/CodingChallenge');
 
 // Import your models
-const ChallengeAttempt = require('../models/challengeAttempt'); // Adjust the path if necessary
+const ChallengeAttempt = require('../models/ChallengeAttempt'); // Adjust the path if necessary
 const Progress = require('../models/progress'); // Adjust the path if necessary
-
+const User = require('../models/User');
 // Create a new coding challenge
 exports.createChallenge = async (req, res) => {
   const errors = validationResult(req);
@@ -161,29 +161,38 @@ exports.getChallenge_with_ds = async (req, res) => {
 exports.submitChallenge = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.error('Validation errors:', errors.array());
     return res.status(400).json({ errors: errors.array() });
   }
 
   try {
-    const { challenge_id, user_id } = req.body; // User ID will come from body
+    const { challenge_id, user_id, solved } = req.body; 
 
-    // Validate if the challenge_id and user_id are valid ObjectIds
+    // Log input data
+    console.log('Request received:', { challenge_id, user_id });
+
+    // Validate ObjectId
     if (!mongoose.Types.ObjectId.isValid(challenge_id)) {
+      console.error('Invalid challenge ID format:', challenge_id);
       return res.status(400).json({ message: 'Invalid challenge ID format' });
     }
     if (!mongoose.Types.ObjectId.isValid(user_id)) {
+      console.error('Invalid user ID format:', user_id);
       return res.status(400).json({ message: 'Invalid user ID format' });
     }
 
-    // Fetch the challenge to determine its difficulty
     const challenge = await CodingChallenge.findById(challenge_id);
     if (!challenge) {
+      console.error(`Challenge not found for ID: ${challenge_id}`);
       return res.status(404).json({ message: 'Challenge not found' });
     }
 
-    // Fetch the user and their progress
-    let user = await User.findById(user_id).populate('progress');
+    let user = await User.findById(user_id).populate({
+      path: 'progress',
+      model: 'Progress', // Ensure it's referencing the correct model
+    });
     if (!user) {
+      console.error(`User not found for ID: ${user_id}`);
       return res.status(404).json({ message: 'User not found' });
     }
 
@@ -194,14 +203,12 @@ exports.submitChallenge = async (req, res) => {
         challenge_scores: 0,
       });
       await newProgress.save();
-
       user.progress = newProgress._id;
       await user.save();
-
-      user = await User.findById(user_id).populate('progress'); // Re-fetch user with new progress populated
+      console.log('New progress created for user:', user_id);
     }
 
-    // Determine the score based on the difficulty
+    // Determine score based on challenge difficulty
     let score = 0;
     switch (challenge.level.toLowerCase()) {
       case 'hard':
@@ -214,38 +221,49 @@ exports.submitChallenge = async (req, res) => {
         score = 5;
         break;
       default:
-        score = 0; // Default score if difficulty is not recognized
-        break;
+        console.error(`Unknown challenge level: ${challenge.level}`);
+        return res.status(400).json({ message: 'Unknown challenge level' });
     }
 
-    // Update challenge_scores in user's progress
     user.progress.challenge_scores += score;
     await user.progress.save();
 
-    // Create a new challenge attempt
-    const newAttempt = new ChallengeAttempt({
-      user_id: user_id,
-      challenge_id: challenge_id,
-      score: score,
-      solved: true,
-      completed_at: Date.now(), // Fixed typo from Date to date
-    });
+    // Find or create the challenge attempt for the user
+    let attempt = await ChallengeAttempt.findOne({ challenge_id, user_id });
 
-    await newAttempt.save();
+    if (!attempt) {
+      attempt = new ChallengeAttempt({
+        challenge_id,
+        user_id,
+        solved,
+        score, // Include score in the new attempt
+        completed_at: Date.now(),
+      });
+    } else {
+      // Update the existing attempt's solved status and score
+      attempt.solved = solved;
+      attempt.score = score;
+      attempt.completed_at = Date.now(); // Update timestamp for attempt completion
+    }
+
+    await attempt.save(); // Save the attempt
+
     res.status(201).json({ message: 'Challenge submitted successfully', score });
   } catch (error) {
-    console.error('Error submitting challenge:', error); // Log error
-    res.status(500).json({ message: 'Server error' });
-  }};
+    console.error('Error submitting challenge:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+
   exports.solveChallengesAsync = async (req, res) => {
     const errors = validationResult(req);
+    const { user_id } =req.query; 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
   
     try {
-      const { user_id } = req.body; // User ID will come from body
-  
       // Validate if the user_id is a valid ObjectId
       if (!mongoose.Types.ObjectId.isValid(user_id)) {
         return res.status(400).json({ message: 'Invalid user ID format' });
@@ -268,4 +286,31 @@ exports.submitChallenge = async (req, res) => {
     }
   };
   
+  exports.RemoveChallengeAttempt =  async (req, res) => {
+    const { challenge_id, user_id } = req.params; // Get the challenge_id and user_id from the request body
+    console.log('db Deleting challenge with id:', challenge_id);
+    console.log('db User ID:', user_id);
+    try {
+        // Validate inputs
+        if (!challenge_id || !user_id) {
+            return res.status(400).json({ message: 'Challenge ID and User ID are required' });
+        }
+        if (!mongoose.Types.ObjectId.isValid(challenge_id)) {
+          return res.status(400).send('Invalid challenge ID');
+        }
+        // Remove the challenge attempt
+        const result = await ChallengeAttempt.deleteOne({ challenge_id, user_id });
+        console.log("come");
+        // Check if any documents were deleted
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'Challenge attempt not found' });
+        }
+
+        res.status(200).json({ message: 'Challenge attempt removed successfully' });
+    } catch (error) {
+        console.error('Error removing challenge attempt:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
   

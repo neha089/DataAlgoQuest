@@ -2,6 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const challengeController = require('../controllers/codingChallengeController');
 const router = express.Router();
+const { query } = require('express-validator');
 
 // Validation rules
 const submitChallengeValidation = [
@@ -10,7 +11,9 @@ const submitChallengeValidation = [
 ];
 
 const solvedChallengeValidation = [
-  body('user_id').notEmpty().withMessage('User ID is required')
+  query('user_id').exists().withMessage('User ID is required')
+  .isLength({ min: 24, max: 24 }).withMessage('User ID must be 24 characters long')
+  .matches(/^[0-9a-fA-F]{24}$/).withMessage('User ID must be a valid ObjectId')
 ];
 
 // Routes
@@ -41,5 +44,6 @@ router.post('/submit', submitChallengeValidation, challengeController.submitChal
 
 // Corrected route
 router.get('/status', solvedChallengeValidation, challengeController.solveChallengesAsync);
+router.delete('/remove/:challenge_id/:user_id',challengeController.RemoveChallengeAttempt);
 
 module.exports = router;
