@@ -1,0 +1,80 @@
+/* LearningPaths.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1c1c1c;
+    color: #fff;
+  }
+  
+  .learning-paths-container {
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .paths {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 0 20px;
+  }
+  
+  .path-card {
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+  }
+  
+  .path-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .progress-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #00bfff;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #00bfff;
+    margin-bottom: 10px;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: white;
+  }
+  
+  p {
+    font-size: 1rem;
+    margin: 5px 0;
+  }
+  
+  .time {
+    color: #b583ff;
+  }
+  
+  .continue-btn {
+    background-color: #00bfff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .continue-btn:hover {
+    background-color: #008fcc;
+  }
+  

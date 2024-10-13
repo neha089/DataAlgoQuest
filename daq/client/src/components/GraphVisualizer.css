@@ -1,0 +1,34 @@
+.graph-visualizer {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.algorithm-selection {
+  margin-bottom: 10px;
+}
+
+button {
+  margin-left: 10px;
+}
+
+.node {
+  cursor: pointer;
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
+.label {
+  font-size: 16px; /* Increased font size for better visibility */
+  fill: black; /* Changed to ensure visibility */
+}
+
+.edge {
+  stroke: gray;
+  stroke-width: 2;
+}

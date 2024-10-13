@@ -1,0 +1,94 @@
+/* General Layout */
+.knapsack-visualizer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f1f1f;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+  }
+  
+  .controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .controls button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #27ae60;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .controls input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+  }
+  
+  /* DP Table */
+  .dp-table {
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .dp-table td {
+    padding: 10px;
+    border: 1px solid #ffffff;
+    background-color: #34495e;
+    color: #ffffff;
+  }
+  
+  .highlight {
+    background-color: #f39c12 !important;
+  }
+  
+  /* Thief */
+  .thief {
+    position: relative;
+    bottom: -10px; /* Adjust to position thief at the bottom */
+    left: 10px; /* Adjust as needed */
+  }
+  
+  .thief img {
+    width: 50px; /* Adjust size of the thief image */
+    height: auto;
+  }
+  
+  /* Knapsack Items */
+  .knapsack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .knapsack-item {
+    background-color: #3498db;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .item-label {
+    color: white;
+  }
+  
+  /* Step Description */
+  .step-description {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #e74c3c;
+  }
+  

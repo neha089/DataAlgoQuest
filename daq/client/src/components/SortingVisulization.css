@@ -1,0 +1,96 @@
+/* SortingVisualizer.css */
+
+.sorting-visualizer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1818;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+h2 {
+  color: #f5f1f1;
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.controls, .algorithm-selection, .speed-control {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.controls label, .algorithm-selection label, .speed-control label {
+  font-weight: 500;
+  color: #319ed4;
+}
+
+input[type="range"] {
+  width: 200px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  background-color: #7f8c8d;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+.array-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  margin: 20px 0;
+}
+
+.array-bar {
+  background-color: #3498db;
+  width: 20px;
+  transition: height 0.3s ease;
+}
+
+.array-bar.highlighted {
+  background-color: #e74c3c;
+}
+
+.bar-label {
+  position: absolute;
+  bottom: -20px;
+  font-size: 12px;
+  color: #eeeaea;
+  
+}
+
+.algorithm-selection select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.speed-control input {
+  margin-left: 10px;
+}
