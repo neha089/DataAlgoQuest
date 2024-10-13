@@ -64,6 +64,7 @@ exports.deleteChallenge = async (req, res) => {
   }
 };
 
+
 const mongoose = require('mongoose');
 
 // Find a coding challenge by ID
@@ -133,7 +134,8 @@ exports.getChallengesForRevision = async (req, res) => {
     console.error('Error retrieving revision challenges:', error); // Log error
     res.status(500).json({ message: 'Server error' });
   }
-};
+}; 
+
 
 // Get all coding challenges for a specific data structure
 exports.getChallenge_with_ds = async (req, res) => {
@@ -146,12 +148,11 @@ exports.getChallenge_with_ds = async (req, res) => {
     }
 
     const challenges = await CodingChallenge.find({ data_structure_id }).populate({ path: 'note', select: 'content' });
-      console.log(challenges); 
     if (challenges.length === 0) {
       return res.status(404).json({ message: 'No challenges found for this data structure' });
     }
-
-    res.json(challenges);
+    const totalChallenges = challenges.length;
+    res.json({totalChallenges,challenges});
   } catch (error) {
     console.error('Error retrieving challenges for data structure:', error); // Log error
     res.status(500).json({ message: 'Server error' });
@@ -277,19 +278,73 @@ exports.submitChallenge = async (req, res) => {
   
       // Step 3: Use the challenge IDs to find the corresponding challenges from the CodingChallenge collection
       const challenges = await CodingChallenge.find({ _id: { $in: challengeIds } });
-  
-      // Step 4: Return the list of challenges back to the client
-      return res.status(200).json({ solvedChallenges: challenges });
+      if (challenges.length === 0) {
+        return res.status(404).json({ message: 'No challenges found for the provided challenge IDs' });
+      }
+
+      // Step 4: Count the number of solved challenges
+      const totalSolvedChallenges = challenges.length;
+
+      // Step 5: Return the list of challenges back to the client
+      return res.status(200).json({  totalSolvedChallenges,solvedChallenges: challenges });
     } catch (error) {
       console.error('Error retrieving solved challenges:', error);
       return res.status(500).json({ message: 'Internal Server Error' });
     }
   };
-  
+  //get all challenges for specific ds and which is solved by user
+  exports.solveChallengesDs = async (req, res) => { 
+    const errors = validationResult(req);
+    const { user_id, data_structure_id } = req.query; // Get data_structure_id from query parameters
+    
+    // Validate if any errors exist
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      // Validate user_id and data_structure_id are valid ObjectIds
+      if (!mongoose.Types.ObjectId.isValid(user_id)) {
+        return res.status(400).json({ message: 'Invalid user ID format' });
+      }
+      if (!mongoose.Types.ObjectId.isValid(data_structure_id)) {
+        return res.status(400).json({ message: 'Invalid data structure ID format' });
+      }
+
+      // Step 1: Find all challenge attempts where user_id matches and the challenge is solved
+      const challengeAttempts = await ChallengeAttempt.find({ 
+        user_id, 
+        solved: true,
+      });
+
+      // Step 2: Extract all unique challenge IDs from the challenge attempts
+      const challengeIds = challengeAttempts.map(attempt => attempt.challenge_id);
+
+      // Step 3: Use the challenge IDs to find the corresponding challenges from the CodingChallenge collection
+      const challenges = await CodingChallenge.find({ 
+        _id: { $in: challengeIds }, 
+        data_structure_id // Ensure the challenges are filtered by data_structure_id
+      });
+
+      if (challenges.length === 0) {
+        return res.status(404).json({ message: 'No challenges found for the provided data structure ID' });
+      }
+
+      // Step 4: Count the number of solved challenges
+      const totalSolvedChallenges = challenges.length;
+
+      // Step 5: Return the list of challenges back to the client
+      return res.status(200).json({ totalSolvedChallenges, solvedChallenges: challenges });
+      
+    } catch (error) {
+      console.error('Error retrieving solved challenges:', error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+
   exports.RemoveChallengeAttempt =  async (req, res) => {
     const { challenge_id, user_id } = req.params; // Get the challenge_id and user_id from the request body
-    console.log('db Deleting challenge with id:', challenge_id);
-    console.log('db User ID:', user_id);
     try {
         // Validate inputs
         if (!challenge_id || !user_id) {
@@ -300,7 +355,6 @@ exports.submitChallenge = async (req, res) => {
         }
         // Remove the challenge attempt
         const result = await ChallengeAttempt.deleteOne({ challenge_id, user_id });
-        console.log("come");
         // Check if any documents were deleted
         if (result.deletedCount === 0) {
             return res.status(404).json({ message: 'Challenge attempt not found' });

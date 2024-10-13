@@ -56,17 +56,40 @@ exports.addNoteToCodingChallenge = async (req, res) => {
 
     const newNote = new Note({
       user_id,
+      challenge_id: coding_challenge_id,
       content,
     });
 
     await newNote.save();
-    codingChallenge.note.push(newNote._id);
-    await codingChallenge.save();
+    // codingChallenge.note.push(newNote._id);
+    // await codingChallenge.save();
 
     res.status(201).json({ message: 'Note added successfully' });
   } catch (error) {
     console.error('Server error:', error); // Log error for debugging
     res.status(500).json({ message: 'Server error', error: error.message }); // Provide detailed error message
+  }
+};
+
+exports.getNotesByChallengeAndUser = async (req, res) => {
+  const { coding_challenge_id } = req.params; // Extract challenge ID from request parameters
+  const { user_id } = req.query; // Extract user ID from query parameters
+  try {
+      // Validate input
+      if (!coding_challenge_id || !user_id) {
+          return res.status(400).json({ error: 'Challenge ID and User ID are required.' });
+      }
+
+      // Find notes by challenge ID and user ID
+      const notes = await Note.find({
+        challenge_id: coding_challenge_id, // Change to match your database field
+        user_id: user_id
+      });
+      // Return the notes
+      res.status(200).json(notes);
+  } catch (error) {
+      console.error('Error fetching notes:', error);
+      res.status(500).json({ error: 'An error occurred while fetching notes.' });
   }
 };
 

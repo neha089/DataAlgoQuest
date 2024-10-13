@@ -1,11 +1,28 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css'; // Ensure your CSS file is linked
 import { FaDatabase, FaCogs } from 'react-icons/fa'; // Import icons
 
 const HomePage = () => {
     const navigate = useNavigate();
+    const [message, setMessage] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        const token = localStorage.getItem('token'); // assuming JWT token is stored in localStorage
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
 
+    const handleLearningPath = () => {
+        if(isLoggedIn)
+            navigateTo('/learning-paths');
+        else
+        {
+            setMessage('Please Login to show your Learning paths');
+            console.log("click");
+        }
+    };
     const navigateTo = (path) => {
         navigate(path);
     };
@@ -17,7 +34,7 @@ const HomePage = () => {
                 backgroundImage: "url('/ds1.avif')", // Ensure the image is in the public folder
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                height: '100vh',
+                height: '92vh',
                 position: 'relative',
             }}
         >
@@ -31,9 +48,12 @@ const HomePage = () => {
                     <span>Algorithm</span>
                 </div>
             </div>
-            <button className="start-learning" onClick={() => navigateTo('/learningpath')}>
+
+            <button className="start-learning" onClick={handleLearningPath}  >
                 Start Learning
             </button>
+            {message && <p>{message}</p>}
+
         </div>
     );
 };

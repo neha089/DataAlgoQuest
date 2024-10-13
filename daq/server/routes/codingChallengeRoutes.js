@@ -44,6 +44,8 @@ router.post('/submit', submitChallengeValidation, challengeController.submitChal
 
 // Corrected route
 router.get('/status', solvedChallengeValidation, challengeController.solveChallengesAsync);
+router.get('/solveByds', challengeController.solveChallengesDs);
+
 router.delete('/remove/:challenge_id/:user_id',challengeController.RemoveChallengeAttempt);
 
 module.exports = router;

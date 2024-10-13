@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const DataStructureQuiz = () => {
+    const [userId, setUserId] = useState(null);
     const { data_structure_id } = useParams();
     const [quizzes, setQuizzes] = useState([]);
     const [answers, setAnswers] = useState({});
@@ -10,8 +11,17 @@ const DataStructureQuiz = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [quizId, setQuizId] = useState(null);
     useEffect(() => {
+        const fetchUserId = () => { 
+            const user_id =localStorage.getItem('userId'); // Assuming 'user' was stored in localStorage
+            if (user_id) {
+              setUserId(user_id);
+            }
+          };
+      
+        fetchUserId();
+
         const fetchQuizzes = async () => {
             if (!data_structure_id) {
                 setError('Data Structure ID is undefined');
@@ -27,6 +37,9 @@ const DataStructureQuiz = () => {
                 const data = await response.json();
                 console.log('Fetched data:', data); // Log the fetched data
                 setQuizzes(data.quizzes || []); // Ensure quizzes is always an array
+                if (data.quizzes && data.quizzes.length > 0) {
+                    setQuizId(data.quizzes[0]._id); // Set the quiz_id of the first quiz
+                }
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -44,8 +57,38 @@ const DataStructureQuiz = () => {
         });
     };
 
-    const handleSubmit = () => {
-        setSubmitted(true);
+    const handleSubmit = async () => {
+        // Dummy user ID (replace with actual user authentication or state)
+        const user_id = userId; // Replace with actual user ID
+        const quiz_id = quizId;
+        
+        try {
+            const response = await fetch('http://localhost:5000/api/quizzes/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    quiz_id,
+                    user_id,
+                    answers
+                })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                // Handle success (e.g., show a message or navigate)
+                console.log('Quiz submitted successfully', result);
+                setSubmitted(true);
+            } else {
+                // Handle error from API (e.g., validation errors)
+                console.error('Error submitting quiz', result);
+                setError(result.message || 'Error submitting quiz');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setError('An error occurred while submitting the quiz');
+        }
     };
 
     const handleBack = () => {
