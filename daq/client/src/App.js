@@ -17,6 +17,8 @@ import Login from './components/login';
 import Signup from './components/signup';
 import LearningPathsaa from './components/aa';
 import SortingVisualization from './components/SortingVisulization';
+import GraphVisualization from './components/graph'
+import DynamicProgrammingVisualization from './components/dp'
 const AppContent = () => {
     const location = useLocation();
 
@@ -40,6 +42,8 @@ const AppContent = () => {
                 <Route path="/aa" element={<LearningPathsaa />} />
                 <Route path="/data-structure/Tree/BinaryTree" element={<BinaryTree/>}/>
                 <Route path="/sorting-visualization" element={<SortingVisualization />} />
+        <Route path="/graph-visualization" element={<GraphVisualization />} />
+        <Route path="/dynamic-programming-visualization" element={<DynamicProgrammingVisualization />} />
             </Routes>
         </div>
     );

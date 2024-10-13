@@ -1,22 +1,26 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "./aa.css";
-import SortingVisulization from "./SortingVisulization";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import './aa.css';
+import SortingVisulization from './SortingVisulization';
 
 const LearningPathsaa = () => {
   const paths = [
-    { title: "Sorting Algorithms", time: "39 hours, 30 minutes" },
-    { title: "Graph Algorithms", time: "42 hours, 15 minutes" },
-    { title: "Dynamic Programming", time: "45 hours, 10 minutes" },
+    { title: 'Sorting Algorithms', time: '39 hours, 30 minutes' },
+    { title: 'Graph Algorithms', time: '42 hours, 15 minutes' },
+    { title: 'Dynamic Programming', time: '45 hours, 10 minutes' },
   ];
 
   const navigate = useNavigate();
 
   const handleContinue = (title) => {
-    if (title === "Sorting Algorithms") {
-      navigate("/sorting-visualization");
+    if (title === 'Sorting Algorithms') {
+      navigate('/sorting-visualization');
+    } else if (title === 'Graph Algorithms') {
+      navigate('/graph-visualization');
+    } else if (title === 'Dynamic Programming') {
+      navigate('/dynamic-programming-visualization');
     } else {
-      alert("This path is under construction!");
+      alert('This path is under construction!');
     }
   };
 
@@ -41,7 +45,6 @@ const LearningPathsaa = () => {
           </div>
         ))}
       </div>
-      <SortingVisulization />
     </div>
   );
 };
