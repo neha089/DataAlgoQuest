@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 const QuizAttempt=require('../models/quizAttempt');
 const Progress=require('../models/progress');
 const mongoose = require('mongoose');
-
+const User=require('../models/User');
 const getQuestionByQuizId=async (req, res, next) => {
   const { quizId } = req.params;
 
@@ -179,8 +179,8 @@ const getQuizzesByDataStructureId = async (req, res, next) => {
     const error = new HttpError('Fetching quizzes failed, please try again later.', 500);
     return next(error);
   }
-
-  res.json({ quizzes: quizzes.map(quiz => quiz.toObject({ getters: true })) });
+  const totalQuizzes = quizzes.length;
+  res.json({ totalQuizzes,quizzes: quizzes.map(quiz => quiz.toObject({ getters: true })) });
 };
 
 // Submit a quiz attempt
@@ -190,34 +190,42 @@ const submitQuiz = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  try {
-    const {quiz_id, user_id, answers} = req.body; // User ID will come from body
+  console.log('Request body:', req.body);  // Log the received request body
 
-    // Validate if the quiz_id and user_id are valid ObjectIds
+  try {
+    const { quiz_id, user_id, answers } = req.body;
+
+    // Validate ObjectIds
     if (!mongoose.Types.ObjectId.isValid(quiz_id)) {
       return res.status(400).json({ message: 'Invalid quiz ID format' });
     }
     if (!mongoose.Types.ObjectId.isValid(user_id)) {
       return res.status(400).json({ message: 'Invalid user ID format' });
     }
-    // Check if answers is provided
+
     if (!answers || typeof answers !== 'object') {
       return res.status(400).json({ message: 'Answers field is required and should be an object' });
     }
-    // Fetch the quiz to determine its difficulty
+
+    // Fetch quiz
     const quiz = await Quiz.findById(quiz_id).populate('question').exec();
     if (!quiz) {
+      console.log('Quiz not found');
       return res.status(404).json({ message: 'Quiz not found' });
     }
+    console.log('Quiz fetched:', quiz);  // Log fetched quiz details
 
-    // Fetch the user and their progress
+    // Fetch user and progress
     let user = await User.findById(user_id).populate('progress');
     if (!user) {
+      console.log('User not found');
       return res.status(404).json({ message: 'User not found' });
     }
+    console.log('User fetched:', user);  // Log fetched user details
 
-    // Check if progress exists; if not, create a new Progress object
+    // Initialize progress if not exists
     if (!user.progress) {
+      console.log('Creating new progress for user');
       const newProgress = new Progress({
         quiz_scores: 0,
         challenge_scores: 0,
@@ -226,68 +234,132 @@ const submitQuiz = async (req, res) => {
 
       user.progress = newProgress._id;
       await user.save();
-
-      user = await User.findById(user_id).populate('progress'); // Re-fetch user with new progress populated
+      user = await User.findById(user_id).populate('progress');  // Re-fetch user with progress
     }
+    console.log('User progress:', user.progress);  // Log user's progress
 
-    // Determine the score based on the difficulty
+    // Calculate score
     let score = 0;
-    quiz.question.forEach(question => {
+    quiz.question.forEach((question, index) => {
       const questionId = question._id.toString();
-      const userAnswer = answers[questionId];
-      
-      // Check if the answer is correct
+      const userAnswer = answers[index];
+      console.log(`Question ID: ${questionId}, User answer: ${userAnswer}, Correct answer: ${question.correct_answer}`);
+
       if (userAnswer && userAnswer.trim().toLowerCase() === question.correct_answer.trim().toLowerCase()) {
         score += 1;
       }
     });
+    console.log('Calculated score:', score);  // Log calculated score
 
-     // Check if this user has already attempted this quiz
+    // Check for existing quiz attempt
     const existingAttempt = await QuizAttempt.findOne({ user_id, quiz_id });
-
     if (existingAttempt) {
-       // If the user has attempted this quiz before, update the scores
-       existingAttempt.current_score = score;
-       if (score > existingAttempt.highest_score) {
-         existingAttempt.highest_score = score;
-       }
-       existingAttempt.updated_at = Date.now();
- 
-       await existingAttempt.save();
-       user.progress.quiz_scores += existingAttempt.highest_score;
-       await user.progress.save();
+      console.log('Existing attempt found, updating...');
+      existingAttempt.current_score = score;
+      if (score > existingAttempt.highest_score) {
+        existingAttempt.highest_score = score;
+      }
+      existingAttempt.updated_at = Date.now();
+      await existingAttempt.save();
 
-       return res.status(200).json({
+      user.progress.quiz_scores += existingAttempt.highest_score;
+      await user.progress.save();
+      return res.status(200).json({
         message: 'Quiz resubmitted successfully',
         current_score: score,
-        highest_score: existingAttempt.highest_score
+        highest_score: existingAttempt.highest_score,
       });
-    } 
-    else {
-       // If this is the user's first attempt, create a new quiz attempt
-       const newAttempt = new QuizAttempt({
-         user_id,
-         quiz_id,
-         current_score: score,
-         highest_score: score,
-         completed_at: Date.now(),
-         updated_at: Date.now(),
-       });
-       await newAttempt.save();
+    } else {
+      console.log('No previous attempt, creating new attempt...');
+      const newAttempt = new QuizAttempt({
+        user_id,
+        quiz_id,
+        current_score: score,
+        highest_score: score,
+        completed_at: Date.now(),
+        updated_at: Date.now(),
+      });
+      await newAttempt.save();
 
-       user.progress.quiz_scores += score;
-       await user.progress.save();
-       return res.status(200).json({
-        message: 'Quiz resubmitted successfully',
-        current_score: score
-      }); 
-     }
-    
+      user.progress.quiz_scores += score;
+      await user.progress.save();
+
+      return res.status(200).json({
+        message: 'Quiz submitted successfully',
+        current_score: score,
+      });
+    }
+
+  } catch (error) {
+    console.error('Error during quiz submission:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
-     catch (error) {
-    res.status(500).json({ message: 'Server error' });
-  }};
+};
 
+//solve specific ds quiz by user
+const solveQuizDs = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+      const user_id = req.params.userId;
+      const data_structure_id = req.query.data_structure_id; // Get data structure ID from query parameters
+
+      // Validate if the user_id is a valid ObjectId
+      if (!mongoose.Types.ObjectId.isValid(user_id)) {
+          return res.status(400).json({ message: 'Invalid user ID format' });
+      }
+
+      // Validate if the data_structure_id is a valid ObjectId
+      if (!mongoose.Types.ObjectId.isValid(data_structure_id)) {
+          return res.status(400).json({ message: 'Invalid data structure ID format' });
+      }
+
+      // Step 1: Find all quiz attempts where the user_id matches
+      const quizAttempts = await QuizAttempt.find({ user_id });
+
+      if (quizAttempts.length === 0) {
+          return res.status(404).json({ message: 'No quiz attempts found for this user' });
+      }
+
+      // Step 2: Extract all unique quiz IDs from the quiz attempts
+      const quizIds = quizAttempts.map(attempt => attempt.quiz_id);
+
+      // Step 3: Use the quiz IDs to find the corresponding quizzes from the quizzes collection, 
+      // and filter by the provided data structure ID
+      const quizzes = await Quiz.find({ 
+          _id: { $in: quizIds },
+          data_structure_id // Ensure that the quizzes belong to the specific data structure
+      });
+
+      if (quizzes.length === 0) {
+          return res.status(404).json({ message: 'No quizzes found for the provided quiz IDs and data structure' });
+      }
+
+      const solvedQuizzes = quizzes.map(quiz => {
+          const attempt = quizAttempts.find(attempt => attempt.quiz_id.equals(quiz._id));
+          if (attempt) {
+              return {
+                  quiz_id: quiz._id,
+                  title: quiz.title,
+                  highest_Score: attempt.highest_score,
+                  completed_at: attempt.completed_at,
+                  updated_at: attempt.updated_at
+              };
+          }
+      }).filter(Boolean);
+      
+      const totalSolvedQuizzes = solvedQuizzes.length;
+
+      // Step 4: Return the list of quizzes back to the client
+      return res.status(200).json({ totalSolvedQuizzes, solvedQuizzes });
+  } catch (error) {
+      console.error('Error retrieving solved quizzes:', error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 
   //get all submitted or solved quizes
   const solveQuizAsync = async (req, res,next) => {
@@ -333,8 +405,9 @@ const submitQuiz = async (req, res) => {
             };
           }
         }).filter(Boolean);
+        const totalSolvedQuizzes = solvedQuizzes.length;
         // Step 4: Return the list of quizzes back to the client
-        return res.status(200).json({ solvedQuizzes });
+        return res.status(200).json({ totalSolvedQuizzes, solvedQuizzes });
     } catch (error) {
         console.error('Error retrieving solved quizzes:', error); // Better error visibility
         return res.status(500).json({ message: 'Internal Server Error' });
@@ -450,6 +523,7 @@ module.exports = {
   deleteQuiz,
   getQuizzesByDataStructureId,
   submitQuiz,
+  solveQuizDs,
   solveQuizAsync,
   getQuizWithHighestScoreUser,
   getQuizWithLowestScoreUser,

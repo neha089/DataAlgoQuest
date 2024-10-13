@@ -45,6 +45,8 @@ router.delete('/:id', quizController.deleteQuiz);
 router.get('/data-structure/:data_structure_id', quizController.getQuizzesByDataStructureId);
 //submit quiz
 router.post('/submit', submitQuizValidation, quizController.submitQuiz);
+//get all specific ds'quiz which is solved by user
+router.get('/solvedDs/:userId',quizController.solveQuizDs);
 //get all submitted or solved quizes
 router.get('/solved/:userId',quizController.solveQuizAsync);
 //get quiz with highest score user
