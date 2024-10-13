@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './aa.css';
 import SortingVisulization from './SortingVisulization';
+import GraphVisualizer from './GraphVisualizer';
 
 const LearningPathsaa = () => {
   const paths = [

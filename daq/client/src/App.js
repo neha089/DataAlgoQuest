@@ -17,7 +17,7 @@ import Login from './components/login';
 import Signup from './components/signup';
 import LearningPathsaa from './components/aa';
 import SortingVisualization from './components/SortingVisulization';
-import GraphVisualization from './components/graph'
+import GraphVisualization from './components/GraphVisualizer'
 import DynamicProgrammingVisualization from './components/dp'
 const AppContent = () => {
     const location = useLocation();
