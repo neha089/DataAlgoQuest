@@ -1,0 +1,25 @@
+.submission-calendar {
+  width: 100%;
+  max-width: 600px; /* Adjust as needed */
+  margin: auto;
+}
+
+.custom-calendar {
+  border: 1px solid #ddd; /* Optional border for the calendar */
+}
+
+.react-calendar {
+  background: #fff;
+}
+
+.react-calendar__tile {
+  height: 60px; /* Adjust tile height as needed */
+}
+
+.react-calendar__tile div {
+  height: 100%; /* Fill the tile */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px; /* Optional rounded corners */
+}
