@@ -403,6 +403,8 @@ const [currentNoteId, setCurrentNoteId] = useState(null); // To track the note b
 const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track the note content
     const leetcodeLogo = `${process.env.PUBLIC_URL}/leetcode-logo.png`;
     const navigate = useNavigate();
+    const getStorageKey = (problemId) => `user-${userId}-problem-${problemId}`;
+
 
     useEffect(() => {
         const fetchUserId = () => {
@@ -521,7 +523,7 @@ const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track th
             return;
         }
         problemsList.forEach(problem => {
-            const solvedStatus = localStorage.getItem(`problem-${problem._id}`);
+            const solvedStatus = localStorage.getItem(getStorageKey(problem._id));
             if (solvedStatus !== null) {
                 problem.solved = solvedStatus === 'true'; 
             }
@@ -648,7 +650,7 @@ const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track th
                 const updatedProblems = prevProblems.map(problem =>
                     problem._id === id ? { ...problem, solved: newSolvedStatus } : problem
                 );
-                localStorage.setItem(`problem-${id}`, newSolvedStatus);
+                localStorage.setItem(getStorageKey(id), newSolvedStatus);
                 updateProgress(updatedProblems);
                 if (!newSolvedStatus) {
                     fetch(`http://localhost:5000/api/challenges/remove/${id}/${userId}`, {
@@ -791,6 +793,7 @@ const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track th
                     ))}
                 </tbody>
             </table>
+            <button onClick={() => navigate(-1)} className="back-button">Back</button>
         </div>
     );
 };

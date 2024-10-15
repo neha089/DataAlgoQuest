@@ -7,3 +7,18 @@
     border-radius: 10px;
     font-family: 'Poppins', sans-serif;
 }
+.progress-section {
+    display: flex; /* This makes the calendar and progress graph sit horizontally */
+    justify-content: space-between; /* Space between the two elements */
+    align-items: flex-start; /* Align them to the top */
+}
+
+.calendar {
+    flex: 1; /* This takes up the left side */
+    margin-left: 117px; /* Adds some space between the calendar and graph */
+}
+
+.progress-graph {
+    flex: 2; /* This takes up more space on the right side */
+    margin-left: 15px;
+}

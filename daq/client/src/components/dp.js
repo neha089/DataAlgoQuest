@@ -220,7 +220,7 @@ const KnapsackVisualizer = () => {
             ))}
           </div>
           <div className="thief">
-            <img src="thief.png" alt="Thief" />
+            <img src="thief.avif" alt="Thief" />
           </div>
         </div>
       )}

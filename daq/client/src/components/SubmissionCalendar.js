@@ -7,17 +7,16 @@ const SubmissionCalendar = ({ submissions = [] }) => {
     const [date, setDate] = useState(new Date());
 
     const getSubmissionsForDate = (date) => {
-        const dateString = date.toISOString().split('T')[0];
-        const submission = submissions.find(sub => sub.date === dateString);
+        const submission = submissions.find(sub => sub.date.toDateString() === date.toDateString());
         return submission ? submission.count : 0;
     };
 
     const getBoxColor = (count) => {
-        if (count === 0) return '#d3d3d3'; 
-        if (count <= 3) return '#a8d8ff';
-        if (count <= 6) return '#6fb8ff';
-        if (count <= 10) return '#368bff';
-        return '#0053cc';
+        if (count === 0) return 'rgb(158 167 174)'; 
+        if (count <= 3) return 'rgb(141 200 247)';
+        if (count <= 6) return 'rgb(106 170 219);';
+        if (count <= 10) return 'rgb(82 142 189)';
+        return 'rgb(31 115 181)';
     };
 
     const tileContent = ({ date, view }) => {

@@ -19,7 +19,7 @@
 }
 
 .node circle {
-  fill: lightblue;
+  fill: rgb(140, 142, 143);
 }
 
 .node text {

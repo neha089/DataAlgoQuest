@@ -57,7 +57,7 @@ const QueueVisualization = () => {
 
         {/* Tail Indicator */}
         {queue.length > 1 && (
-          <div className="qtail-indicator" style={{ left: `${queue.length * 63 - 15}px` }}>
+          <div className="qtail-indicator" style={{ left: `${queue.length * 73 - 15}px` }}>
             <div className="arrow-wrapper">
               <img className="arrow-image" src={arrowImage} alt="Tail" />
               <div className="arrow-label">Front</div>

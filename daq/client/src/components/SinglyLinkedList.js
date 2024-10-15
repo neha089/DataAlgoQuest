@@ -164,139 +164,181 @@ class SingleLinkedList {
 
 sourceCode(){
     return {
-        title:`Double Linked List`,
-        codes:[
-          {
-               description:`Node Class of double linked list`,
-               code:`export class DoubleLinkNode {
-               data: number;
-               next: DoubleLinkNode | any;
-               prev: DoubleLinkNode | any;
-               constructor(data: number) {
-                    this.data = data;
-                    this.next = null;
-                    this.prev = null;
+        title:`Single Linked List`,
+     codes:[
+     {
+          description:`Single link node class code snippet`,
+          code:`export class SingleLinkNode {
+          data: number;
+          next: SingleLinkNode | any;
+     
+          constructor(data: number) {
+          this.data = data;
+          this.next = null;
+          }
+     }`
+     },
+     {
+          description:'Convert an array into single linked list',
+          code:`createSingleLinkedList(arr: number[]): void {
+          for (let i = 0; i < arr.length; i++) {
+            const node = new SingleLinkNode(arr[i]);
+            if (i === 0) {
+                 this.head = node;
+                 this.currentNode = this.head;
+            } else {
+                 this.currentNode.next = node;
+                 this.currentNode = node;
+            }
+          }
+     }`
+     },
+     {
+          description:'Insert Node at the start of the linked list',
+          code:`insertNodeAtFirst(element: number): void {
+          const node = new SingleLinkNode(element);
+          this.currentNode = this.head;
+          this.head = node;
+          this.head.next = this.currentNode;
+     }`
+     },
+     {
+          description:'Insert Node at the end of the linked list',
+          code:`insertNodeAtEnd(element: number): void {
+          const node = new SingleLinkNode(element);
+          if (this.head != null) {
+               this.currentNode = this.head;
+               while (this.currentNode.next !== null) {
+               this.currentNode = this.currentNode.next;
                }
-          }`
-          },
-          {
-               description:`Convert an array into double linked list`,
-               code:`createDoubleLinkedList(arr: number[]): void {
-               arr.forEach((item: number, index: number) => {
-                    const newNode = new DoubleLinkNode(item);
-                    if (index === 0) {
-                         this.head = newNode;
-                         this.currentNode = this.head;
-                    } else {
-                         newNode.prev = this.currentNode;
-                         this.currentNode.next = newNode;
-                         this.currentNode = newNode;
-                    }
-               });
-          }`
-          },
-          {
-               description:`Insert Node at the first of the double linked list`,
-               code:`insertNodeAtFirst(element: number): void {
-               const newNode = new DoubleLinkNode(element);
-               this.head.prev = newNode;
-               newNode.next = this.head;
-               this.head = newNode;
-          }`
-          },
-          {
-               description:`Insert Node at the last of the double linked list`,
-               code:`insertNodeAtEnd(element: number): void {
-               const newNode = new DoubleLinkNode(element);
-               if (this.head === null) {
-                    this.head = newNode;
+               this.currentNode.next = node;
+          } else {
+               this.head = node;
+          }
+     }`
+     },
+     {
+          description:'Insert Node at the specific position of the linked list',
+          code:`insertNodeAtPosition(element: number, position: number): void {
+          if (position === 1 || this.head === null) {
+               this.insertNodeAtFirst(element);
+               return;
+          }
+          const node = new SingleLinkNode(element);
+          let count = 1;
+          this.currentNode = this.head;
+          this.previousNode = this.head;
+          while (this.currentNode.next !== null) {
+               if (count === position) {
+               break;
+               }
+               count++;
+               this.previousNode = this.currentNode;
+               this.currentNode = this.currentNode.next;
+          }
+          node.next = this.currentNode;
+          this.previousNode.next = node;
+     }`
+     },
+     {
+          description:'Delete first node of the linked list',
+          code:`deleteAtFirst(): void {
+          if (this.head !== null) {
+               this.head = this.head.next;
+          }
+     }`
+     },
+     {
+          description:'Delete last node of the linked list',
+          code:`deleteAtEnd(): void {
+          if (this.head !== null) {
+               this.currentNode = this.head;
+               this.previousNode = null;
+               while (this.currentNode.next != null) {
+                    this.previousNode = this.currentNode;
+                    this.currentNode = this.currentNode.next;
+               }
+               if (this.previousNode != null) {
+                   this.previousNode.next = null;
                } else {
-                    this.currentNode = this.head;
-                    while (this.currentNode.next !== null) {
-                         this.currentNode = this.currentNode.next;
-                    }
-                    newNode.prev = this.currentNode;
-                    this.currentNode.next = newNode;
+                   this.head = null;
                }
-          }`
-          },
-          {
-               description:`Insert Node at the specifice position of the double linked list`,
-               code:`insertNodeAtPosition(element: number, position: number): void {
-               const newNode = new DoubleLinkNode(element);
-               if (position === 1 || this.head === null) {
-                    this.insertNodeAtFirst(element);
-               } else {
-                    this.currentNode = this.head;
-                    let count = 1;
-                    while (this.currentNode.next !== null) {
-                         if (count === position) {
-                              break;
-                         }
-                         count++;
-                         this.currentNode = this.currentNode.next;
-                    }
-                    newNode.prev = this.currentNode.prev;
-                    this.currentNode.prev.next = newNode;
-                    this.currentNode.prev = newNode;
-                    newNode.next = this.currentNode;
+          }
+     }`
+     },
+     {
+          description:'Delete a specific position node of the linked list',
+          code:`deleteAtPosition(position: number): void {
+          if (position === 1 || this.head === null) {
+               this.deleteAtFirst();
+               return;
+          }
+          let count = 0;
+          this.currentNode = this.head;
+          while (this.currentNode.next !== null) {
+               count++;
+               if (count === position) {
+               break;
                }
-          }`
-          },
-          {
-               description:`Delete node at the first of the double linked list`,
-               code:`deleteAtFirst(): void {
-               if (this.head !== null && this.head.next !== null) {
-                    this.currentNode = this.head.next;
-                    this.currentNode.prev = null;
-                    this.head = this.currentNode;
-               } else {
-                    this.head = null;
+          
+               this.previousNode = this.currentNode;
+               this.currentNode = this.currentNode.next;
+          }
+          if (count === position) {
+               this.previousNode.next = this.currentNode.next;
+          }
+     }`
+     },
+     {
+          description:'Convert single linked list into circular linked list',
+          code:` convertToCircularLinkedList(): void {
+          if (this.head != null) {
+               this.currentNode = this.head;
+               while (this.currentNode.next !== null) {
+                  this.currentNode = this.currentNode.next;
                }
-          }`
-          },
-          {
-               description:`Delete node at the end of the double linked list`,
-               code:`deleteAtEnd(): void {
-               if (this.head !== null) {
-                    this.currentNode = this.head;
-                    while (this.currentNode.next !== null) {
-                         this.currentNode = this.currentNode.next;
+               this.currentNode.next = this.head;
+          }
+     }`
+     },
+     {
+          description:'Check single linked list is circular linked list or not',
+          code:`isCircularLinkedList(): boolean {
+          if (this.head === null) {
+               return false;
+          } else {
+               this.currentNode = this.head.next;
+               while (this.currentNode.next !== null) {
+                    if (this.currentNode === this.head) {
+                         return true;
                     }
-                    if (this.currentNode.prev !== null) {
-                         this.currentNode.prev.next = null;
-                    } else {
-                         this.head = null;
-                    }
+                    this.currentNode = this.currentNode.next;
                }
-          }`
-          },
-          {
-               description:`Delete node at the specifice position of the double linked list`,
-               code:`deleteAtPosition(position: number): void {
-               if (position === 1 || this.head === null) {
-                    this.deleteAtFirst();
-                    return;
-               } else {
-                    let count = 1;
-                    this.currentNode = this.head;
-                    while (this.currentNode.next !== null) {
-                         if (count === position) {
-                              break;
-                         }
-                         count++;
-                         this.currentNode = this.currentNode.next;
-                    }
-                    if (count === position && this.currentNode.next !== null) {
-                         this.currentNode.prev.next = this.currentNode.next;
-                         this.currentNode.next.prev = this.currentNode.prev;
-                    } else {
-                         this.deleteAtEnd();
-                    }
+               return false;
+          }
+     }`
+     },
+     {
+          description:'Reverse a single linked list',
+          code:`reverseASingleLinkedList(): SingleLinkNode | null {
+          if (this.head === null) {
+               return this.head;
+          } else {
+               this.currentNode = this.head.next;
+               this.previousNode = this.head;
+               this.previousNode.next = null;
+               while (this.currentNode !== null) {
+                    let temp = this.currentNode;
+                    this.currentNode = this.currentNode.next;
+                    temp.next = this.previousNode;
+                    this.previousNode = temp;
                }
-          }`
-          },
-        ]
+               return this.previousNode;
+          }
+     }`
+     },
+     
+     ]
      }
     }
 }

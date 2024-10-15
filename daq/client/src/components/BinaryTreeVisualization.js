@@ -26,12 +26,12 @@ const BinaryTreeVisualization = () => {
 
   const freezeButtons = () => {
     document.getElementById('InsertButton').disabled = true;
-    document.getElementById('DeleteButton').disabled = true;
+    // document.getElementById('DeleteButton').disabled = true;
   };
 
   const unfreezeButtons = () => {
     document.getElementById('InsertButton').disabled = false;
-    document.getElementById('DeleteButton').disabled = false;
+    // document.getElementById('DeleteButton').disabled = false;
   };
 
   const sleep = (ms) => {
@@ -375,8 +375,8 @@ const BinaryTreeVisualization = () => {
         <button id="InsertButton" onClick={addNode}>
           Insert
         </button>
-        <input id="DeleteNodeField" type="number" placeholder="Enter value to delete" />
-        <button id="DeleteButton">Delete</button>
+        {/* <input id="DeleteNodeField" type="number" placeholder="Enter value to delete" />
+        <button id="DeleteButton">Delete</button> */}
         <button onClick={handleViewCode}>View Code</button>
       </div>
       <div className="Canvas" style={{ height: height }}>
