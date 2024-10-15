@@ -1,0 +1,64 @@
+/* UserInfo.css */
+.user-info-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1818;
+    border-radius: 10px;
+    padding: 20px;
+    color: #f5f1f1;
+    width: 80%;
+    margin: auto;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    background-color: #319ed4;
+    color: #f5f1f1;
+    font-size: 32px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.user-text-info h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #3498db;
+    margin-bottom: 5px;
+}
+
+.user-text-info p {
+    margin: 5px 0;
+    font-weight: 500;
+    color: #319ed4;
+}
+
+.user-activity {
+    background-color: #2e2b2b;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.user-activity h3 {
+    font-size: 20px;
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.user-activity p {
+    font-weight: 500;
+    color: #f5f1f1;
+    margin: 5px 0;
+}

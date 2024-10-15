@@ -19,6 +19,7 @@ import LearningPathsaa from './components/aa';
 import SortingVisualization from './components/SortingVisulization';
 import GraphVisualization from './components/GraphVisualizer'
 import DynamicProgrammingVisualization from './components/dp'
+import Profile from './components/Profile';
 const AppContent = () => {
     const location = useLocation();
 
@@ -40,10 +41,11 @@ const AppContent = () => {
                 <Route path="/Character" element={<Character/>}/>
                 <Route path="/Boolean" element={<Boolean/>}/>
                 <Route path="/aa" element={<LearningPathsaa />} />
+                <Route path="/profile" element={ <Profile />} />
                 <Route path="/data-structure/Tree/BinaryTree" element={<BinaryTree/>}/>
                 <Route path="/sorting-visualization" element={<SortingVisualization />} />
-        <Route path="/graph-visualization" element={<GraphVisualization />} />
-        <Route path="/dynamic-programming-visualization" element={<DynamicProgrammingVisualization />} />
+                <Route path="/graph-visualization" element={<GraphVisualization />} />
+                <Route path="/dynamic-programming-visualization" element={<DynamicProgrammingVisualization />} />
             </Routes>
         </div>
     );

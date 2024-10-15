@@ -1,0 +1,9 @@
+.profile-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1a1818;
+    color: #f5f1f1;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+}

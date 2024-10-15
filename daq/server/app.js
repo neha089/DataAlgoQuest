@@ -84,7 +84,16 @@ app.patch('/api/notes/:noteId', async (req, res) => {
 //   throw error;
 // });
 
-
+app.get('/api/user/profile', async (req, res) => {
+  try {
+      const user = await User.findById(req.user.id).populate('progress');
+      const quizAttempts = await QuizAttempt.find({ user_id: req.user.id });
+      const challengeAttempts = await ChallengeAttempt.find({ user_id: req.user.id });
+      res.json({ user, quizAttempts, challengeAttempts });
+  } catch (error) {
+      res.status(500).send("Server Error");
+  }
+});
 app.use((error, req, res, next) => {
   if (res.headerSent) {
     return next(error);

@@ -92,9 +92,17 @@ const SortingVisualizer = () => {
 
   const unhighlightBars = (index1, index2) => {
     const bars = document.getElementsByClassName("array-bar");
-    bars[index1].classList.remove("highlighted");
-    bars[index2].classList.remove("highlighted");
+  
+    // Ensure indices are valid
+    if (index1 >= 0 && index1 < bars.length) {
+      bars[index1].classList.remove("highlighted");
+    }
+  
+    if (index2 >= 0 && index2 < bars.length) {
+      bars[index2].classList.remove("highlighted");
+    }
   };
+  
 
   const bubbleSort = async () => {
     let arr = [...array];
