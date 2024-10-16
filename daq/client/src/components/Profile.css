@@ -1,24 +1,72 @@
-.profile-container {
-    width: 80%;
-    margin: 0 auto;
+/* Profile.css */
+
+.feedback-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.feedback-form {
+    background: #fff;
     padding: 20px;
-    background-color: #1a1818;
-    color: #f5f1f1;
-    border-radius: 10px;
-    font-family: 'Poppins', sans-serif;
-}
-.progress-section {
-    display: flex; /* This makes the calendar and progress graph sit horizontally */
-    justify-content: space-between; /* Space between the two elements */
-    align-items: flex-start; /* Align them to the top */
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.calendar {
-    flex: 1; /* This takes up the left side */
-    margin-left: 117px; /* Adds some space between the calendar and graph */
+.feedback-form h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
 }
 
-.progress-graph {
-    flex: 2; /* This takes up more space on the right side */
-    margin-left: 15px;
+.feedback-form label {
+    display: block;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.feedback-form textarea,
+.feedback-form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.feedback-form-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.feedback-form-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #007bff;
+    color: #fff;
+}
+
+.feedback-form-buttons button[type="button"] {
+    background: #dc3545;
+}
+.star-rating {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.star-rating .fa-star {
+    margin: 0 5px;
+    cursor: pointer;
 }
