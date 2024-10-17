@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './dp.css';
+import { useNavigate } from 'react-router-dom';
 
 const KnapsackVisualizer = () => {
   const [items, setItems] = useState([
@@ -14,6 +15,7 @@ const KnapsackVisualizer = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [currentCell, setCurrentCell] = useState([0, 0]); // [row, col]
   const [isSelectionDone, setIsSelectionDone] = useState(false);
+  const navigate=useNavigate();
 
   const generateRandomItems = () => {
     const newItems = Array(4)
@@ -101,7 +103,6 @@ const KnapsackVisualizer = () => {
     const [row, col] = currentCell;
     const nextCol = col < capacity ? col + 1 : 1;
     const nextRow = nextCol === 1 ? row + 1 : row;
-
     if (nextRow <= items.length) {
       setCurrentCell([nextRow, nextCol]);
     } else {
@@ -203,6 +204,7 @@ const KnapsackVisualizer = () => {
         <button onClick={nextCell} disabled={isSelectionDone}>
           Next
         </button>
+        <button onClick={() => navigate(-1)}>Back</button>
       </div>
 
       {isSelectionDone && (

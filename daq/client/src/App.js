@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';// useLocation 
 import DataAlgoQuestNavbar from './components/DataAlgoQuestNavbar';
 import LearningPaths from './components/LearningPaths';
 import DataStructureDetail from './components/DataStructureDetail';
@@ -21,11 +21,12 @@ import GraphVisualization from './components/GraphVisualizer'
 import DynamicProgrammingVisualization from './components/dp'
 import Profile from './components/Profile';
 const AppContent = () => {
-    const location = useLocation();
+    // const location = useLocation();
 
     return (
-        <div>
-            {!location.pathname.startsWith('/admin') && <DataAlgoQuestNavbar />}
+        <div>  
+              {/* {!location.pathname.startsWith('/admin') && <DataAlgoQuestNavbar />} */}
+            {<DataAlgoQuestNavbar />}
             <Routes>
                 <Route path="/" element={<HomePage/>} />
                 <Route path="/signup" element={<Signup/>} />

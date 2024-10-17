@@ -6,19 +6,24 @@ import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa'; // Profile and logo
 const DataAlgoQuestNavbar = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const [isAdmin, setIsAdmin] = useState(false);
     // Check if the user is logged in when the component mounts
     useEffect(() => {
-        const token = localStorage.getItem('token'); // assuming JWT token is stored in localStorage
-        if (token) {
+        const token = localStorage.getItem('token');
+        const adminFlag = localStorage.getItem('isAdmin');
+        if (token || adminFlag) {
             setIsLoggedIn(true);
+            if (adminFlag) {
+                setIsAdmin(true); // Check if admin is logged in
+            }
         }
     }, []);
 
     const handleLogout = () => {
-        // Clear token or any user authentication data
         localStorage.removeItem('token');
+        localStorage.removeItem('isAdmin'); // Clear the admin flag
         setIsLoggedIn(false);
+        setIsAdmin(false);
         navigate('/');
     };
 
@@ -33,7 +38,8 @@ const DataAlgoQuestNavbar = () => {
             <div className="navbar-right">
                 {isLoggedIn ? (
                     <>
-                        <FaUserCircle className="navbar-icon" onClick={() => navigateTo('/profile')} title="Profile" />
+                        {!isAdmin &&(
+                        <FaUserCircle className="navbar-icon" onClick={() => navigateTo('/profile')} title="Profile" />)}
                         <FaSignOutAlt className="navbar-icon" onClick={handleLogout} title="Logout" />
                     </>
                 ) : (

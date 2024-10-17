@@ -46,6 +46,7 @@ const LearningPathsaa = () => {
           </div>
         ))}
       </div>
+      <button onClick={() => navigate(-1)}>Back</button>
     </div>
   );
 };

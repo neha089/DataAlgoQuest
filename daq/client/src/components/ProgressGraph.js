@@ -4,9 +4,6 @@ import './ProgressGraph.css';
 const ProgressGraph = ({ progress }) => {
     const { quiz_scores, challenge_scores } = progress;
 
-    console.log("Quiz Scores:", quiz_scores);
-    console.log("Challenge Scores:", challenge_scores);
-
     // Set a reasonable maximum value for scaling
     const maxScore = Math.max(quiz_scores, challenge_scores, 50); 
     // Scale the values to fit within the SVG height (200)
@@ -26,7 +23,7 @@ const ProgressGraph = ({ progress }) => {
        
             <div className="graph-container">
                 <h4>Progress</h4>
-                <svg width="700" height="220"> {/* Increased height for better visibility */}
+                <svg width="700" height="520"> {/* Increased height for better visibility */}
                     {/* X-axis */}
                     <line x1="30" y1="200" x2="180" y2="200" stroke="black" strokeWidth="3"/>
                     {/* Y-axis */}

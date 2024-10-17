@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./SortingVisulization.css";
+import { useNavigate } from 'react-router-dom';
 
 const SortingVisualizer = () => {
   const [array, setArray] = useState([]);
@@ -9,6 +10,7 @@ const SortingVisualizer = () => {
   const [sorting, setSorting] = useState(false);
   const [paused, setPaused] = useState(false);
   const timeoutId = useRef(null);
+  const navigate = useNavigate();
 
   const resetArray = () => {
     if (sorting) return;
@@ -320,6 +322,7 @@ const SortingVisualizer = () => {
           </div>
         ))}
       </div>
+      <button onClick={() => navigate(-1)}>Back</button>
     </div>
   );
 };

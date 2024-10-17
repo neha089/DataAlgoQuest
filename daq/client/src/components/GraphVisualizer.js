@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as d3 from "d3";
 import "./GraphVisualizer.css";
+import { useNavigate } from 'react-router-dom';
 
 const GraphVisualizer = () => {
   const [nodes, setNodes] = useState([]);
@@ -15,6 +16,7 @@ const GraphVisualizer = () => {
   const [bfsOutput, setBfsOutput] = useState([]);
   const [dfsOutput, setDfsOutput] = useState([]);
   const [queueStackStatus, setQueueStackStatus] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const svg = d3.select("#graph").attr("width", "800px").attr("height", "500px");
@@ -255,7 +257,9 @@ const GraphVisualizer = () => {
         <p>{dfsOutput.join(", ")}</p>
       </div>
       <svg id="graph"></svg>
+      <button onClick={() => navigate(-1)}>Back</button>
     </div>
+    
   );
 };
 

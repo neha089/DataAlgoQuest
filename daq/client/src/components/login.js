@@ -10,6 +10,12 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (email === 'admin123@gmail.com' && password === 'admin123') {
+      localStorage.setItem('isAdmin', true); // Store an admin flag in local storage
+      navigate('/admin'); // Redirect to the admin page
+      window.location.reload();
+      return;
+    }
     try {
       const response = await axios.post('http://localhost:5000/api/users/login', { email, password });
       // Store token in local storage

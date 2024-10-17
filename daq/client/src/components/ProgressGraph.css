@@ -6,6 +6,8 @@
     color: #f5f1f1;
     text-align: center;
     transition: background-color 0.3s ease;
+    max-width: 45%; /* Adjust this percentage to control the width */
+    margin-right:130px;
 }
 
 .graph-container {
@@ -16,6 +18,7 @@
     padding: 80px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
     transition: height 0.3s ease; /* Adjust container height dynamically */
+    margin-left: 100px;
 }
 
 svg {

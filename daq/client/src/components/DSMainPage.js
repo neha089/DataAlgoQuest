@@ -75,13 +75,14 @@ const TreeNode = ({ name, onClick, isActive }) => {
       onClick={handleClick}
     >
       <p className="m-0">{name}</p>
-    </div>
+    </div>  
   );
 };
 
 export default function DataStructureTree() {
   const [activeType, setActiveType] = useState(null);
   const [activeSubType, setActiveSubType] = useState(null);
+  const navigate = useNavigate(); // Updated hook
 
   const handleTypeClick = (type) => {
     setActiveType(type);
@@ -155,6 +156,8 @@ export default function DataStructureTree() {
           </div>
         )}
       </div>
+      <button onClick={()=>navigate(-1)}>Back</button>
+
     </div>
   );
 }

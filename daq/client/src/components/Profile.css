@@ -70,3 +70,32 @@
     margin: 0 5px;
     cursor: pointer;
 }
+
+.profile-container {
+    padding: 20px;
+}
+
+.progress-section {
+    display: flex; /* This makes the calendar and progress graph sit horizontally */
+    justify-content: space-between; /* Space between the two elements */
+    align-items: flex-start; /* Align them to the top */
+}
+
+.calendar {
+    flex: 1; /* This takes up the left side */
+    margin-left: 150px; /* Adds some space between the calendar and graph */
+}
+
+.progress-graph {
+    flex: 2; /* This takes up more space on the right side */
+}
+
+/* Optional: Adjust size if needed */
+.progress-graph svg {
+    width: 100%; /* Make sure the graph fills its container */
+    height: auto;
+}
+
+.calendar {
+    min-width: 300px; /* Ensure the calendar has a minimum width */
+}

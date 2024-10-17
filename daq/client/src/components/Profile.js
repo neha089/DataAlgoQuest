@@ -111,7 +111,7 @@ const Profile = () => {
                     </div>
                 </div>
             )}
-            <UserInfo />
+            <UserInfo /><br/>
             <div className="progress-section">
                 <div className="calendar">
                     <SubmissionCalendar submissions={submissions} />
