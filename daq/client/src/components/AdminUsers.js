@@ -6,9 +6,9 @@ const AdminUsers = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [editingUserId, setEditingUserId] = useState(null); // For tracking the user being edited
-    const [editedUserName, setEditedUserName] = useState('');
-    const [editedUserEmail, setEditedUserEmail] = useState('');
+    // const [editingUserId, setEditingUserId] = useState(null); // For tracking the user being edited
+    // const [editedUserName, setEditedUserName] = useState('');
+    // const [editedUserEmail, setEditedUserEmail] = useState('');
 
     // Fetching users on component load
     useEffect(() => {
@@ -24,32 +24,33 @@ const AdminUsers = () => {
             });
     }, []);
 
-    // Handling user edit
-    const handleEdit = (userId, userName, userEmail) => {
-        setEditingUserId(userId);
-        setEditedUserName(userName);
-        setEditedUserEmail(userEmail);
-    };
+    // // Handling user edit
+    // const handleEdit = (userId, userName, userEmail) => {
+    //     setEditingUserId(userId);
+    //     setEditedUserName(userName);
+    //     setEditedUserEmail(userEmail);
+    // };
 
-    // Saving the edited user without reloading the page
-    const handleSaveEdit = () => {
-        axios.put(`http://localhost:5000/api/users/${editingUserId}`, {
-            name: editedUserName,
-            email: editedUserEmail
-        })
-            .then(response => {
-                // Optimistically update the users state with the modified user
-                setUsers(users.map(user => user._id === editingUserId ? { ...user, name: editedUserName, email: editedUserEmail } : user));
-                setEditingUserId(null);  // Clear editing state
-            })
-            .catch(error => {
-                console.error('Error saving user:', error);
-                setError('Failed to save user.');
-            });
-    };
+    // // Saving the edited user without reloading the page
+    // const handleSaveEdit = () => {
+    //     axios.put(`http://localhost:5000/api/users/${editingUserId}`, {
+    //         name: editedUserName,
+    //         email: editedUserEmail
+    //     })
+    //         .then(response => {
+    //             // Optimistically update the users state with the modified user
+    //             setUsers(users.map(user => user._id === editingUserId ? { ...user, name: editedUserName, email: editedUserEmail } : user));
+    //             setEditingUserId(null);  // Clear editing state
+    //         })
+    //         .catch(error => {
+    //             console.error('Error saving user:', error);
+    //             setError('Failed to save user.');
+    //         });
+    // };
 
     // Handling user deletion
     const handleDelete = (userId) => {
+        console.log(userId);
         axios.delete(`http://localhost:5000/api/users/${userId}`)
             .then(response => {
                 // Remove the user from the state without reloading the page
@@ -81,7 +82,7 @@ const AdminUsers = () => {
                     <tbody>
                         {users.map(user => (
                             <tr key={user._id}>
-                                <td>
+                                {/* <td>
                                     {editingUserId === user._id ? (
                                         <input
                                             type="text"
@@ -89,8 +90,9 @@ const AdminUsers = () => {
                                             onChange={(e) => setEditedUserName(e.target.value)}
                                         />
                                     ) : user.name}
-                                </td>
-                                <td>
+                                </td> */}
+                                <td>{user.name}</td>
+                                {/* <td>
                                     {editingUserId === user._id ? (
                                         <input
                                             type="email"
@@ -98,13 +100,14 @@ const AdminUsers = () => {
                                             onChange={(e) => setEditedUserEmail(e.target.value)}
                                         />
                                     ) : user.email}
-                                </td>
+                                </td> */}
+                                <td>{user.email}</td>
                                 <td>{new Date(user.created_at).toLocaleDateString()}</td>
                                 <td>{new Date(user.updated_at).toLocaleDateString()}</td>
                                 <td>{user.progress ? user.progress.quiz_scores : 'N/A'}</td>
                                 <td>{user.progress ? user.progress.challenge_scores : 'N/A'}</td>
                                 <td>
-                                    {editingUserId === user._id ? (
+                                    {/* {editingUserId === user._id ? (
                                         <button className="btn-save" onClick={handleSaveEdit}>
                                             Save
                                         </button>
@@ -115,7 +118,7 @@ const AdminUsers = () => {
                                         >
                                             Edit
                                         </button>
-                                    )}
+                                    )} */}
                                     <button 
                                         className="btn-delete" 
                                         onClick={() => handleDelete(user._id)}

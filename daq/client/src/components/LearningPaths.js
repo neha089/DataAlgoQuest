@@ -23,7 +23,7 @@ const LearningPaths = () => {
             id: 1,
             title: 'Stack',
             description: 'Your Path to Becoming a Career-Ready Web Developer!',
-            duration: 'Total time: 39 hours, 30 minutes',
+            duration: 'Total time: 3 hours, 30 minutes',
             progress: 0 ,// Update this value to reflect actual user progress
             data_structure_id:'66ec161e15a1fe7205accf22'
         },
@@ -31,7 +31,7 @@ const LearningPaths = () => {
             id: 2,
             title: 'Queue',
             description: 'Enhance Your Skills and Build More Complex Projects!',
-            duration: 'Total time: 42 hours, 15 minutes',
+            duration: 'Total time: 2 hours, 15 minutes',
             progress: 0, // Update this value to reflect actual user progress
             data_structure_id:'66c18a3c9f77a665101a175f'
         },
@@ -39,7 +39,7 @@ const LearningPaths = () => {
             id: 3,
             title: 'Tree',
             description: 'Master the Latest Technologies and Go Beyond the Basics!',
-            duration: 'Total time: 45 hours, 10 minutes',
+            duration: 'Total time: 5 hours, 10 minutes',
             progress: 0 ,// Update this value to reflect actual user progress
             data_structure_id:'66c18a4b9f77a665101a1762'
         },
@@ -47,7 +47,7 @@ const LearningPaths = () => {
             id: 4,
             title: 'Linked List',
             description: 'Your Path to Becoming a Career-Ready Web Developer!',
-            duration: 'Total time: 39 hours, 30 minutes',
+            duration: 'Total time: 3 hours, 45 minutes',
             progress: 0, // Update this value to reflect actual user progress
             data_structure_id:'66ec157515a1fe7205accf1f'
         },

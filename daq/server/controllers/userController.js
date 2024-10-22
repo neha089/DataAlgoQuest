@@ -124,29 +124,32 @@ const updateUser = async (req, res, next) => {
   res.json({ user: user.toObject({ getters: true }) });
 };
 
+const Progress = require('../models/progress');
 // Delete user by ID
 const deleteUser = async (req, res, next) => {
   const userId = req.params.id;
 
-  let user;
-  try {
-    user = await User.findById(userId).populate('progress');
+  try {      
+      // Find the user and populate the progress field
+      const user = await User.findById(userId).populate('progress');
+      if (!user) {
+          return next(new HttpError('User not found.', 404));
+      }
+
+      // Remove the associated progress
+      if (user.progress) {
+          await Progress.findByIdAndDelete(user.progress._id);
+      }
+
+      // Now delete the user
+      await User.findByIdAndDelete(userId);
+
+      res.status(200).json({ message: 'User and associated progress deleted.' });
   } catch (err) {
-    return next(new HttpError('Something went wrong, could not delete user.', 500));
+      return next(new HttpError('Something went wrong, could not delete user and progress.', 500));
   }
-
-  if (!user) {
-    return next(new HttpError('User not found.', 404));
-  }
-
-  try {
-    await user.remove();
-  } catch (err) {
-    return next(new HttpError('Something went wrong, could not delete user.', 500));
-  }
-
-  res.status(200).json({ message: 'User deleted.' });
 };
+
 
 module.exports = {
   createUser,

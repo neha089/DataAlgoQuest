@@ -1,14 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './aa.css';
-import SortingVisulization from './SortingVisulization';
-import GraphVisualizer from './GraphVisualizer';
 
 const LearningPathsaa = () => {
   const paths = [
-    { title: 'Sorting Algorithms', time: '39 hours, 30 minutes' },
-    { title: 'Graph Algorithms', time: '42 hours, 15 minutes' },
-    { title: 'Dynamic Programming', time: '45 hours, 10 minutes' },
+    { title: 'Sorting Algorithms', time: '1 hours, 30 minutes' },
+    { title: 'Graph Algorithms', time: '1 hours, 15 minutes' },
+    { title: 'Dynamic Programming', time: '1 hours, 10 minutes' },
   ];
 
   const navigate = useNavigate();

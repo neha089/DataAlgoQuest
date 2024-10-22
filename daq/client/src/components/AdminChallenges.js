@@ -125,14 +125,14 @@ const AdminChallenges = () => {
                     onChange={(e) => setDataStructureId(e.target.value)}
                     required
                 />
-                <label>
+                {/* <label>
                     Revision:
                     <input
                         type="checkbox"
                         checked={revision}
                         onChange={(e) => setRevision(e.target.checked)}
                     />
-                </label>
+                </label> */}
                 <button type="submit">{editingId ? 'Update' : 'Add'} Challenge</button>
                 {editingId && <button type="button" onClick={resetForm}>Cancel</button>}
             </form>
