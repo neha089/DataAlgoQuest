@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './style.css';
+import '../style.css';
 
 const DataStructureQuiz = () => {
     const [userId, setUserId] = useState(null);

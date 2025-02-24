@@ -1,25 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';// useLocation 
-import DataAlgoQuestNavbar from './components/DataAlgoQuestNavbar';
+import DataAlgoQuestNavbar from './components/Navbar/DataAlgoQuestNavbar';
 import LearningPaths from './components/LearningPaths';
 import DataStructureDetail from './components/DataStructureDetail';
-import DataStructureQuiz from './components/DataStructureQuiz';
-import DataStructurePage from './components/DSMainPage';
-import Integer from './components/Integer';
-import Float from './components/Float';
-import Character from './components/Character';
-import Boolean from './components/Boolean';
-import CodingChallenges from './components/CodingChallenges';
+import DataStructureQuiz from './components/Quiz/DataStructureQuiz';
+import DataStructurePage from './components/Main/DSMainPage';
+import Integer from './components/DataType/Integer';
+import Float from './components/DataType/Float';
+import Character from './components/DataType/Character';
+import Boolean from './components/DataType/Boolean';
+import CodingChallenges from './components/CodingChallenge/CodingChallenges';
 import Admin from './components/Admin/Admin';
-import HomePage from './components/HomePage'; // Import the new HomePage
-import BinaryTree from './components/BinaryTree';
-import Login from './components/login';
-import Signup from './components/signup';
-import LearningPathsaa from './components/aa';
-import SortingVisualization from './components/SortingVisulization';
-import GraphVisualization from './components/GraphVisualizer'
-import DynamicProgrammingVisualization from './components/dp'
-import Profile from './components/Profile';
+import HomePage from './components/HomePage/HomePage'; // Import the new HomePage
+import BinaryTree from './components/BinaryTree/BinaryTree';
+import Login from './components/User/login';
+import Signup from './components/User/signup';
+import LearningPathsaa from './components/Algorithm/aa';
+import SortingVisualization from './components/Sorting/SortingVisulization';
+import GraphVisualization from './components/Graph/GraphVisualizer'
+import DynamicProgrammingVisualization from './components/DP/dp'
+import Profile from './components/User/Profile';
 const AppContent = () => {
     // const location = useLocation();
 

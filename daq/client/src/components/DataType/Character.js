@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css'; // Ensure you have the necessary styles
+import '../style.css'; // Ensure you have the necessary styles
 import { useNavigate } from 'react-router-dom';
 
 const Character = () => {

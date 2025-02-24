@@ -1,6 +1,6 @@
 import {useNavigate } from 'react-router-dom';
 import BinaryTreeVisualization from './BinaryTreeVisualization';
-import BinaryTreeImage from '../assets/ds-image/binary-tree.jpg';
+import BinaryTreeImage from '../../assets/ds-image/binary-tree.jpg';
 
 const binaryTree = {
     defination:

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SingleLinkedList from './SinglyLinkedList';
-import image from '../assets/icons/link-arrow.png'; // Arrow for the links
+import image from '../../assets/icons/link-arrow.png'; // Arrow for the links
 import "./singly.css";
 import "./linklist.css"
 

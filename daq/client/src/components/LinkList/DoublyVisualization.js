@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import DoubleLinkedList from './DoublyLinkedList';
-import image from '../assets/icons/link-arrow.png'; // Arrow for the links
+import image from '../../assets/icons/link-arrow.png'; // Arrow for the links
 import "./doubly.css";
-import linkImage from '../assets/icons/double-link.png';
+import linkImage from '../../assets/icons/double-link.png';
 const DoubleLinkedListComponent = () => {
   const [doubleLinkedList, setDoubleLinkedList] = useState(null);
   const [operationStep, setOperationStep] = useState(-1);

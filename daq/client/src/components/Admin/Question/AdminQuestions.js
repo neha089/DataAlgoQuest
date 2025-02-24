@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import './AdminQuestions.css';
+import './AdminQuestion.css';
 
 const AdminQuestions = () => {
     const { quizId } = useParams(); // Get quizId from the route params

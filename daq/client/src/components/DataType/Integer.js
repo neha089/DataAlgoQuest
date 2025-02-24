@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css'; // Make sure you have the styles you need
+import '../style.css'; // Make sure you have the styles you need
 import { useNavigate } from 'react-router-dom';
 
 const ReadMore = () => {

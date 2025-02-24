@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import StackVisualization from './StackVisualization';
-import QueueVisualization from './QueueVisualization';
-import TreeVisualization from './TreeVisualization';
-import LinkedListVisualization from './LinkedListVisualization';
+import StackVisualization from './Stack/StackVisualization';
+import QueueVisualization from './Queue/QueueVisualization';
+import TreeVisualization from './BinaryTree/TreeVisualization';
+import LinkedListVisualization from './LinkList/LinkedListVisualization';
 import stackImage from '../assets/ds-image/stack.jpg';
 import queueImage from '../assets/ds-image/queue.jpg';
 import listImage from '../assets/ds-image/linked-list.jpg';

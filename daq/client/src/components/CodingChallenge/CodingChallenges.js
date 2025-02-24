@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './style.css';
+import '../style.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const CodingChallenges = () => {
