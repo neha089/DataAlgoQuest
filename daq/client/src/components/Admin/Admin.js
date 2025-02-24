@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom'; 
-import AdminNavbar from './AdminNavbar';
-import AdminUsers from './AdminUsers';
-import AdminFeedback from './AdminFeedback';
-import AdminDataStructures from './AdminDataStructures';
-import AdminQuizzes from './AdminQuizzes';
-import AdminChallenges from './AdminChallenges';
-import AdminQuestions from './AdminQuestions';
+import AdminNavbar from './Navabar/AdminNavbar';
+import AdminUsers from './User/AdminUsers';
+import AdminFeedback from './Feedback/AdminFeedback';
+import AdminDataStructures from './DataStructure/AdminDataStructures';
+import AdminQuizzes from './Quizz/AdminQuizzes';
+import AdminChallenges from './Challenges/AdminChallenges';
+import AdminQuestions from './Question/AdminQuestions';
 
 const Admin = () => {
     return (

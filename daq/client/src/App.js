@@ -10,7 +10,7 @@ import Float from './components/Float';
 import Character from './components/Character';
 import Boolean from './components/Boolean';
 import CodingChallenges from './components/CodingChallenges';
-import Admin from './components/Admin';
+import Admin from './components/Admin/Admin';
 import HomePage from './components/HomePage'; // Import the new HomePage
 import BinaryTree from './components/BinaryTree';
 import Login from './components/login';
