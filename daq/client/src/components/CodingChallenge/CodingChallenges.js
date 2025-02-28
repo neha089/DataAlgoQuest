@@ -8,43 +8,26 @@ const CodingChallenges = () => {
     const [progress, setProgress] = useState({ total: 0, completed: 0 });
     const [showRevisions, setShowRevisions] = useState(false);
     const [problems, setProblems] = useState([]);
-    const [solvedChallenges, setSolvedChallenges] = useState([]);
     const [showSolvedChallenges, setShowSolvedChallenges] = useState(false);
     const [editMode, setEditMode] = useState(false); // To track if in edit mode
-const [currentNoteId, setCurrentNoteId] = useState(null); // To track the note being edited
-const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track the note content
+    const [currentNoteId, setCurrentNoteId] = useState(null); // To track the note being edited
+    const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track the note content
     const leetcodeLogo = `${process.env.PUBLIC_URL}/leetcode-logo.png`;
     const navigate = useNavigate();
     const getStorageKey = (problemId) => `user-${userId}-problem-${problemId}`;
 
 
     useEffect(() => {
-        const fetchUserId = () => {
-            const user_id = localStorage.getItem('userId');
-            if (user_id) {
-                setUserId(user_id);
-            }
-        };
-
-        fetchUserId();
-
-        if (!userId) {
-            console.error('User ID is not available, cannot fetch challenges');
-            return;
+        const user_id = localStorage.getItem('userId');
+        if (user_id) {
+            setUserId(user_id);
         }
-
-        if (!data_structure_id) {
-            console.error('Data structure ID is not available');
-            return;
-        }
-
+    }, []);
+    useEffect(() => {
+        if (!userId || !data_structure_id) return;
+    
         fetch(`http://localhost:5000/api/challenges/dschallenge/${data_structure_id}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (Array.isArray(data.challenges)) {
                     setProblems(data.challenges);
@@ -57,7 +40,30 @@ const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track th
             })
             .catch(error => console.error('Error fetching problems:', error));
     }, [userId, data_structure_id]);
-
+    
+    const fetchChallenges = async () => {
+        if (!userId || !data_structure_id) return;
+    
+        try {
+            const response = await fetch(`http://localhost:5000/api/challenges/dschallenge/${data_structure_id}`);
+            if (!response.ok) throw new Error('Network error');
+    
+            const data = await response.json();
+            if (Array.isArray(data.challenges)) {
+                setProblems(data.challenges);
+                loadCheckboxStates(data.challenges);
+                updateProgress(data.challenges);
+                fetchNotes(data.challenges); // હવે અહીંથી અલગથી બોલાવ્યું
+            }
+        } catch (error) {
+            console.error('Error fetching problems:', error);
+        }
+    };
+    
+    useEffect(() => {
+        fetchChallenges();
+    }, [userId, data_structure_id]);
+    
     const fetchNotes = (challenges) => {
         if (!userId) {
             console.error('User ID is null. Cannot fetch notes.');
@@ -81,7 +87,7 @@ const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track th
             setProblems(updatedChallenges); // Set updated challenges with notes
         });
     };
-
+    
     const updateProgress = (problemsList) => {
         const revisionsCount = problemsList.filter(problem => problem.solved).length;
         setProgress({ total: problemsList.length, completed: revisionsCount });
@@ -89,45 +95,30 @@ const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track th
     const handleShowRevisions = () => {
         setShowRevisions(!showRevisions); // Toggle between all problems and revision problems
     };
-     const handleShowSolvedChallenges = () => { 
+    const handleShowSolvedChallenges = async () => {
         setShowSolvedChallenges(!showSolvedChallenges);
-        
-        if (!showSolvedChallenges) {
-            fetch(`http://localhost:5000/api/challenges/solveByds?user_id=${encodeURIComponent(userId)}&&data_structure_id=${data_structure_id}`)
-                .then(response => response.json())
-                .then(async (data) => {
-                    if (data.solvedChallenges) {
-                        // Fetch notes for each solved challenge
-                        const challengesWithNotes = await Promise.all(data.solvedChallenges.map(async (challenge) => {
-                            // Fetch notes for the current challenge
-                            const notesResponse = await fetch(`http://localhost:5000/api/notes/challenges/${challenge._id}?user_id=${userId}`);
-                            const notesData = await notesResponse.json();
-
-                            return {
-                                ...challenge,
-                                solved: true,
-                                note: notesData // Assuming notesData is an array
-                            };
-                        }));
-
-                        // Update state with challenges including their notes
-                        setSolvedChallenges(data.solvedChallenges);
-                        setProblems(challengesWithNotes);
-                    }
-                })
-                .catch(error => console.error('Error fetching solved challenges:', error));
-        } else {
-            // Fetch all challenges again
-            fetch(`http://localhost:5000/api/challenges/dschallenge/${data_structure_id}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (Array.isArray(data.challenges)) {
-                        setProblems(data.challenges);
-                    }
-                })
-                .catch(error => console.error('Error fetching all challenges:', error));
+    
+        try {
+            let data;
+            if (!showSolvedChallenges) {
+                const response = await fetch(`http://localhost:5000/api/challenges/solveByds?user_id=${userId}&data_structure_id=${data_structure_id}`);
+                data = await response.json();
+            } else {
+                const response = await fetch(`http://localhost:5000/api/challenges/dschallenge/${data_structure_id}`);
+                data = await response.json();
+            }
+    
+            if (data.solvedChallenges || data.challenges) {
+                const challenges = data.solvedChallenges || data.challenges;
+                setProblems(challenges);
+                loadCheckboxStates(challenges);
+                fetchNotes(challenges);
+            }
+        } catch (error) {
+            console.error('Error fetching challenges:', error);
         }
     };
+    
 
     const loadCheckboxStates = (problemsList) => {
         if (!Array.isArray(problemsList)) {
@@ -189,9 +180,7 @@ const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track th
                     problem._id === problemId 
                         ? {
                             ...problem,
-                            note: noteId 
-                                ? problem.note.map(n => n._id === noteId ? updatedNote : n) 
-                                : [...problem.note, updatedNote] // Replace optimistic update
+                            note: problem.note.map(n => (n._id === optimisticUpdate._id ? updatedNote : n))
                         }
                         : problem
                 )
@@ -236,52 +225,36 @@ const [currentNoteContent, setCurrentNoteContent] = useState(''); // To track th
         });
     };
 
-    const handleSubmitChallenge = (id) => {
-        const problem = problems.find(problem => problem._id === id);
-        if (!problem) return;
-
-        const newSolvedStatus = !problem.solved;
-        fetch(`http://localhost:5000/api/challenges/submit`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                challenge_id: id,
-                user_id: userId, 
-                solved: newSolvedStatus,
-            }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => { 
-                    throw new Error(`Network response was not ok: ${response.status} - ${text}`); 
-                });
-            }
-            return response.json();
-        })
-        .then(() => {
-            setProblems(prevProblems => {
-                const updatedProblems = prevProblems.map(problem =>
-                    problem._id === id ? { ...problem, solved: newSolvedStatus } : problem
-                );
-                localStorage.setItem(getStorageKey(id), newSolvedStatus);
-                updateProgress(updatedProblems);
-                if (!newSolvedStatus) {
-                    fetch(`http://localhost:5000/api/challenges/remove/${id}/${userId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-                }
-                return updatedProblems;
+    const handleSubmitChallenge = async (id) => {
+        try {
+            const problem = problems.find(problem => problem._id === id);
+            if (!problem) return;
+    
+            const newSolvedStatus = !problem.solved;
+            const response = await fetch(`http://localhost:5000/api/challenges/submit`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ challenge_id: id, user_id:userId, solved: newSolvedStatus }),
             });
-            fetchNotes([{ _id: id }]); // Fetch notes again for the problem
-        })
-        .catch(error => console.error('Error submitting challenge:', error));
+    
+            if (!response.ok) throw new Error('Failed to submit challenge');
+    
+            if (!newSolvedStatus) {
+                await fetch(`http://localhost:5000/api/challenges/remove/${id}/${userId}`, { method: 'DELETE' });
+            }
+    
+            const updatedProblems = problems.map(problem =>
+                problem._id === id ? { ...problem, solved: newSolvedStatus } : problem
+            );
+    
+            setProblems(updatedProblems);
+            localStorage.setItem(getStorageKey(id), newSolvedStatus);
+            updateProgress(updatedProblems); 
+        } catch (error) {
+            console.error('Error submitting challenge:', error);
+        }
     };
-
+    
     const problemsToDisplay = Array.isArray(problems) ? (showRevisions ? problems.filter(problem => problem.revision) : problems) : [];
 
     return (

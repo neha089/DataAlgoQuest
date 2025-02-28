@@ -48,7 +48,7 @@ form {
   }
   
   /* Error message styling */
-  p {
+  form p {
     color: rgb(173, 71, 71);
     font-size: 14px;
     margin-bottom: 15px;

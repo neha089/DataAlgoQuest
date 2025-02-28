@@ -83,6 +83,9 @@ ul {
     align-items: center;
     margin-top: 20px;
 }
+.tree-container .box-data {
+    color: #ffffff; /* Change to your desired color */
+}
 
 .tree-root {
     margin-bottom: 20px;
@@ -142,20 +145,20 @@ ul {
 .box-data {
     background-color: #4CAF50;
     padding: 10px 20px;
-    color: white;
     cursor: pointer;
     text-align: center;
     width: 200px;
     border-radius: 8px;
     transition: background-color 0.3s ease;
 }
-
 .box-data:hover {
     background-color: #45a049;
 }
 
 .box-data.active-subtype {
     background-color: #388E3C;
+    color: white;
+
 }
 
 /*primitive sub type*/
