@@ -1,13 +1,14 @@
 .Canvas {
   border: 1px solid #ccc;
   border-radius: 5px;
-  overflow: hidden; /* Optional: prevents overflow if nodes go out of bounds */
-}
-
-.Canvas svg {
   width: 100%;
-  height: calc(100vh - 100px); /* Allow room for the control panel */
-}
+  overflow: auto; /* Enables scrolling */
+  max-height: 90vh; }
+
+/* .Canvas svg {
+  width: 100%;
+  height: calc(100vh - 100px); /* Allow room for the control panel 
+} */
 
 .highlightedNode circle {
   stroke: #ff5722;
@@ -16,6 +17,10 @@
 
 .LinkAnimation {
   stroke: #ff5722 !important;
+}
+g.node{
+  stroke: #151616;
+  stroke-width: 0%;
 }
 
 .node circle {

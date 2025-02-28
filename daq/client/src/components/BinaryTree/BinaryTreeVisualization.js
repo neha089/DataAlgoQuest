@@ -17,12 +17,12 @@ const BinaryTreeVisualization = () => {
   const [currentCode, setCurrentCode] = useState(null);
   const [copiedStates, setCopiedStates] = useState([]);
 
-  useEffect(() => {
-    const svg = d3.select('.Canvas').append('svg').append('g');
-    return () => {
-      svg.remove();
-    };
-  }, []);
+useEffect(() => {
+  d3.select('.Canvas svg')
+    .attr('width', width)
+    .attr('height', height); // Ensure the SVG height updates properly
+}, [width, height, nodeCount]); // Recalculate when nodes change
+
 
   const freezeButtons = () => {
     document.getElementById('InsertButton').disabled = true;
