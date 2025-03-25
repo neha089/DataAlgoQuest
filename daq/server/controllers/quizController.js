@@ -175,8 +175,11 @@ const getQuizzesByDataStructureId = async (req, res, next) => {
     quizzes = await Quiz.find({ data_structure_id })
       .populate('question')
       .populate('data_structure_id');
+    console.log(data_structure_id);
+    console.log(quizzes);
   } catch (err) {
     const error = new HttpError('Fetching quizzes failed, please try again later.', 500);
+    console.log("error in quiz");
     return next(error);
   }
   const totalQuizzes = quizzes.length;
