@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './login_logout.css';
+
+const baseURL = process.env.API_BASE_URL;
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +19,7 @@ const Login = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', { email, password });
+      const response = await axios.post(`${baseURL}/api/users/login`, { email, password });
       // Store token in local storage
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data.userId);

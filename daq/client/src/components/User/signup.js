@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useNavigate } from 'react-router-dom';
 import './login_logout.css';
 
+const baseURL = process.env.API_BASE_URL;
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ const Signup = () => {
     }
 
     try {
-        await axios.post('http://localhost:5000/api/users', { name, email, password });
+        await axios.post(`${baseURL}/api/users`, { name, email, password });
      navigate('/login');
     } catch (err) {
       setError('Signup failed. User may already exist.');

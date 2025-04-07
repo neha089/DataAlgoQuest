@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './AdminQuestion.css';
 
+const baseURL = process.env.API_BASE_URL;
 const AdminQuestions = () => {
     const { quizId } = useParams(); // Get quizId from the route params
     const [questions, setQuestions] = useState([]);
@@ -13,7 +14,7 @@ const AdminQuestions = () => {
 
     // Fetch all questions for the selected quiz
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/quizzes/question/${quizId}`)
+        axios.get(`${baseURL}/api/quizzes/question/${quizId}`)
             .then(response => {
                 if (Array.isArray(response.data)) {
                     setQuestions(response.data);
@@ -32,7 +33,7 @@ const handleQuestionSubmit = (e) => {
 
     if (newQuestion._id) {
         // If updating a question
-        axios.put(`http://localhost:5000/api/question/questions/${newQuestion._id}`, questionData)
+        axios.put(`${baseURL}/api/question/questions/${newQuestion._id}`, questionData)
             .then(response => {
                 const updatedQuestions = questions.map(q => q._id === newQuestion._id ? response.data.data : q);
                 setQuestions(updatedQuestions);
@@ -42,7 +43,7 @@ const handleQuestionSubmit = (e) => {
             .catch(error => setError('Failed to update question.'));
     } else {
         // If adding a new question
-        axios.post('http://localhost:5000/api/question/questions', questionData)
+        axios.post(`${baseURL}question/questions`, questionData)
             .then(response => {
                 setQuestions([...questions, response.data.data]);
                 resetQuestionForm();
@@ -56,7 +57,7 @@ const handleQuestionSubmit = (e) => {
     // Handle delete question with confirmation
     const handleDeleteQuestion = (id) => {
         if (window.confirm('Are you sure you want to delete this question?')) {
-            axios.delete(`http://localhost:5000/api/question/questions/${id}`)
+            axios.delete(`${baseURL}/api/question/questions/${id}`)
                 .then(() => {
                     setQuestions(questions.filter(q => q._id !== id));
                     setSuccessMessage('Question deleted successfully.');

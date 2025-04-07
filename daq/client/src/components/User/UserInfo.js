@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './UserInfo.css';
 
+const baseURL = process.env.API_BASE_URL;
 const UserInfo = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ const UserInfo = () => {
         if (userId) {
             const fetchUserData = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/user/profile/${userId}`);
+                    const response = await axios.get(`${baseURL}/api/user/profile/${userId}`);
                     setUserData(response.data);
                     setLoading(false);
                 } catch (err) {

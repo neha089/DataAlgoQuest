@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../style.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
+const baseURL = process.env.API_BASE_URL;
 const CodingChallenges = () => {
     const [userId, setUserId] = useState(null);
     const { data_structure_id } = useParams();
@@ -26,7 +27,7 @@ const CodingChallenges = () => {
     useEffect(() => {
         if (!userId || !data_structure_id) return;
     
-        fetch(`http://localhost:5000/api/challenges/dschallenge/${data_structure_id}`)
+        fetch(`${baseURL}/api/challenges/dschallenge/${data_structure_id}`)
             .then(response => response.json())
             .then(data => {
                 if (Array.isArray(data.challenges)) {
@@ -45,7 +46,7 @@ const CodingChallenges = () => {
         if (!userId || !data_structure_id) return;
     
         try {
-            const response = await fetch(`http://localhost:5000/api/challenges/dschallenge/${data_structure_id}`);
+            const response = await fetch(`${baseURL}/api/challenges/dschallenge/${data_structure_id}`);
             if (!response.ok) throw new Error('Network error');
     
             const data = await response.json();
@@ -70,7 +71,7 @@ const CodingChallenges = () => {
             return;
         }
         Promise.all(challenges.map(challenge => {
-            return fetch(`http://localhost:5000/api/notes/challenges/${challenge._id}?user_id=${userId}`)
+            return fetch(`${baseURL}/api/notes/challenges/${challenge._id}?user_id=${userId}`)
                 .then(response => response.json())
                 .then(notes => {
                     if (Array.isArray(notes)) {
@@ -101,10 +102,10 @@ const CodingChallenges = () => {
         try {
             let data;
             if (!showSolvedChallenges) {
-                const response = await fetch(`http://localhost:5000/api/challenges/solveByds?user_id=${userId}&data_structure_id=${data_structure_id}`);
+                const response = await fetch(`${baseURL}/api/challenges/solveByds?user_id=${userId}&data_structure_id=${data_structure_id}`);
                 data = await response.json();
             } else {
-                const response = await fetch(`http://localhost:5000/api/challenges/dschallenge/${data_structure_id}`);
+                const response = await fetch(`${baseURL}/api/challenges/dschallenge/${data_structure_id}`);
                 data = await response.json();
             }
     
@@ -137,8 +138,8 @@ const CodingChallenges = () => {
     const handleNoteSubmit = (problemId, noteId, newContent) => {
         const method = noteId ? 'PATCH' : 'POST';
         const url = noteId
-            ? `http://localhost:5000/api/notes/${noteId}`
-            : `http://localhost:5000/api/notes/coding-challenge/${problemId}`;
+            ? `${baseURL}/api/notes/${noteId}`
+            : `${baseURL}/api/notes/coding-challenge/${problemId}`;
     
         // Optimistic UI update - this adds the note immediately to the state
         const optimisticUpdate = {
@@ -200,7 +201,7 @@ const CodingChallenges = () => {
 
         const newRevisionStatus = !problem.revision;
 
-        fetch(`http://localhost:5000/api/challenges/${id}`, {
+        fetch(`${baseURL}/api/challenges/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -231,7 +232,7 @@ const CodingChallenges = () => {
             if (!problem) return;
     
             const newSolvedStatus = !problem.solved;
-            const response = await fetch(`http://localhost:5000/api/challenges/submit`, {
+            const response = await fetch(`${baseURL}/api/challenges/submit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ challenge_id: id, user_id:userId, solved: newSolvedStatus }),
@@ -240,7 +241,7 @@ const CodingChallenges = () => {
             if (!response.ok) throw new Error('Failed to submit challenge');
     
             if (!newSolvedStatus) {
-                await fetch(`http://localhost:5000/api/challenges/remove/${id}/${userId}`, { method: 'DELETE' });
+                await fetch(`${baseURL}/api/challenges/remove/${id}/${userId}`, { method: 'DELETE' });
             }
     
             const updatedProblems = problems.map(problem =>

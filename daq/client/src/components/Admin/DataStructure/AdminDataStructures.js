@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminDatastructure.css';
 
+const baseURL = process.env.API_BASE_URL;
 const AdminDataStructures = () => {
     const [dataStructures, setDataStructures] = useState([]);
     const [name, setName] = useState('');
@@ -11,7 +12,7 @@ const AdminDataStructures = () => {
 
     // Fetch all data structures
     useEffect(() => {
-        axios.get('http://localhost:5000/api/datastructures')
+        axios.get(`${baseURL}/api/datastructures`)
             .then(response => setDataStructures(response.data))
             .catch(error => console.error('Error fetching data structures:', error));
     }, []);
@@ -21,7 +22,7 @@ const AdminDataStructures = () => {
         e.preventDefault();
         if (editingId) {
             // Update the existing data structure
-            axios.put(`http://localhost:5000/api/datastructures/${editingId}`, { name, description })
+            axios.put(`${baseURL}/api/datastructures/${editingId}`, { name, description })
                 .then(response => {
                     const updatedDataStructures = dataStructures.map(ds =>
                         ds._id === editingId ? response.data : ds
@@ -35,7 +36,7 @@ const AdminDataStructures = () => {
                 });
         } else {
             // Add a new data structure
-            axios.post('http://localhost:5000/api/datastructures', { name, description })
+            axios.post(`${baseURL}datastructures`, { name, description })
                 .then(response => {
                     setDataStructures([...dataStructures, response.data]);
                     resetForm();
@@ -49,7 +50,7 @@ const AdminDataStructures = () => {
 
     // Handle delete data structure
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:5000/api/datastructures/${id}`)
+        axios.delete(`${baseURL}/api/datastructures/${id}`)
             .then(() => {
                 setDataStructures(dataStructures.filter(ds => ds._id !== id));
             })

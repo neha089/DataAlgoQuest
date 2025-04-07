@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AdminUsers.css';
 
+const baseURL = process.env.API_BASE_URL;
 const AdminUsers = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,7 +13,7 @@ const AdminUsers = () => {
 
     // Fetching users on component load
     useEffect(() => {
-        axios.get('http://localhost:5000/api/users')
+        axios.get(`${baseURL}/users`)
             .then(response => {
                 setUsers(response.data.users);  // Accessing the users array in the response
                 setLoading(false);
@@ -33,7 +34,7 @@ const AdminUsers = () => {
 
     // // Saving the edited user without reloading the page
     // const handleSaveEdit = () => {
-    //     axios.put(`http://localhost:5000/api/users/${editingUserId}`, {
+    //     axios.put(`${baseURL}/api/users/${editingUserId}`, {
     //         name: editedUserName,
     //         email: editedUserEmail
     //     })
@@ -51,7 +52,7 @@ const AdminUsers = () => {
     // Handling user deletion
     const handleDelete = (userId) => {
         console.log(userId);
-        axios.delete(`http://localhost:5000/api/users/${userId}`)
+        axios.delete(`${baseURL}/api/users/${userId}`)
             .then(response => {
                 // Remove the user from the state without reloading the page
                 setUsers(users.filter(user => user._id !== userId));

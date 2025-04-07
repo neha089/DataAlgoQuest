@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-require('dotenv').config();
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const AdminChallenges = () => {
     const [challenges, setChallenges] = useState([]);
@@ -29,7 +28,7 @@ const AdminChallenges = () => {
 
         if (editingId) {
             // Update existing challenge
-            axios.put(`http://localhost:5000/api/challenges/${editingId}`, challengeData)
+            axios.put(`${baseURL}/api/challenges/${editingId}`, challengeData)
                 .then(response => {
                     const updatedChallenges = challenges.map(challenge =>
                         challenge._id === editingId ? response.data : challenge
@@ -43,7 +42,7 @@ const AdminChallenges = () => {
                 });
         } else {
             // Add a new coding challenge
-            axios.post('http://localhost:5000/api/challenges', challengeData)
+            axios.post(`${baseURL}challenges`, challengeData)
                 .then(response => {
                     setChallenges([...challenges, response.data]);
                     resetForm();
@@ -57,7 +56,7 @@ const AdminChallenges = () => {
 
     // Handle delete challenge
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:5000/api/challenges/${id}`)
+        axios.delete(`${baseURL}/api/challenges/${id}`)
             .then(() => {
                 setChallenges(challenges.filter(challenge => challenge._id !== id));
             })

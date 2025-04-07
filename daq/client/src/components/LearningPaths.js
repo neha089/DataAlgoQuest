@@ -5,6 +5,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import './style.css'; // Ensure you import the CSS file
 import axios from 'axios';
 
+const baseURL = process.env.API_BASE_URL;
 const LearningPaths = () => {
     const navigate = useNavigate();
     const [userId, setUserId] = useState(null);
@@ -61,12 +62,12 @@ const LearningPaths = () => {
             const updatedPaths = await Promise.all(learningPaths.map(async (path) => {
                 try {
                     // Fetch total quizzes and challenges for this data structure
-                    const totalQuizzesResponse = await axios.get(`http://localhost:5000/api/quizzes/data-structure/${path.data_structure_id}`)
+                    const totalQuizzesResponse = await axios.get(`${baseURL}/api/quizzes/data-structure/${path.data_structure_id}`)
                         .catch(error => {
                             console.error('Error:', error.response ? error.response.data : error.message);
                         });
                     
-                    const totalChallengesResponse = await axios.get(`http://localhost:5000/api/challenges/dschallenge/${path.data_structure_id}`)
+                    const totalChallengesResponse = await axios.get(`${baseURL}/api/challenges/dschallenge/${path.data_structure_id}`)
                         .catch(error => {
                             console.error('Error:', error.response ? error.response.data : error.message);
                         });
@@ -76,11 +77,11 @@ const LearningPaths = () => {
                     const totalChallenges = totalChallengesResponse?.data?.challenges?.length || 0;
     
                     // Fetch solved quizzes and challenges for the current user
-                    const solvedQuizzesResponse = await axios.get(`http://localhost:5000/api/quizzes/solvedDs/${userId}?data_structure_id=${path.data_structure_id}`)
+                    const solvedQuizzesResponse = await axios.get(`${baseURL}/api/quizzes/solvedDs/${userId}?data_structure_id=${path.data_structure_id}`)
                         .catch(error => {
                             console.error('Error:', error.response ? error.response.data : error.message);
                         });
-                    const solvedChallengesResponse = await axios.get(`http://localhost:5000/api/challenges/solveByds?user_id=${userId}&data_structure_id=${path.data_structure_id}`)
+                    const solvedChallengesResponse = await axios.get(`${baseURL}/api/challenges/solveByds?user_id=${userId}&data_structure_id=${path.data_structure_id}`)
                         .catch(error => {
                             console.error('Error:', error.response ? error.response.data : error.message);
                         });

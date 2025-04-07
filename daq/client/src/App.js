@@ -33,6 +33,8 @@ const AppContent = () => {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/learning-paths" element={<LearningPaths />} />
                 <Route path="/data-structure/:name" element={<DataStructureDetail />} />
+                {/* Error :DataAlgoQuest Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+                sol:<Route path="/data-structure/find/:name" element={<DataStructureDetail />} /> */}
                 <Route path="/admin/*" element={<Admin />} />
                 <Route path="/data-structure/:data_structure_id/quiz" element={<DataStructureQuiz />} />
                 <Route path="/data-structure/:data_structure_id/challenges" element={<CodingChallenges />} />

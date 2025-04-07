@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa'; // Import star icons
 
+const baseURL = process.env.API_BASE_URL;
 const Profile = () => {
     const [submissions, setSubmissions] = useState([]);
     const [progress, setProgress] = useState(null);
@@ -33,7 +34,7 @@ const Profile = () => {
         if (userId) {
             const fetchAttemptsPerDay = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/attempts-per-day/${userId}`);
+                    const response = await axios.get(`${baseURL}/api/attempts-per-day/${userId}`);
                     const formattedSubmissions = Object.keys(response.data.attemptsPerDay).map(date => ({
                         date: new Date(date),
                         count: response.data.attemptsPerDay[date]
@@ -46,7 +47,7 @@ const Profile = () => {
 
             const fetchProgressData = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/user-progress/${userId}`);
+                    const response = await axios.get(`${baseURL}/api/user-progress/${userId}`);
                     setProgress(response.data);
                 } catch (error) {
                     console.error('Error fetching progress data:', error);
@@ -61,7 +62,7 @@ const Profile = () => {
     const handleFeedbackSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/feedback/', {
+            const response = await axios.post(`${baseURL}/feedback/`, {
                 user_id: userId,
                 bug,
                 feedback,

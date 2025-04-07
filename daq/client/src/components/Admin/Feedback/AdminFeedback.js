@@ -5,13 +5,14 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'; // Solid star
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'; // Empty star
 import './AdminFeedback.css';
 
+const baseURL = process.env.API_BASE_URL;
 const AdminFeedback = () => {
     const [feedbacks, setFeedbacks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/feedback/')
+        axios.get(`${baseURL}feedback/`)
             .then(response => {
                 setFeedbacks(response.data);
                 setLoading(false);

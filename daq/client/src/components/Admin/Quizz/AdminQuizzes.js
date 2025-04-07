@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // useNavigate instead of useHistory
 import './AdminQuizzes.css'; // Link your CSS for styles
 
+const baseURL = process.env.API_BASE_URL;
 const AdminQuizzes = () => {
     const [quizzes, setQuizzes] = useState([]);
     const [quizTitle, setQuizTitle] = useState('');
@@ -13,7 +14,7 @@ const AdminQuizzes = () => {
 
     // Fetch all quizzes
     useEffect(() => {
-        axios.get('http://localhost:5000/api/quizzes')
+        axios.get(`${baseURL}/api/quizzes`)
             .then(response => {
                 if (response.data.quizzes && Array.isArray(response.data.quizzes)) {
                     setQuizzes(response.data.quizzes);
@@ -30,7 +31,7 @@ const AdminQuizzes = () => {
         const quizData = { title: quizTitle };
 
         if (editingQuizId) {
-            axios.put(`http://localhost:5000/api/quizzes/${editingQuizId}`, quizData)
+            axios.put(`${baseURL}/api/quizzes/${editingQuizId}`, quizData)
                 .then(response => {
                     const updatedQuizzes = quizzes.map(quiz => quiz._id === editingQuizId ? response.data : quiz);
                     setQuizzes(updatedQuizzes);
@@ -39,7 +40,7 @@ const AdminQuizzes = () => {
                 })
                 .catch(error => setError('Failed to update quiz.'));
         } else {
-            axios.post('http://localhost:5000/api/quizzes', quizData)
+            axios.post(`${baseURL}/api/quizzes`, quizData)
                 .then(response => {
                     setQuizzes([...quizzes, response.data]);
                     resetQuizForm();
@@ -51,7 +52,7 @@ const AdminQuizzes = () => {
 
     const handleDeleteQuiz = (id) => {
         if (window.confirm('Are you sure you want to delete this quiz?')) {
-            axios.delete(`http://localhost:5000/api/quizzes/${id}`)
+            axios.delete(`${baseURL}/api/quizzes/${id}`)
                 .then(() => {
                     setQuizzes(quizzes.filter(quiz => quiz._id !== id));
                     setSuccessMessage('Quiz deleted successfully.');

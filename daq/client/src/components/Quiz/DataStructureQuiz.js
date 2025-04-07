@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../style.css';
 
+const baseURL = process.env.API_BASE_URL;
 const DataStructureQuiz = () => {
     const [userId, setUserId] = useState(null);
     const { data_structure_id } = useParams();
@@ -30,7 +31,7 @@ const DataStructureQuiz = () => {
             }
     
             try {
-                const response = await fetch(`http://localhost:5000/api/quizzes/data-structure/${data_structure_id}`);
+                const response = await fetch(`${baseURL}/api/quizzes/data-structure/${data_structure_id}`);
                 if (!response.ok) {
                     throw new Error('Quizzes not found');
                 }
@@ -63,7 +64,7 @@ const DataStructureQuiz = () => {
         const quiz_id = quizId;
         
         try {
-            const response = await fetch('http://localhost:5000/api/quizzes/submit', {
+            const response = await fetch(`${baseURL}/quizzes/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
