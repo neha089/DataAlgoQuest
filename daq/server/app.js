@@ -84,7 +84,7 @@ app.patch('/api/notes/:noteId', async (req, res) => {
 // });
 const User = require('./models/User');
 const ChallengeAttempt = require('./models/ChallengeAttempt');
-const QuizAttempt = require('./models/quizAttempt');
+const QuizAttempt = require('./models/QuizAttempt');
 app.get('/api/user/profile/:userId', async (req, res) => {
   user_id=req.params.userId;
   try {
