@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+require('dotenv').config();
+
+const baseURL = process.env.API_BASE_URL;
 
 const AdminChallenges = () => {
     const [challenges, setChallenges] = useState([]);
@@ -14,8 +17,8 @@ const AdminChallenges = () => {
 
     // Fetch all coding challenges
     useEffect(() => {
-        axios.get('http://localhost:5000/api/challenges')
-            .then(response => setChallenges(response.data))
+        axios.get(`${baseURL}/api/challenges`)
+                    .then(response => setChallenges(response.data))
             .catch(error => console.error('Error fetching coding challenges:', error));
     }, []);
 
