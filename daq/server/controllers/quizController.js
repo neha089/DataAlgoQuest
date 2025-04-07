@@ -2,7 +2,7 @@ const HttpError = require('../models/http-error');
 const Quiz = require('../models/Quiz');
 const { validationResult } = require('express-validator');
 const QuizAttempt=require('../models/quizAttempt');
-const Progress=require('../models/progress');
+const Progress=require('../models/Progress');
 const mongoose = require('mongoose');
 const User=require('../models/User');
 const getQuestionByQuizId=async (req, res, next) => {

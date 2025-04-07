@@ -2,7 +2,6 @@ const HttpError = require('../models/http-error');
 const User = require('../models/User');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-
 // Create a new user
 const createUser = async (req, res, next) => {
   const errors = validationResult(req);
@@ -124,7 +123,7 @@ const updateUser = async (req, res, next) => {
   res.json({ user: user.toObject({ getters: true }) });
 };
 
-const Progress = require('../models/progress');
+const Progress = require('../models/Progress');
 // Delete user by ID
 const deleteUser = async (req, res, next) => {
   const userId = req.params.id;

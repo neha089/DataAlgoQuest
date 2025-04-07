@@ -3,7 +3,7 @@ const CodingChallenge = require('../models/CodingChallenge');
 
 // Import your models
 const ChallengeAttempt = require('../models/ChallengeAttempt'); // Adjust the path if necessary
-const Progress = require('../models/progress'); // Adjust the path if necessary
+const Progress =require('../models/Progress')
 const User = require('../models/User');
 // Create a new coding challenge
 exports.createChallenge = async (req, res) => {
