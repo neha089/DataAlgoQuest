@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../style.css';
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const DataStructureQuiz = () => {
     const [userId, setUserId] = useState(null);
     const { data_structure_id } = useParams();

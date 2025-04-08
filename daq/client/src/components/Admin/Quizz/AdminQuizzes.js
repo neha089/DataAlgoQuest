@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // useNavigate instead of useHistory
 import './AdminQuizzes.css'; // Link your CSS for styles
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const AdminQuizzes = () => {
     const [quizzes, setQuizzes] = useState([]);
     const [quizTitle, setQuizTitle] = useState('');
@@ -77,7 +77,7 @@ const AdminQuizzes = () => {
 
     // Redirect to AdminQuestions with the selected quiz ID
     const handleViewQuestions = (quizId) => {
-        navigate(`/admin/quizzes/question/${quizId}`); // Updated to use navigate
+        navigate(`${baseURL}/api/admin/quizzes/question/${quizId}`); // Updated to use navigate
     };
 
     return (

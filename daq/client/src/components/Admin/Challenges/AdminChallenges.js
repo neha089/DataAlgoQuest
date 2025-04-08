@@ -42,7 +42,7 @@ const AdminChallenges = () => {
                 });
         } else {
             // Add a new coding challenge
-            axios.post(`${baseURL}challenges`, challengeData)
+            axios.post(`${baseURL}/api/challenges`, challengeData)
                 .then(response => {
                     setChallenges([...challenges, response.data]);
                     resetForm();

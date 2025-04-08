@@ -9,7 +9,7 @@ import queueImage from '../assets/ds-image/queue.jpg';
 import listImage from '../assets/ds-image/linked-list.jpg';
 import treeImage from '../assets/ds-image/tree.jpg';
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const dataStructures = [
     {
         title: 'Stack',

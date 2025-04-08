@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './login_logout.css';
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,8 +26,21 @@ const Login = () => {
       navigate('/');
       window.location.reload();
     } catch (err) {
-      setError('Invalid login credentials');
+      console.error('Login error:', err); // Add this
+      if (err.response) {
+        const { status, data } = err.response;
+        if (status === 404) {
+          setError('Email not found. Please create an account.');
+        } else if (status === 401) {
+          setError('Invalid password. Please try again.');
+        } else {
+          setError(data.message || 'Login failed. Please try again.');
+        }
+      } else {
+        setError('Network error. Please try again later.');
+      }
     }
+    
   };
 
   return (

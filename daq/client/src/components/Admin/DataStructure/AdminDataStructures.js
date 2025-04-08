@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminDatastructure.css';
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const AdminDataStructures = () => {
     const [dataStructures, setDataStructures] = useState([]);
     const [name, setName] = useState('');
@@ -36,7 +36,7 @@ const AdminDataStructures = () => {
                 });
         } else {
             // Add a new data structure
-            axios.post(`${baseURL}datastructures`, { name, description })
+            axios.post(`${baseURL}/api/datastructures`, { name, description })
                 .then(response => {
                     setDataStructures([...dataStructures, response.data]);
                     resetForm();

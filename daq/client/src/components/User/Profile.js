@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa'; // Import star icons
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const Profile = () => {
     const [submissions, setSubmissions] = useState([]);
     const [progress, setProgress] = useState(null);
@@ -62,7 +62,7 @@ const Profile = () => {
     const handleFeedbackSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${baseURL}/feedback/`, {
+            const response = await axios.post(`${baseURL}/api/feedback/`, {
                 user_id: userId,
                 bug,
                 feedback,

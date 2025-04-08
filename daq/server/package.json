@@ -21,9 +21,7 @@
     "express-validator": "^7.2.0",
     "http-error": "^0.0.6",
     "jsonwebtoken": "^9.0.2",
-    "mongod": "^2.0.0",
-    "mongoose": "^8.5.2",
-    "moongoose": "^0.0.5"
+    "mongoose": "^8.5.2"
   },
   "description": ""
 }
