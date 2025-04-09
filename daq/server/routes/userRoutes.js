@@ -39,30 +39,34 @@ router.delete('/:id', userController.deleteUser);
 
 router.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
+  console.log('Login attempt:', email);
 
   let existingUser;
   try {
     existingUser = await User.findOne({ email });
   } catch (err) {
-    return next(new HttpError('Login failed, please try again later.', 500));
+    console.error('Database error:', err);
+    return res.status(500).json({ message: 'Login failed, please try again later.' });
   }
 
   if (!existingUser) {
-    return next(new HttpError('Invalid credentials, could not log you in.', 403));
+    console.log('User not found');
+    return res.status(404).json({ message: 'Email not found' });
   }
 
   let isValidPassword = false;
   try {
     isValidPassword = await bcrypt.compare(password, existingUser.password);
   } catch (err) {
-    return next(new HttpError('Could not log you in, please check your credentials and try again.', 500));
+    console.error('Password check error:', err);
+    return res.status(500).json({ message: 'Something went wrong. Please try again.' });
   }
 
   if (!isValidPassword) {
-    return next(new HttpError('Invalid credentials, could not log you in.', 403));
+    console.log('Invalid password');
+    return res.status(401).json({ message: 'Invalid password' });
   }
 
-  // Create a JWT token
   let token;
   try {
     token = jwt.sign(
@@ -71,9 +75,10 @@ router.post('/login', async (req, res, next) => {
       { expiresIn: '1h' }
     );
   } catch (err) {
-    return next(new HttpError('Login failed, please try again later.', 500));
+    return res.status(500).json({ message: 'Login failed, please try again later.' });
   }
 
+  console.log('Login successful:', email);
   res.json({ userId: existingUser.id, email: existingUser.email, token });
 });
 

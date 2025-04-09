@@ -62,7 +62,7 @@ const Profile = () => {
     const handleFeedbackSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${baseURL}/feedback/`, {
+            const response = await axios.post(`${baseURL}/api/feedback/`, {
                 user_id: userId,
                 bug,
                 feedback,

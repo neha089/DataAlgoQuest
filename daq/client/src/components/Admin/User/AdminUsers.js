@@ -13,7 +13,7 @@ const AdminUsers = () => {
 
     // Fetching users on component load
     useEffect(() => {
-        axios.get(`${baseURL}/users`)
+        axios.get(`${baseURL}/api/users`)
             .then(response => {
                 setUsers(response.data.users);  // Accessing the users array in the response
                 setLoading(false);

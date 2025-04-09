@@ -36,7 +36,7 @@ const AdminDataStructures = () => {
                 });
         } else {
             // Add a new data structure
-            axios.post(`${baseURL}datastructures`, { name, description })
+            axios.post(`${baseURL}/api/datastructures`, { name, description })
                 .then(response => {
                     setDataStructures([...dataStructures, response.data]);
                     resetForm();

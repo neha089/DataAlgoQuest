@@ -12,7 +12,7 @@ const AdminFeedback = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get(`${baseURL}feedback/`)
+        axios.get(`${baseURL}/api/feedback`)
             .then(response => {
                 setFeedbacks(response.data);
                 setLoading(false);

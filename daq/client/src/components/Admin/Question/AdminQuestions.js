@@ -43,7 +43,7 @@ const handleQuestionSubmit = (e) => {
             .catch(error => setError('Failed to update question.'));
     } else {
         // If adding a new question
-        axios.post(`${baseURL}question/questions`, questionData)
+        axios.post(`${baseURL}/api/question/questions`, questionData)
             .then(response => {
                 setQuestions([...questions, response.data.data]);
                 resetQuestionForm();
@@ -80,7 +80,7 @@ const handleQuestionSubmit = (e) => {
 
     // Return to quiz list
     const goBackToQuizzes = () => {
-        navigate('/admin/quizzes');
+        navigate(`${baseURL}/api/admin/quizzes`);
     };
 
     return (
