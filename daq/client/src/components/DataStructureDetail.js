@@ -108,7 +108,7 @@ const dataStructures = [
     },
     
     {
-        title: 'Linked List',
+        title: 'LinkedList',
         notes: [
             'A Linked List is a linear data structure where elements, called nodes, are stored in a sequence. Each node contains two parts: data and a reference (or pointer) to the next node in the sequence.',
             'Linked lists are dynamic in size, allowing efficient insertion and deletion of elements. Unlike arrays, linked lists do not require contiguous memory, making them more flexible for memory management.',

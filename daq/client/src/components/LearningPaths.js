@@ -19,38 +19,35 @@ const LearningPaths = () => {
       
         fetchUserId();
     },[]);
+    
         const [learningPaths, setLearningPaths] =  useState([
         {
             id: 1,
             title: 'Stack',
             description: 'Your Path to Becoming a Career-Ready Web Developer!',
             duration: 'Total time: 3 hours, 30 minutes',
-            progress: 0 ,// Update this value to reflect actual user progress
-            data_structure_id:'66ec161e15a1fe7205accf22'
+            data_structure_id:'67e2852b84e8f18d0c335458'
         },
         {
             id: 2,
             title: 'Queue',
             description: 'Enhance Your Skills and Build More Complex Projects!',
             duration: 'Total time: 2 hours, 15 minutes',
-            progress: 0, // Update this value to reflect actual user progress
-            data_structure_id:'66c18a3c9f77a665101a175f'
+            data_structure_id:'67e28b2f84e8f18d0c335a19'
         },
         {
             id: 3,
             title: 'Tree',
             description: 'Master the Latest Technologies and Go Beyond the Basics!',
             duration: 'Total time: 5 hours, 10 minutes',
-            progress: 0 ,// Update this value to reflect actual user progress
-            data_structure_id:'66c18a4b9f77a665101a1762'
+            data_structure_id:'67e2853d84e8f18d0c33545e'
         },
         {
             id: 4,
-            title: 'Linked List',
+            title: 'LinkedList',
             description: 'Your Path to Becoming a Career-Ready Web Developer!',
             duration: 'Total time: 3 hours, 45 minutes',
-            progress: 0, // Update this value to reflect actual user progress
-            data_structure_id:'66ec157515a1fe7205accf1f'
+            data_structure_id:'67e2853584e8f18d0c33545b'
         },
 
 
@@ -108,7 +105,7 @@ const LearningPaths = () => {
         };
     
         fetchProgressData();
-    }, [userId, learningPaths]);
+    }, [userId]);
     
     const handleClick = (path) => {
         navigate(`/data-structure/${encodeURIComponent(path.title)}`); // Navigate to DataStructureDetail with the title

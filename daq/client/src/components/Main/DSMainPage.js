@@ -59,8 +59,8 @@ const TreeNode = ({ name, onClick, isActive }) => {
     else if (name === "Queue") {
       navigateToPage("Queue"); // Updated method
     } 
-    else if (name === "Linked List") {
-      navigateToPage("Linked List"); // Updated method
+    else if (name === "LinkedList") {
+      navigateToPage("LinkedList"); // Updated method
     }
     else if (name === "Tree") {
       navigateToPage("Tree"); // Updated method
@@ -142,7 +142,7 @@ export default function DataStructureTree() {
             <TreeNode name="Array" onClick={() => console.log('Array')} />
             <TreeNode name="Stack" onClick={() => console.log('Stack')} />
             <TreeNode name="Queue" onClick={() => console.log('Queue')} />
-            <TreeNode name="Linked List" onClick={() => console.log('Linked List')} />
+            <TreeNode name="LinkedList" onClick={() => console.log('Linked List')} />
           </div>
         )}
 
