@@ -5,7 +5,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'; // Solid star
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'; // Empty star
 import './AdminFeedback.css';
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const AdminFeedback = () => {
     const [feedbacks, setFeedbacks] = useState([]);
     const [loading, setLoading] = useState(true);

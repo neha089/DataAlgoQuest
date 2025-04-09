@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './AdminQuestion.css';
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const AdminQuestions = () => {
     const { quizId } = useParams(); // Get quizId from the route params
     const [questions, setQuestions] = useState([]);

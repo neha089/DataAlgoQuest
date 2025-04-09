@@ -3,7 +3,8 @@ import axios from 'axios';
 import {useNavigate } from 'react-router-dom';
 import './login_logout.css';
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+console.log('Base URL:', baseURL);
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

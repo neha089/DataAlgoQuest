@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './UserInfo.css';
 
-const baseURL = process.env.API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const UserInfo = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
