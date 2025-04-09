@@ -64,7 +64,7 @@ const DataStructureQuiz = () => {
         const quiz_id = quizId;
         
         try {
-            const response = await fetch(`${baseURL}/quizzes/submit`, {
+            const response = await fetch(`${baseURL}/api/quizzes/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
