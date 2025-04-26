@@ -1,11 +1,9 @@
 const { validationResult } = require('express-validator');
 const CodingChallenge = require('../models/CodingChallenge');
-
-// Import your models
 const ChallengeAttempt = require('../models/ChallengeAttempt'); // Adjust the path if necessary
 const Progress =require('../models/Progress')
 const User = require('../models/User');
-// Create a new coding challenge
+
 exports.createChallenge = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -89,7 +87,6 @@ exports.getChallengeById = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-// Find a coding challenge by title
 exports.getChallengeByTitle = async (req, res) => {
   try {
     const { title } = req.params;
@@ -105,8 +102,6 @@ exports.getChallengeByTitle = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
-// Get all coding challenges
 exports.getChallenge = async (req, res) => {
   try {
     const challenges = await CodingChallenge.find().populate('note');
@@ -120,7 +115,6 @@ exports.getChallenge = async (req, res) => {
   }  
 };
 
-// Get all coding challenges where revision is true
 exports.getChallengesForRevision = async (req, res) => {
   try {
     const challenges = await CodingChallenge.find({ revision: true });
@@ -135,14 +129,9 @@ exports.getChallengesForRevision = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 }; 
-
-
-// Get all coding challenges for a specific data structure
 exports.getChallenge_with_ds = async (req, res) => {
   try {
     const { data_structure_id } = req.params;
-
-    // Validate if the data_structure_id is a valid ObjectId
     if (!mongoose.Types.ObjectId.isValid(data_structure_id)) {
       return res.status(400).json({ message: 'Invalid data structure ID format' });
     }
@@ -158,7 +147,6 @@ exports.getChallenge_with_ds = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-// Submit a challenge attempt
 exports.submitChallenge = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -169,10 +157,8 @@ exports.submitChallenge = async (req, res) => {
   try {
     const { challenge_id, user_id, solved } = req.body; 
 
-    // Log input data
     console.log('Request received:', { challenge_id, user_id });
 
-    // Validate ObjectId
     if (!mongoose.Types.ObjectId.isValid(challenge_id)) {
       console.error('Invalid challenge ID format:', challenge_id);
       return res.status(400).json({ message: 'Invalid challenge ID format' });

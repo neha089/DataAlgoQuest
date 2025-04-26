@@ -4,6 +4,7 @@ import {useNavigate } from 'react-router-dom';
 import './login_logout.css';
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
+console.log(baseURL);
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
