@@ -3,11 +3,7 @@ import axios from 'axios';
 import {useNavigate } from 'react-router-dom';
 import './login_logout.css';
 const baseURL = process.env.REACT_APP_API_BASE_URL;
-
-if (!baseURL) {
-  console.warn('⚠️ baseURL is undefined. Check your .env or environment variables!');
-}
-
+console.log(baseURL);
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
