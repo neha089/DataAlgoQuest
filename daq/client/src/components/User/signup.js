@@ -24,7 +24,7 @@ const Signup = () => {
     }
 
     try {
-        await axios.post(`${baseURL}/api/users`, { name, email, password });
+        await axios.post(`https://dataalgoquest.onrender.com/api/users`, { name, email, password });
      navigate('/login');
     } catch (err) {
       setError('Signup failed. User may already exist.');
