@@ -10,11 +10,11 @@ const AdminChallenges = () => {
     const [problemStatement, setProblemStatement] = useState('');
     const [link, setLink] = useState('');
     const [level, setLevel] = useState('easy');
-    const [dataStructureId, setDataStructureId] = useState('');
     const [revision, setRevision] = useState(false);
     const [editingId, setEditingId] = useState(null);
     const [error, setError] = useState(null);
-
+    const [dataStructures, setDataStructures] = useState([]);
+    const [selectedDsId, setSelectedDsId] = useState('');
     // Fetch all coding challenges
     useEffect(() => {
         axios.get(`${baseURL}/api/challenges`)
@@ -22,10 +22,24 @@ const AdminChallenges = () => {
             .catch(error => console.error('Error fetching coding challenges:', error));
     }, []);
 
+    // Fetch all data structures for dropdown
+    useEffect(() => {
+        axios.get(`${baseURL}/api/datastructures`)
+            .then(response => {
+                setDataStructures(response.data);
+            })
+            .catch(error => console.error('Error fetching data structures:', error));
+    }, []);
+
     // Handle add or update challenge
     const handleSubmit = (e) => {
         e.preventDefault();
-        const challengeData = { title, problem_statement: problemStatement, link, level, data_structure_id: dataStructureId, revision };
+        if (!selectedDsId) {
+            setError("Please select a data structure.");
+            return;
+        }
+
+        const challengeData = { title, problem_statement: problemStatement, link, level, data_structure_id: selectedDsId, revision };
 
         if (editingId) {
             // Update existing challenge
@@ -73,7 +87,7 @@ const AdminChallenges = () => {
         setProblemStatement(challenge.problem_statement);
         setLink(challenge.link);
         setLevel(challenge.level);
-        setDataStructureId(challenge.data_structure_id);
+        setSelectedDsId(challenge.data_structure_id?._id || '');
         setRevision(challenge.revision);
         setEditingId(challenge._id);
     };
@@ -84,7 +98,7 @@ const AdminChallenges = () => {
         setProblemStatement('');
         setLink('');
         setLevel('easy');
-        setDataStructureId('');
+        setSelectedDsId('');
         setRevision(false);
         setEditingId(null);
         setError(null);
@@ -121,13 +135,26 @@ const AdminChallenges = () => {
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select>
-                <input
+                {/* <input
                     type="text"
                     placeholder="Data Structure ID"
                     value={dataStructureId}
                     onChange={(e) => setDataStructureId(e.target.value)}
                     required
-                />
+                /> */}
+                 {/* Data Structure Dropdown */}
+                 <select
+                    value={selectedDsId}
+                    onChange={(e) => setSelectedDsId(e.target.value)}
+                    required
+                >
+                    <option value="">Select Data Structure</option>
+                    {dataStructures.map(ds => (
+                        <option key={ds._id} value={ds._id}>
+                            {ds.name}
+                        </option>
+                    ))}
+                </select>
                 {/* <label>
                     Revision:
                     <input
